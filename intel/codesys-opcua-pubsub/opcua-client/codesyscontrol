@@ -1,0 +1,256 @@
+#!/bin/sh
+#
+### BEGIN INIT INFO
+# Provides:          codesyscontrol
+# Required-Start:    $remote_fs $named
+# Required-Stop:     $remote_fs $named
+# Should-Start:      $network
+# Should-Stop:       $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Prepares and starts codesyscontrol
+# Description:       Prepares and starts codesyscontrol
+### END INIT INFO
+
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+EXEC=/opt/codesys/bin/codesyscontrol.bin
+WORKDIR=/var/opt/codesys
+PIDFILE=/var/run/codesyscontrol.pid
+CONFIGFILE=/etc/CODESYSControl.cfg
+
+
+# use default file if available
+if [ -f /etc/default/codesyscontrol ]; then
+    . /etc/default/codesyscontrol
+fi
+
+# use target-specific variables, if available
+if [ -f /opt/codesys/scripts/init-vars ]; then
+    . /opt/codesys/scripts/init-vars
+fi
+
+# use target-specific init-functions
+. /opt/codesys/scripts/init-functions
+
+# exit script if not running as root
+if [ $(id -u) -ne 0 ]; then
+    echo "Error: script has to be run as root"
+    exit 1
+fi
+
+
+# function start_runtime
+# creates runtime process, stores PID in $PIDFILE and verifies process exists
+# pre: runtime not started yet
+# exit:
+#   - 1 if $EXEC could not be started
+# post: runtime is running with PID stored in $PIDFILE
+start_runtime () {
+    #exit script if package is not installed
+    [ -x "$EXEC" ] || exit 5
+
+    if [ ! -z "$DEBUGOUTPUT" ]; then
+        ARGS="-d $ARGS"
+        if [ -z "$DEBUGLOGFILE" ]; then
+            DEBUGLOGFILE=/tmp/codesyscontrol_debug.log
+        fi
+    else
+        DEBUGLOGFILE=/dev/null
+    fi
+
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/codesys/lib
+
+    mkdir -p $WORKDIR
+    cd $WORKDIR
+    
+    # Start with rdtset if cache allocation variables are provided
+    if [ -n "$L3_CACHE_MASK" ] && [ -n "$T_CORE" ]; then
+        echo "Starting codesyscontrol with cache allocation: L3=$L3_CACHE_MASK, CPU=$T_CORE"
+        ( $DAEMON $DAEMON_ARGS rdtset -t "l3=${L3_CACHE_MASK};cpu=${T_CORE}" -c "${T_CORE}" -k $EXEC $CONFIGFILE $ARGS >$DEBUGLOGFILE 2>&1 & echo $! >$PIDFILE )
+    else
+        echo "Starting codesyscontrol without cache allocation"
+        ( $DAEMON $DAEMON_ARGS $EXEC $CONFIGFILE $ARGS >$DEBUGLOGFILE 2>&1 & echo $! >$PIDFILE )
+    fi
+    sleep 1
+    if [ ! -z $DAEMON ] && which pidof >/dev/null 2>&1; then
+        # wait up to 10 seconds for process to become ready
+        local TIMEOUT=10
+        while ! pidof -s $EXEC >$PIDFILE 2>/dev/null; do
+            TIMEOUT=$(expr $TIMEOUT - 1)
+            if [ "$TIMEOUT" = "0" ]; then
+                break
+            fi
+            sleep 1
+        done
+    fi
+
+    do_status
+    if [ $? -eq 0 ]; then
+        rm $PIDFILE
+        echo "Error: Failed to start codesyscontrol"
+        exit 1
+    else
+        echo "codesyscontrol started"
+    fi
+}
+
+# function kill_runtime
+# terminates runtime process and waits for termination, using given signal and timeout
+# args:
+#   - $1 signal to send to the process
+#   - $2 PID
+#   - $3 timeout
+# pre: none
+# exit: none
+# post:
+#   - if no timeout occurred, runtime process will be stopped
+#   - if timeout occurred, runtime process might still be running
+# return:
+#   - 0 if termination was successful
+#   - 1 if termination was not successful
+kill_runtime () {
+    kill -$1 $2 2>/dev/null
+    
+    local TIMEOUT=$3
+    while [ -d /proc/$2 ]; do
+        TIMEOUT=$(expr $TIMEOUT - 1)
+        if [ "$TIMEOUT" = "0" ]; then
+            return 1
+        fi
+        sleep 1
+    done
+
+    return 0
+}
+
+# function stop_runtime
+# stops runtime process through helper function kill_runtime
+# pre: $PIDFILE must contain a valid PID
+# exit: 1 if termination was not successful
+# post: see post-conditions of kill_runtime
+stop_runtime () {
+    local PID=$(cat $PIDFILE)
+
+    kill_runtime TERM $PID 15
+    if [ $? -eq 1 ]; then
+        echo "Warning: stop action timed out"
+        kill_runtime KILL $PID 10
+    fi
+    rm -f $PIDFILE
+
+    do_status
+    if [ ! $? -eq 0 ]; then
+        echo "Error: failed to stop codesyscontrol"
+        exit 1
+    else
+        echo "codesyscontrol stopped"
+    fi
+}
+
+# function do_status
+# entry point for init.d status action
+# checks if runtime process started through init.d is active
+# pre: none
+# exit: none
+# post: none
+# return:
+#   - 0 if runtime process is not active
+#   - 1 if runtime process is active
+do_status () {
+    if [ -f $PIDFILE ]; then
+        local PID=$(cat $PIDFILE)
+        if [ -d /proc/$PID ] && [ ! -z $PID ] ; then
+            return 1  # Process is running
+        fi
+    fi
+    return 0  # Process is not running
+}
+
+# function do_start
+# entry point for init.d start action.
+# refers package-specific hooks before_start_runtime and after_start_runtime
+# pre: none
+# exit: none
+# post:
+#   - if runtime is already running, no action will be performed
+#   - if runtime is not running, see post-conditions of start_runtime
+#   - if start_runtime returns, see post-conditions of after_start_runtime, if exists
+do_start () {
+    do_status
+    if [ $? -eq 1 ]; then
+        echo "codesyscontrol already running"
+        return 0
+    fi
+
+    before_start_runtime
+    start_runtime
+    after_start_runtime
+}
+
+# fucntion do_stop
+# entry point for init.d stop action
+# refers package-specific hooks before_stop_runtime and after_stop_runtime
+# pre: none
+# exit: none
+# post:
+#   - see post-conditions of stop_runtime
+#   - if stop_runtime returns, see post-conditions of after_stop_runtime, if exists
+do_stop () {
+    do_status
+    if [ $? -eq 0 ]; then
+        echo "codesyscontrol not running"
+        return 0
+    fi
+
+    before_stop_runtime
+    stop_runtime
+    after_stop_runtime
+}
+
+# exit codes
+# 0 OK
+# 1 generic error (see message)
+# 2 invalid arguments
+# 3 unimplemented feature
+# 5 progam not installed (correctly)
+case "$1" in
+    start)
+        do_start
+        ;;
+    stop)
+        do_stop
+        ;;
+    restart)
+        do_stop
+        do_start
+        ;;
+    try-restart)
+        do_status
+        if [ $? -eq 1 ]; then
+            do_stop
+            do_start
+        fi
+        ;;
+    reload)
+        echo "Error: argument '$1' is not supported"
+        exit 3
+        ;;
+    force-reload)
+        echo "Warning: '$1' is not supported - performing restart instead"
+        do_stop
+        do_start
+        ;;
+    status)
+        do_status
+        if [ $? -eq 1 ]; then
+            echo "codesyscontrol running"
+        else
+            echo "codesyscontrol not running"
+        fi
+        ;;
+    *)
+        echo "Error: use {start|stop|restart|try-restart|force-reload|status}"
+        exit 2
+        ;;
+esac
