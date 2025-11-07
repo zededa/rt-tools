@@ -1,0 +1,44 @@
+benchmark_output_path: "${hydra:run.dir}/output.csv"
+sysinfo_collector_file: "${hydra:run.dir}/sysinfo.json"
+
+run:
+  command: "caterpillar"
+  llc_cache_mask: "0x000f"
+  t_core: "3"
+  stressor: true
+  tests_path: "tests"
+
+cpus:
+  t_core: "3"
+  enable_turbo: false
+  disable_c_state: true
+  core_freq_mhz: 3.0
+
+caterpillar:
+  n_cycles: 12000
+
+megabench:
+  caterpillar_cat: "${hydra:run.dir}/caterpillar_cat.csv"
+  caterpillar_no_cat: "${hydra:run.dir}/caterpillar_no_cat.csv"
+  cyclictest_cat: "${hydra:run.dir}/cyclictest_cat.csv"
+  cyclictest_no_cat: "${hydra:run.dir}/cyclictest_no_cat.csv"
+
+cpu_monitor:
+  path: "${hydra:run.dir}/cpu_monitor.csv"
+  interval: 1.0
+
+irq_monitor:
+  path: "${hydra:run.dir}/irq_monitor.csv"
+  interval: 1.0
+
+meminfo_monitor:
+  path: "${hydra:run.dir}/meminfo_monitor.csv"
+  interval: 1.0
+
+softirq_monitor:
+  path: "${hydra:run.dir}/softirq_monitor.csv"
+  interval: 1.0
+
+cpustat_monitor:
+  path: "${hydra:run.dir}/cpustat_monitor.csv"
+  interval: 1.0
