@@ -184,6 +184,8 @@ class DockerTestRunner:
             return self._run_codesys_opcua(docker_cmd, l3_cache_mask, t_core)
         elif test == "iperf3":
             return self._run_iperf3(docker_cmd, l3_cache_mask, t_core)
+        elif test == "mega-benchmark":
+            return self._run_megabench(t_core)
         else:
             print(f"Error: Test '{test}' is not implemented")
             return 1
@@ -447,13 +449,31 @@ class DockerTestRunner:
 
         return result.returncode
 
-    def _run_megabench(self, base_cmd: List[str]) -> int:
-        cmd = base_cmd + [
+    def _run_megabench(self, t_core: str) -> int:
+        cmd = [
+            "docker",
+            "run",
+            "-it",
+            "--rm",
+            "--privileged",
+            "--name",
+            "mega-benchmark-1",
+            f"--cpuset-cpus={t_core}",
+            "--pid=host",
+            "-v",
+            "/sys/fs/resctrl:/sys/fs/resctrl",
+            "-v",
+            "/dev/cpu_dma_latency:/dev/cpu_dma_latency",
+            "-v",
+            "/dev/cpu:/dev/cpu",
+            "--cap-add=SYS_NICE",
+            "--cap-add=IPC_LOCK",
             "mega-benchmark:latest",
             "/bin/bash",
             "-c",
-            f"stdbuf -oL -eL /opt/benchmarking/mega-benchmark/48_hour_benchmark.sh",
+            "stdbuf -oL -eL /opt/benchmarking/mega-benchmark/48_hour_benchmark.sh",
         ]
+
         print(" ".join(cmd))
         process = self._run_interactive_command(cmd)
         assert process.stdout is not None
@@ -471,7 +491,7 @@ class DockerTestRunner:
                 caterpillar_cat, caterpillar_no_cat, cyclictest_cat, cyclictest_no_cat
             )
             for line in process.stdout:
-                print(line)
+                print(f"{line}\r\n")
                 parser.parse(line)
                 raw.write(line)
 
