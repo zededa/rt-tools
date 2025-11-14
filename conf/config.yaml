@@ -15,9 +15,13 @@ cpus:
   core_freq_mhz: 3.0
 
 caterpillar:
-  n_cycles: 12000
+  n_cycles: 7200
 
 megabench:
+  no_cat_cores: "9,11,13,15"
+  no_cat_mask: "0x00ff"
+  cat_cores: "9"
+  cat_mask: "0x0003"
   caterpillar_cat: "${hydra:run.dir}/caterpillar_cat.csv"
   caterpillar_no_cat: "${hydra:run.dir}/caterpillar_no_cat.csv"
   cyclictest_cat: "${hydra:run.dir}/cyclictest_cat.csv"

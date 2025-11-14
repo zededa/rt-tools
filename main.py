@@ -175,9 +175,13 @@ class DockerTestRunner:
         docker_cmd = self._build_base_docker_command(test, t_core)
 
         if test == "caterpillar":
-            return self._run_caterpillar(docker_cmd, l3_cache_mask, t_core)
+            return self._run_caterpillar(
+                docker_cmd, l3_cache_mask, t_core, self.config.benchmark_output_path
+            )
         elif test == "cyclictest":
-            return self._run_cyclictest(docker_cmd, l3_cache_mask, t_core)
+            return self._run_cyclictest(
+                docker_cmd, l3_cache_mask, t_core, self.config.benchmark_output_path
+            )
         elif test == "codesys-jitter-benchmark":
             return self._run_codesys_jitter(docker_cmd, l3_cache_mask, t_core)
         elif test == "codesys-opcua-pubsub":
@@ -210,7 +214,7 @@ class DockerTestRunner:
         ]
 
     def _run_caterpillar(
-        self, base_cmd: List[str], l3_cache_mask: str, t_core: str
+        self, base_cmd: List[str], l3_cache_mask: str, t_core: str, path: str
     ) -> int:
         """Run caterpillar test."""
         cmd = base_cmd + [
@@ -227,7 +231,7 @@ class DockerTestRunner:
 
         pbar = tqdm(total=self.config.caterpillar.n_cycles)
         parser = build_caterpillar_parser()
-        with open(self.config.benchmark_output_path, "w") as f:
+        with open(path, "w") as f:
             prelude = parser.prelude()
             if prelude is not None:
                 f.write(prelude)
@@ -242,7 +246,7 @@ class DockerTestRunner:
         return process.wait()
 
     def _run_cyclictest(
-        self, base_cmd: List[str], l3_cache_mask: str, t_core: str
+        self, base_cmd: List[str], l3_cache_mask: str, t_core: str, path: str
     ) -> int:
         """Run cyclictest."""
         cmd = base_cmd + [
@@ -250,7 +254,7 @@ class DockerTestRunner:
             "/bin/bash",
             "-c",
             f'stdbuf -oL -eL /usr/sbin/rdtset -t "l3={l3_cache_mask};cpu={t_core}" -c {t_core} '
-            f"-k /usr/bin/cyclictest --threads -t 4 -p 99 -l 100000 -d 1 -D 0 -i 100000 -a {t_core}",
+            f"-k /usr/bin/cyclictest --threads -t 1 -p 99 -l 100000 -d 1 -D 0 -i 100000 -a {t_core}",
         ]
         print(" ".join(cmd))
 
@@ -260,7 +264,7 @@ class DockerTestRunner:
         pbar = tqdm(total=400000)
         last_c_value = 0
         parser = build_cyclictest_parser()
-        with open(self.config.benchmark_output_path, "w") as f:
+        with open(path, "w") as f:
             prelude = parser.prelude()
             if prelude is not None:
                 f.write(prelude)
@@ -449,53 +453,36 @@ class DockerTestRunner:
 
         return result.returncode
 
-    def _run_megabench(self, t_core: str) -> int:
-        cmd = [
-            "docker",
-            "run",
-            "-it",
-            "--rm",
-            "--privileged",
-            "--name",
-            "mega-benchmark-1",
-            f"--cpuset-cpus={t_core}",
-            "--pid=host",
-            "-v",
-            "/sys/fs/resctrl:/sys/fs/resctrl",
-            "-v",
-            "/dev/cpu_dma_latency:/dev/cpu_dma_latency",
-            "-v",
-            "/dev/cpu:/dev/cpu",
-            "--cap-add=SYS_NICE",
-            "--cap-add=IPC_LOCK",
-            "mega-benchmark:latest",
-            "/bin/bash",
-            "-c",
-            "stdbuf -oL -eL /opt/benchmarking/mega-benchmark/48_hour_benchmark.sh",
-        ]
+    def _run_megabench(self, base_cmd: List[str], t_core: str) -> int:
+        self._run_caterpillar(
+            base_cmd,
+            self.config.megabench.no_cat_mask,
+            self.config.megabench.no_cat_cores,
+            self.config.megabench.caterpillar_no_cat,
+        )
 
-        print(" ".join(cmd))
-        process = self._run_interactive_command(cmd)
-        assert process.stdout is not None
+        self._run_caterpillar(
+            base_cmd,
+            self.config.megabench.cat_mask,
+            self.config.megabench.cat_cores,
+            self.config.megabench.caterpillar_cat,
+        )
 
-        with open(self.config.megabench.caterpillar_cat, "w") as caterpillar_cat, open(
-            self.config.megabench.caterpillar_no_cat, "w"
-        ) as caterpillar_no_cat, open(
-            self.config.megabench.cyclictest_cat, "w"
-        ) as cyclictest_cat, open(
-            self.config.megabench.cyclictest_no_cat, "w"
-        ) as cyclictest_no_cat, open(
-            self.config.benchmark_output_path, "w"
-        ) as raw:
-            parser = MegabenchParser(
-                caterpillar_cat, caterpillar_no_cat, cyclictest_cat, cyclictest_no_cat
-            )
-            for line in process.stdout:
-                print(f"{line}\r\n")
-                parser.parse(line)
-                raw.write(line)
+        self._run_cyclictest(
+            base_cmd,
+            self.config.megabench.no_cat_mask,
+            self.config.megabench.no_cat_cores,
+            self.config.megabench.cyclictest_no_cat,
+        )
 
-        return process.wait()
+        self._run_cyclictest(
+            base_cmd,
+            self.config.megabench.cat_mask,
+            self.config.megabench.cat_cores,
+            self.config.megabench.cyclictest_cat,
+        )
+
+        return 0
 
     def _start_stressor(self) -> None:
         """Start the stressor container if not already running."""
