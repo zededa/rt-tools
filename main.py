@@ -189,7 +189,7 @@ class DockerTestRunner:
         elif test == "iperf3":
             return self._run_iperf3(docker_cmd, l3_cache_mask, t_core)
         elif test == "mega-benchmark":
-            return self._run_megabench(t_core)
+            return self._run_megabench(docker_cmd, t_core)
         else:
             print(f"Error: Test '{test}' is not implemented")
             return 1
