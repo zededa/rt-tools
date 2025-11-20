@@ -221,7 +221,7 @@ class DockerTestRunner:
             "caterpillar:latest",
             "/bin/bash",
             "-c",
-            f'stdbuf -oL -eL /usr/sbin/rdtset -t "l3={l3_cache_mask};cpu={t_core}" '
+            f"stdbuf -oL -eL /usr/sbin/rdtset {self._compose_rdtset()} "
             f"-c {t_core} -k /opt/benchmarking/caterpillar/caterpillar -c {t_core} -s {self.config.caterpillar.n_cycles}",
         ]
 
@@ -508,6 +508,13 @@ class DockerTestRunner:
                 )
         except subprocess.CalledProcessError:
             print("Warning: Could not check stressor status")
+
+    def _compose_rdtset(self) -> str:
+        ans = ""
+        for group in self.config.run.resctrl:
+            ans += f' -t "l3={group.mask};cpu={group.cpus}"'
+
+        return ans
 
     @staticmethod
     def _run_command(cmd: List[str]) -> CompletedProcess | None:
