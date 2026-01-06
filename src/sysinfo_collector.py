@@ -4,6 +4,7 @@ import subprocess
 import json
 from datetime import datetime
 from glob import glob
+from omegaconf import DictConfig
 
 
 class SystemInfoCollector:
@@ -158,7 +159,10 @@ class SystemInfoCollector:
 
         print(f"[+] System information dumped to {output_path}")
 
-    def gather_all(self):
+    def collect_hydra(self, cfg: DictConfig):
+        self.info["hydra"] = cfg
+
+    def gather_all(self, cfg: DictConfig):
         """Collect all available system information."""
         self.collect_os_info()
         self.collect_kernel_info()
@@ -174,5 +178,6 @@ class SystemInfoCollector:
         self.collect_irq_affinity()
         self.collect_cstate_pstate_info()
         self.collect_isolated_cpus()
+        self.collect_hydra(cfg)
 
         return self.info

@@ -107,7 +107,7 @@ class DockerTestRunner:
                 "APP_DEB=codesys-opcua-benchmark",
                 f"{test}/opcua-client/.",
             ]
-            if self._run_command(cmd) == None:
+            if self._run_command(cmd) != 0:
                 return False
 
             print("Building Codesys-opcua-server")
@@ -126,7 +126,7 @@ class DockerTestRunner:
                 f"{test}/opcua-server/.",
             ]
 
-            return self._run_command(cmd) != None
+            return self._run_command(cmd) != 0
 
         elif test == "codesys-jitter-benchmark":
             cmd = [
@@ -142,7 +142,7 @@ class DockerTestRunner:
                 "APP_DEB=codesys-eci-benchmark",
                 f"{test}/.",
             ]
-            return self._run_command(cmd) != None
+            return self._run_command(cmd) != 0
 
         else:
             cmd = [
@@ -154,7 +154,7 @@ class DockerTestRunner:
                 f"{test}:latest",
                 f"./{test}",
             ]
-            return self._run_command(cmd) != None
+            return self._run_command(cmd) != 0
 
     def run_test(
         self, test: str, l3_cache_mask: str, t_core: str, stressor: bool = False
@@ -217,13 +217,23 @@ class DockerTestRunner:
         self, base_cmd: List[str], l3_cache_mask: str, t_core: str, path: str
     ) -> int:
         """Run caterpillar test."""
-        cmd = base_cmd + [
-            "caterpillar:latest",
-            "/bin/bash",
-            "-c",
-            f"stdbuf -oL -eL /usr/sbin/rdtset {self._compose_rdtset()} "
-            f"-c {t_core} -k /opt/benchmarking/caterpillar/caterpillar -c {t_core} -s {self.config.caterpillar.n_cycles}",
-        ]
+        caterpillar_cmd = (
+            f"/opt/benchmarking/caterpillar/caterpillar "
+            f"-c {t_core} -s {self.config.caterpillar.n_cycles}"
+        )
+        if self.config.run.docker:
+            rdtset_cmd = (
+                f"stdbuf -oL -eL /usr/sbin/rdtset {self._compose_rdtset()} "
+                f"-c {t_core} -k {caterpillar_cmd}"
+            )
+            cmd = base_cmd + [
+                "caterpillar:latest",
+                "/bin/bash",
+                "-c",
+                rdtset_cmd,
+            ]
+        else:
+            cmd = [caterpillar_cmd]
 
         print(" ".join(cmd))
         process = self._run_interactive_command(cmd)
@@ -249,13 +259,24 @@ class DockerTestRunner:
         self, base_cmd: List[str], l3_cache_mask: str, t_core: str, path: str
     ) -> int:
         """Run cyclictest."""
-        cmd = base_cmd + [
-            "cyclictest:latest",
-            "/bin/bash",
-            "-c",
-            f'stdbuf -oL -eL /usr/sbin/rdtset -t "l3={l3_cache_mask};cpu={t_core}" -c {t_core} '
-            f"-k /usr/bin/cyclictest --threads -t 1 -p 99 -l 100000 -d 1 -D 0 -i 100000 -a {t_core}",
-        ]
+        cyclictest_cmd = (
+            f"/usr/bin/cyclictest --threads -t 1 -p 99 "
+            f"-l 100000 -d 1 -D 0 -i 100000 -a {t_core}"
+        )
+        if self.config.run.docker:
+            rdtset_cmd = (
+                f'stdbuf -oL -eL /usr/sbin/rdtset -t "l3={l3_cache_mask};cpu={t_core}" '
+                f"-c {t_core} -k {cyclictest_cmd}"
+            )
+            cmd = base_cmd + [
+                "cyclictest:latest",
+                "/bin/bash",
+                "-c",
+                rdtset_cmd,
+            ]
+        else:
+            cmd = [cyclictest_cmd]
+
         print(" ".join(cmd))
 
         process = self._run_interactive_command(cmd)
@@ -335,10 +356,7 @@ class DockerTestRunner:
         except (subprocess.CalledProcessError, IndexError):
             print("Could not determine server IP")
 
-        if result == None:
-            return 1
-
-        return result.returncode
+        return result
 
     def _run_codesys_opcua(
         self, base_cmd: List[str], l3_cache_mask: str, t_core: str
@@ -387,10 +405,7 @@ class DockerTestRunner:
         print("Stopping Codesys OPC-UA Server")
         self._run_command(["docker", "stop", "codesys-opcua-server"])
 
-        if result == None:
-            return 1
-
-        return result.returncode
+        return result
 
     def _run_iperf3(self, base_cmd: List[str], l3_cache_mask: str, t_core: str) -> int:
         """Run iperf3 test."""
@@ -448,10 +463,7 @@ class DockerTestRunner:
         print("Stopping iperf3 Server")
         self._run_command(["docker", "stop", "iperf3-server"])
 
-        if result == None:
-            return 1
-
-        return result.returncode
+        return result
 
     def _run_megabench(self, base_cmd: List[str], t_core: str) -> int:
         self._run_caterpillar(
@@ -517,14 +529,15 @@ class DockerTestRunner:
         return ans
 
     @staticmethod
-    def _run_command(cmd: List[str]) -> CompletedProcess | None:
-        """Run a command and return its exit code."""
+    def _run_command(cmd: List[str]) -> int:
+        """Run a command and return its integer exit code (0 = success)."""
+        print(f"DEBUG: Executing {' '.join(cmd)}")
         try:
-            result = subprocess.run(cmd, capture_output=True, check=False)
-            return result
+            result = subprocess.run(cmd, check=False)
+            return result.returncode
         except Exception as e:
-            print(f"Error running command: {e}")
-            return None
+            print(f"CRITICAL ERROR running command: {e}")
+            return 1
 
     @staticmethod
     def _run_interactive_command(cmd: List[str]) -> Popen[str]:
@@ -542,7 +555,7 @@ class DockerTestRunner:
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def main(cfg: DictConfig):
     collector = SystemInfoCollector()
-    collector.gather_all()
+    collector.gather_all(cfg)
     collector.dump_to_file(cfg.sysinfo_collector_file)
 
     runner = DockerTestRunner(cfg)

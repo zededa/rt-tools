@@ -7,20 +7,7 @@ run:
   t_core: "3"
   stressor: true
   tests_path: "tests"
-
-  resctrl:
-    - mask: "0x7ff0"
-      cpus: "3"
-    - mask: "0x7fff"
-      cpus: "0,2,4,6,8,10,12,14"
-    - mask: "0x000f"
-      cpus: "1,5,7,9,11,13,15"
-
-cpus:
-  t_core: "3"
-  enable_turbo: false
-  disable_c_state: true
-  core_freq_mhz: 3.0
+  metrics: true
 
 caterpillar:
   n_cycles: 7200
