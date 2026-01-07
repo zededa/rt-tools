@@ -34,6 +34,7 @@ def fit_and_plot_gev(
     column_name: str,
     quantile: float = 0.999999,
     save_fig: bool = False,
+    type: str = "CPU cycles",
 ):
     """
     Fits a GEV distribution to a specified column in a DataFrame and plots the result,
@@ -54,7 +55,7 @@ def fit_and_plot_gev(
         print(f"Error: No data found in column '{column_name}' after dropping NaNs.")
         return
 
-    # Ensure all data is positive, as CPU cycles cannot be negative
+    # Ensure all data is positive
     data = data[data > 0]
 
     if len(data) < 10:  # GEV fit is unreliable with very few data points
@@ -86,9 +87,7 @@ def fit_and_plot_gev(
 
         # --- 2b. Calculate and Print Return Value ---
         return_value = genextreme.ppf(quantile, c, loc, scale)
-        print(
-            f"Return Value at {quantile*100:.4f}% quantile: {return_value:.2f} CPU cycles"
-        )
+        print(f"Return Value at {quantile*100:}% quantile: {return_value:.2f} {type}")
         print("-" * 30)
 
         # --- 3. Plotting with Seaborn (Histogram + PDF) ---
@@ -114,7 +113,7 @@ def fit_and_plot_gev(
         # Generate x-values for the fitted PDF plot
         # Go from the 0.1th percentile to the 99.9th percentile
         xmin = genextreme.ppf(0.001, c, loc, scale)
-        xmax = genextreme.ppf(0.999, c, loc, scale)
+        xmax = genextreme.ppf(quantile, c, loc, scale)
 
         x_values = np.linspace(xmin, xmax, 200)
 
@@ -210,7 +209,7 @@ def fit_and_plot_gev(
         ax_rl.set_xscale("log")
         ax_rl.set_title(f"Return Level Plot for {column_name.title()}", fontsize=16)
         ax_rl.set_xlabel("Return Period (Log Scale)", fontsize=12)
-        ax_rl.set_ylabel("Return Level (CPU Cycles)", fontsize=12)
+        ax_rl.set_ylabel(f"Return Level ({type})", fontsize=12)
         ax_rl.legend()
         ax_rl.grid(True, which="both", linestyle="--")
         plt.tight_layout()
