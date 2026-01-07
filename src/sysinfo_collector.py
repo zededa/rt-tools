@@ -145,18 +145,22 @@ class SystemInfoCollector:
     def dump_to_file(self, path=None, as_text=False):
         """Dump collected info into a JSON or text file."""
         output_path = path or self.output_file
+
+        info_to_dump = OmegaConf.to_container(OmegaConf.create(self.info), resolve=True)
+
         if as_text:
             # human-readable plain text
             with open(output_path, "w") as f:
-                for key, value in self.info.items():
+                for key, value in info_to_dump.items():
                     f.write(f"== {key.upper()} ==\n")
-                    f.write(json.dumps(value, indent=4))
+                    f.write(
+                        json.dumps(value, indent=4, default=str)
+                    )  # Added default=str for safety
                     f.write("\n\n")
         else:
             # structured JSON
             with open(output_path, "w") as f:
-                json.dump(self.info, f, indent=4)
-
+                json.dump(info_to_dump, f, indent=4, default=str)
         print(f"[+] System information dumped to {output_path}")
 
     def collect_hydra(self, cfg: DictConfig):
