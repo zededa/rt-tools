@@ -5,6 +5,7 @@ import json
 from datetime import datetime
 from glob import glob
 from omegaconf import DictConfig
+from omegaconf import OmegaConf
 
 
 class SystemInfoCollector:

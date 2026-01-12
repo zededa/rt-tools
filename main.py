@@ -157,9 +157,7 @@ class DockerTestRunner:
             ]
             return self._run_command(cmd) != 0
 
-    def run_test(
-        self, test: str, l3_cache_mask: str, t_core: str, stressor: bool = False
-    ) -> int:
+    def run_test(self, test: str, t_core: str, stressor: bool = False) -> int:
         """Run a specific test with given parameters."""
         if test not in self.tests:
             print(f"Error: '{test}' is not a valid test")
@@ -169,7 +167,6 @@ class DockerTestRunner:
             self._start_stressor()
 
         print(f"Running {test} with:")
-        print(f"  L3 Cache Mask: {l3_cache_mask}")
         print(f"  Target Core(s): {t_core}")
         print(f"  Stressor: {stressor}")
 
@@ -177,18 +174,18 @@ class DockerTestRunner:
 
         if test == "caterpillar":
             return self._run_caterpillar(
-                docker_cmd, l3_cache_mask, t_core, self.config.benchmark_output_path
+                docker_cmd, t_core, self.config.benchmark_output_path
             )
         elif test == "cyclictest":
             return self._run_cyclictest(
-                docker_cmd, l3_cache_mask, t_core, self.config.benchmark_output_path
+                docker_cmd, t_core, self.config.benchmark_output_path
             )
         elif test == "codesys-jitter-benchmark":
-            return self._run_codesys_jitter(docker_cmd, l3_cache_mask, t_core)
+            return self._run_codesys_jitter(docker_cmd, t_core)
         elif test == "codesys-opcua-pubsub":
-            return self._run_codesys_opcua(docker_cmd, l3_cache_mask, t_core)
+            return self._run_codesys_opcua(docker_cmd, t_core)
         elif test == "iperf3":
-            return self._run_iperf3(docker_cmd, l3_cache_mask, t_core)
+            return self._run_iperf3(docker_cmd, t_core)
         elif test == "mega-benchmark":
             return self._run_megabench(docker_cmd, t_core)
         else:
@@ -214,9 +211,7 @@ class DockerTestRunner:
             test,
         ]
 
-    def _run_caterpillar(
-        self, base_cmd: List[str], l3_cache_mask: str, t_core: str, path: str
-    ) -> int:
+    def _run_caterpillar(self, base_cmd: List[str], t_core: str, path: str) -> int:
         """Run caterpillar test."""
         caterpillar_cmd = (
             f"/opt/benchmarking/caterpillar/caterpillar "
@@ -253,9 +248,7 @@ class DockerTestRunner:
 
         return process.wait()
 
-    def _run_cyclictest(
-        self, base_cmd: List[str], l3_cache_mask: str, t_core: str, path: str
-    ) -> int:
+    def _run_cyclictest(self, base_cmd: List[str], t_core: str, path: str) -> int:
         """Run cyclictest."""
         cyclictest_cmd = (
             f"/usr/bin/cyclictest --threads -t 1 -p 99 "
@@ -316,9 +309,7 @@ class DockerTestRunner:
 
         return process.wait()
 
-    def _run_codesys_jitter(
-        self, base_cmd: List[str], l3_cache_mask: str, t_core: str
-    ) -> int:
+    def _run_codesys_jitter(self, base_cmd: List[str], t_core: str) -> int:
         """Run Codesys jitter benchmark."""
         cmd = base_cmd + [
             "-p",
@@ -328,7 +319,7 @@ class DockerTestRunner:
             "-e",
             "DEBUGLOGFILE=/tmp/codesyscontrol_debug.log",
             "-e",
-            f"L3_CACHE_MASK={l3_cache_mask}",
+            # f"L3_CACHE_MASK={l3_cache_mask}",
             "-e",
             f"T_CORE={t_core}",
             "-d",
@@ -353,9 +344,7 @@ class DockerTestRunner:
 
         return result
 
-    def _run_codesys_opcua(
-        self, base_cmd: List[str], l3_cache_mask: str, t_core: str
-    ) -> int:
+    def _run_codesys_opcua(self, base_cmd: List[str], t_core: str) -> int:
         """Run Codesys OPC-UA PubSub test."""
         print("Starting codesys-opcua-pubsub")
 
@@ -381,7 +370,7 @@ class DockerTestRunner:
         # Start client
         cmd = base_cmd + [
             "-e",
-            f"L3_CACHE_MASK={l3_cache_mask}",
+            # f"L3_CACHE_MASK={l3_cache_mask}",
             "-e",
             f"T_CORE={t_core}",
             "-p",
@@ -402,7 +391,7 @@ class DockerTestRunner:
 
         return result
 
-    def _run_iperf3(self, base_cmd: List[str], l3_cache_mask: str, t_core: str) -> int:
+    def _run_iperf3(self, base_cmd: List[str], t_core: str) -> int:
         """Run iperf3 test."""
         print("Starting iperf3")
 
@@ -444,7 +433,7 @@ class DockerTestRunner:
         # Start client
         cmd = base_cmd + [
             "-e",
-            f"L3_CACHE_MASK={l3_cache_mask}",
+            # f"L3_CACHE_MASK={l3_cache_mask}",
             "-e",
             f"T_CORE={t_core}",
             "iperf3:latest",
@@ -600,9 +589,7 @@ def main(cfg: DictConfig):
     softirq_monitor.start()
     cpustat_monitor.start()
 
-    return runner.run_test(
-        cfg.run.command, cfg.run.llc_cache_mask, cfg.run.t_core, cfg.run.stressor
-    )
+    return runner.run_test(cfg.run.command, cfg.run.t_core, cfg.run.stressor)
 
 
 if __name__ == "__main__":
