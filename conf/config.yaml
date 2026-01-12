@@ -1,10 +1,26 @@
 benchmark_output_path: "${hydra:run.dir}/output.csv"
 sysinfo_collector_file: "${hydra:run.dir}/sysinfo.json"
 
+pqos:
+  # resets all allocations before applying new ones
+  reset_before_apply: true
+
+  classes:
+    - id: 1
+      description: "real-time workload"
+      # Hexademical mask (e.g 0x003 means using the last 2 cache ways)
+      l3_mask: "0x0ff"
+      # List of CPU cores assigned to this class
+      cores: [9, 11]
+    - id: 2
+      description: "background worker"
+      # Using different cache ways to isolate from class 1
+      l3_mask: "0x7f00"
+      cores: [0,1,2,3,4,5,6,7,8,10,12,13,14,15]
+  
 run:
   command: "caterpillar"
-  llc_cache_mask: "0x000f"
-  t_core: "3"
+  t_core: "9,11"
   stressor: true
   tests_path: "tests"
   metrics: true
@@ -13,10 +29,6 @@ caterpillar:
   n_cycles: 7200
 
 megabench:
-  no_cat_cores: "9,11,13,15"
-  no_cat_mask: "0x00ff"
-  cat_cores: "9"
-  cat_mask: "0x0003"
   caterpillar_cat: "${hydra:run.dir}/caterpillar_cat.csv"
   caterpillar_no_cat: "${hydra:run.dir}/caterpillar_no_cat.csv"
   cyclictest_cat: "${hydra:run.dir}/cyclictest_cat.csv"

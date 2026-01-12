@@ -25,6 +25,7 @@ from src.metrics import (
     CpuStatMonitor,
 )
 from src.sysinfo_collector import SystemInfoCollector
+from src.pqos_manager import PQOSManager
 
 
 class DockerTestRunner:
@@ -203,12 +204,12 @@ class DockerTestRunner:
             "--rm",
             "--privileged",
             f"--cpuset-cpus={t_core}",
-            "-v",
-            "/sys/fs/resctrl:/sys/fs/resctrl",
-            "-v",
-            "/dev/cpu_dma_latency:/dev/cpu_dma_latency",
-            "--cap-add=SYS_NICE",
-            "--cap-add=IPC_LOCK",
+            # "-v",
+            # "/sys/fs/resctrl:/sys/fs/resctrl",
+            # "-v",
+            # "/dev/cpu_dma_latency:/dev/cpu_dma_latency",
+            # "--cap-add=SYS_NICE",
+            # "--cap-add=IPC_LOCK",
             f"--name",
             test,
         ]
@@ -222,10 +223,7 @@ class DockerTestRunner:
             f"-c {t_core} -s {self.config.caterpillar.n_cycles}"
         )
         if self.config.run.docker:
-            rdtset_cmd = (
-                f"stdbuf -oL -eL /usr/sbin/rdtset {self._compose_rdtset()} "
-                f"-c {t_core} -k {caterpillar_cmd}"
-            )
+            rdtset_cmd = f"stdbuf -oL -eL " f"{caterpillar_cmd}"
             cmd = base_cmd + [
                 "caterpillar:latest",
                 "/bin/bash",
@@ -264,10 +262,7 @@ class DockerTestRunner:
             f"-l 100000 -d 1 -D 0 -i 100000 -a {t_core}"
         )
         if self.config.run.docker:
-            rdtset_cmd = (
-                f'stdbuf -oL -eL /usr/sbin/rdtset -t "l3={l3_cache_mask};cpu={t_core}" '
-                f"-c {t_core} -k {cyclictest_cmd}"
-            )
+            rdtset_cmd = f"stdbuf -oL -eL " f"{cyclictest_cmd}"
             cmd = base_cmd + [
                 "cyclictest:latest",
                 "/bin/bash",
@@ -521,13 +516,6 @@ class DockerTestRunner:
         except subprocess.CalledProcessError:
             print("Warning: Could not check stressor status")
 
-    def _compose_rdtset(self) -> str:
-        ans = ""
-        for group in self.config.run.resctrl:
-            ans += f' -t "l3={group.mask};cpu={group.cpus}"'
-
-        return ans
-
     @staticmethod
     def _run_command(cmd: List[str]) -> int:
         """Run a command and return its integer exit code (0 = success)."""
@@ -567,6 +555,32 @@ def main(cfg: DictConfig):
     if cfg.run.command not in runner.tests:
         print(f"Error: '{cfg.run.command}' is not a valid command")
         return 1
+
+    try:
+        manager = PQOSManager()
+    except Exception as e:
+        print(f"Initialization Failed: {e}")
+        return
+
+    if cfg.pqos.reset_before_apply:
+        manager.reset_configuration()
+
+    if "classes" in cfg.pqos:
+        for item in cfg.pqos.classes:
+            class_id = item.id
+            mask = item.l3_mask
+            cores = OmegaConf.to_container(item.cores, resolve=True)
+
+            print(f"\n[Configuring Class {class_id}]: {item.get('description', '')}")
+
+            if mask:
+                manager.configure_l3_cat(class_id, mask)
+
+            if cores:
+                manager.assign_cores_to_class(class_id, cores)
+
+    print("\n[Final Status]")
+    print(manager.get_current_status_text())
 
     cpu_monitor = CPUmonitor(cfg.cpu_monitor.path, cfg.cpu_monitor.interval)
     interrupt_monitor = InterruptMonitor(cfg.irq_monitor.path, cfg.irq_monitor.interval)

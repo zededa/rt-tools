@@ -60,7 +60,7 @@ class SystemInfoCollector:
         }
 
     def collect_pqos_info(self):
-        self.info["pqos"] = self.run_cmd("pqos -s")
+        self.info["pqos"] = self.run_cmd("sudo pqos -s")
 
     def collect_interrupts(self):
         self.info["interrupts"] = self.run_cmd("cat /proc/interrupts")
