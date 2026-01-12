@@ -9,13 +9,17 @@ pqos:
     - id: 1
       description: "real-time workload"
       # Hexademical mask (e.g 0x003 means using the last 2 cache ways)
-      l3_mask: "0x0ff"
+      l3_mask: "0x00ff"
+      l2_mask: "0x00ff"
+      mba: 100
       # List of CPU cores assigned to this class
       cores: [9, 11]
     - id: 2
       description: "background worker"
       # Using different cache ways to isolate from class 1
       l3_mask: "0x7f00"
+      l2_mask: "0xff00"
+      mba: 10
       cores: [0,1,2,3,4,5,6,7,8,10,12,13,14,15]
   
 run:
@@ -24,6 +28,7 @@ run:
   stressor: true
   tests_path: "tests"
   metrics: true
+  docker: true
 
 caterpillar:
   n_cycles: 7200
