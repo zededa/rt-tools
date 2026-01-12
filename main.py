@@ -548,27 +548,39 @@ def main(cfg: DictConfig):
     try:
         manager = PQOSManager()
     except Exception as e:
-        print(f"Initialization Failed: {e}")
+        print(f"Init Error: {e}")
         return
 
-    if cfg.pqos.reset_before_apply:
+    if cfg.pqos.get("reset_before_apply", False):
         manager.reset_configuration()
 
+    # --- Iterate Classes ---
     if "classes" in cfg.pqos:
         for item in cfg.pqos.classes:
             class_id = item.id
-            mask = item.l3_mask
-            cores = OmegaConf.to_container(item.cores, resolve=True)
 
-            print(f"\n[Configuring Class {class_id}]: {item.get('description', '')}")
+            # Extract config values (default to None if missing)
+            l3 = item.get("l3_mask")
+            l2 = item.get("l2_mask")
+            mba = item.get("mba")
+            cores = (
+                OmegaConf.to_container(item.cores, resolve=True) if item.cores else []
+            )
 
-            if mask:
-                manager.configure_l3_cat(class_id, mask)
+            print(f"Configuring Class {class_id}...")
 
+            # Apply Hardware Allocations
+            try:
+                manager.apply_allocations(class_id, l3_mask=l3, l2_mask=l2, mba=mba)
+            except subprocess.CalledProcessError:
+                print(
+                    f"Warning: Failed to apply allocations for Class {class_id}. Check if HW supports L2/MBA."
+                )
+
+            # Apply Core Associations
             if cores:
                 manager.assign_cores_to_class(class_id, cores)
 
-    print("\n[Final Status]")
     print(manager.get_current_status_text())
 
     cpu_monitor = CPUmonitor(cfg.cpu_monitor.path, cfg.cpu_monitor.interval)
