@@ -17,9 +17,14 @@ from omegaconf import DictConfig, OmegaConf
 
 
 class PQOSManager:
-    def __init__(self):
-        # Use -I if you want to force OS interface, otherwise defaults to MSR
+    def __init__(self, interface="os"):
+        """
+        Agrs:
+            interface (str): 'msr' for direct hardware access, 'os' for kernel/resctrl interface.
+            Note: 'os' is required for PID association.
+        """
         self.executable = "pqos"
+        self.interface_flag = [f"--iface={interface}"]
         self._check_requirements()
 
     def _check_requirements(self):
@@ -29,15 +34,22 @@ class PQOSManager:
             raise FileNotFoundError("'pqos' not found. Install intel-cmt-cat.")
 
     def _run_command(self, args):
-        full_cmd = [self.executable] + args
+        full_cmd = [self.executable] + self.interface_flag + args
+        print(f"DEBUG: {full_cmd}")
         try:
             result = subprocess.run(
                 full_cmd, capture_output=True, text=True, check=True
             )
             return result.stdout.strip()
         except subprocess.CalledProcessError as e:
-            # Return error in JSON friendly format or raise
-            print(f"PQOS CMD FAILED: {e.stderr}", file=sys.stderr)
+            # Handle specific error for PID in MSR mode
+            if "PID association not supported" in e.stderr:
+                print(
+                    f"ERROR: You tried to use PIDs but interface is set to 'msr'. Change config to interface: 'os'",
+                    file=sys.stderr,
+                )
+            else:
+                print(f"PQOS CMD FAILED: {e.stderr}", file=sys.stderr)
             raise
 
     def reset_configuration(self):
@@ -76,6 +88,13 @@ class PQOSManager:
         cores_str = ",".join(map(str, core_list))
         # Note: We use 'llc' type for association, but it applies to the whole COS
         self._run_command(["-a", f"llc:{class_id}={cores_str}"])
+
+    def assign_pids_to_class(self, class_id, pid_list):
+        if not pid_list:
+            return
+        pids_str = ",".join(map(str, pid_list))
+        # 'pid' type is used here. REQUIRES -I (OS Interface)
+        self._run_command(["-a", f"pid:{class_id}={pids_str}"])
 
     def get_current_status_text(self):
         return self._run_command(["-s"])

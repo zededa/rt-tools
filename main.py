@@ -452,28 +452,24 @@ class DockerTestRunner:
     def _run_megabench(self, base_cmd: List[str], t_core: str) -> int:
         self._run_caterpillar(
             base_cmd,
-            self.config.megabench.no_cat_mask,
             self.config.megabench.no_cat_cores,
             self.config.megabench.caterpillar_no_cat,
         )
 
         self._run_caterpillar(
             base_cmd,
-            self.config.megabench.cat_mask,
             self.config.megabench.cat_cores,
             self.config.megabench.caterpillar_cat,
         )
 
         self._run_cyclictest(
             base_cmd,
-            self.config.megabench.no_cat_mask,
             self.config.megabench.no_cat_cores,
             self.config.megabench.cyclictest_no_cat,
         )
 
         self._run_cyclictest(
             base_cmd,
-            self.config.megabench.cat_mask,
             self.config.megabench.cat_cores,
             self.config.megabench.cyclictest_cat,
         )
@@ -566,6 +562,7 @@ def main(cfg: DictConfig):
             cores = (
                 OmegaConf.to_container(item.cores, resolve=True) if item.cores else []
             )
+            pids = OmegaConf.to_container(item.pids, resolve=True) if item.cores else []
 
             print(f"Configuring Class {class_id}...")
 
@@ -576,6 +573,9 @@ def main(cfg: DictConfig):
                 print(
                     f"Warning: Failed to apply allocations for Class {class_id}. Check if HW supports L2/MBA."
                 )
+
+            if pids:
+                manager.assign_pids_to_class(class_id, pids)
 
             # Apply Core Associations
             if cores:
