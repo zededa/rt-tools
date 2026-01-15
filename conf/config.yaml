@@ -1,35 +1,46 @@
 benchmark_output_path: "${hydra:run.dir}/output.csv"
 sysinfo_collector_file: "${hydra:run.dir}/sysinfo.json"
 
+pqos:
+  # # 'os' = Uses Linux resctrl (Required for PIDs) recommended
+  # 'msr' = Direct hardware access (Cores only, if some features are
+  # not upstream kernel
+  interface: "os"
+  
+  # resets all allocations before applying new ones
+  reset_before_apply: true
+
+  classes:
+    - id: 1
+      description: "real-time workload"
+      # Hexademical mask (e.g 0x003 means using the last 2 cache ways)
+      l3_mask: "0x00ff"
+      # l2_mask: "0x00ff"
+      mba: 100
+      # pids: [12345]
+      # Option B: List of CPU cores assigned to this class
+      cores: [9, 11]
+    - id: 2
+      description: "background worker"
+      # Using different cache ways to isolate from class 1
+      l3_mask: "0x7f00"
+      # l2_mask: "0xff00"
+      mba: 10
+      cores: [0,1,2,3,4,5,6,7,8,10,12,13,14,15]
+      pids: [115, 118]
+  
 run:
   command: "caterpillar"
-  llc_cache_mask: "0x000f"
-  t_core: "3"
+  t_core: "9,11"
   stressor: true
   tests_path: "tests"
-
-  resctrl:
-    - mask: "0x7ff0"
-      cpus: "3"
-    - mask: "0x7fff"
-      cpus: "0,2,4,6,8,10,12,14"
-    - mask: "0x000f"
-      cpus: "1,5,7,9,11,13,15"
-
-cpus:
-  t_core: "3"
-  enable_turbo: false
-  disable_c_state: true
-  core_freq_mhz: 3.0
+  metrics: true
+  docker: true
 
 caterpillar:
   n_cycles: 7200
 
 megabench:
-  no_cat_cores: "9,11,13,15"
-  no_cat_mask: "0x00ff"
-  cat_cores: "9"
-  cat_mask: "0x0003"
   caterpillar_cat: "${hydra:run.dir}/caterpillar_cat.csv"
   caterpillar_no_cat: "${hydra:run.dir}/caterpillar_no_cat.csv"
   cyclictest_cat: "${hydra:run.dir}/cyclictest_cat.csv"

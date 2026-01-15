@@ -4,6 +4,8 @@ import subprocess
 import json
 from datetime import datetime
 from glob import glob
+from omegaconf import DictConfig
+from omegaconf import OmegaConf
 
 
 class SystemInfoCollector:
@@ -59,7 +61,7 @@ class SystemInfoCollector:
         }
 
     def collect_pqos_info(self):
-        self.info["pqos"] = self.run_cmd("pqos -s")
+        self.info["pqos"] = self.run_cmd("sudo pqos -s")
 
     def collect_interrupts(self):
         self.info["interrupts"] = self.run_cmd("cat /proc/interrupts")
@@ -144,21 +146,28 @@ class SystemInfoCollector:
     def dump_to_file(self, path=None, as_text=False):
         """Dump collected info into a JSON or text file."""
         output_path = path or self.output_file
+
+        info_to_dump = OmegaConf.to_container(OmegaConf.create(self.info), resolve=True)
+
         if as_text:
             # human-readable plain text
             with open(output_path, "w") as f:
-                for key, value in self.info.items():
+                for key, value in info_to_dump.items():
                     f.write(f"== {key.upper()} ==\n")
-                    f.write(json.dumps(value, indent=4))
+                    f.write(
+                        json.dumps(value, indent=4, default=str)
+                    )  # Added default=str for safety
                     f.write("\n\n")
         else:
             # structured JSON
             with open(output_path, "w") as f:
-                json.dump(self.info, f, indent=4)
-
+                json.dump(info_to_dump, f, indent=4, default=str)
         print(f"[+] System information dumped to {output_path}")
 
-    def gather_all(self):
+    def collect_hydra(self, cfg: DictConfig):
+        self.info["hydra"] = cfg
+
+    def gather_all(self, cfg: DictConfig):
         """Collect all available system information."""
         self.collect_os_info()
         self.collect_kernel_info()
@@ -174,5 +183,6 @@ class SystemInfoCollector:
         self.collect_irq_affinity()
         self.collect_cstate_pstate_info()
         self.collect_isolated_cpus()
+        self.collect_hydra(cfg)
 
         return self.info
