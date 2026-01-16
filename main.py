@@ -215,7 +215,7 @@ class DockerTestRunner:
     def _run_caterpillar(self, base_cmd: List[str], t_core: str, path: str) -> int:
         """Run caterpillar test."""
         caterpillar_cmd = (
-            "chrt -r 95"
+            "chrt -r 95 "
             f"/opt/benchmarking/caterpillar/caterpillar"
             f"-c {t_core} -s {self.config.caterpillar.n_cycles}"
         )
@@ -225,7 +225,7 @@ class DockerTestRunner:
                 "caterpillar:latest",
                 "/bin/bash",
                 "-c",
-                rdtset_cmd,
+                f'"{rdtset_cmd}"',
             ]
         else:
             cmd = [caterpillar_cmd]
@@ -253,7 +253,7 @@ class DockerTestRunner:
     def _run_cyclictest(self, base_cmd: List[str], t_core: str, path: str) -> int:
         """Run cyclictest."""
         cyclictest_cmd = (
-            "chrt -r 95"
+            "chrt -r 95 "
             f"/usr/bin/cyclictest --threads -t 1 -p 99 "
             f"-l 100000 -d 1 -D 0 -i 100000 -a {t_core}"
         )
