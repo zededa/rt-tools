@@ -203,10 +203,11 @@ class DockerTestRunner:
             f"--cpuset-cpus={t_core}",
             # "-v",
             # "/sys/fs/resctrl:/sys/fs/resctrl",
-            # "-v",
-            # "/dev/cpu_dma_latency:/dev/cpu_dma_latency",
-            # "--cap-add=SYS_NICE",
-            # "--cap-add=IPC_LOCK",
+            "-v",
+            "/dev/cpu_dma_latency:/dev/cpu_dma_latency",
+            "--cap-add=SYS_NICE",
+            "--cap-add=IPC_LOCK",
+            "--ulimit rtprio=95:95",
             f"--name",
             test,
         ]
@@ -214,7 +215,8 @@ class DockerTestRunner:
     def _run_caterpillar(self, base_cmd: List[str], t_core: str, path: str) -> int:
         """Run caterpillar test."""
         caterpillar_cmd = (
-            f"/opt/benchmarking/caterpillar/caterpillar "
+            "chrt -r 95"
+            f"/opt/benchmarking/caterpillar/caterpillar"
             f"-c {t_core} -s {self.config.caterpillar.n_cycles}"
         )
         if self.config.run.docker:
@@ -251,6 +253,7 @@ class DockerTestRunner:
     def _run_cyclictest(self, base_cmd: List[str], t_core: str, path: str) -> int:
         """Run cyclictest."""
         cyclictest_cmd = (
+            "chrt -r 95"
             f"/usr/bin/cyclictest --threads -t 1 -p 99 "
             f"-l 100000 -d 1 -D 0 -i 100000 -a {t_core}"
         )
