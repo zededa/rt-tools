@@ -216,7 +216,7 @@ class DockerTestRunner:
         """Run caterpillar test."""
         caterpillar_cmd = (
             "chrt -r 95 "
-            f"/opt/benchmarking/caterpillar/caterpillar"
+            f"/opt/benchmarking/caterpillar/caterpillar "
             f"-c {t_core} -s {self.config.caterpillar.n_cycles}"
         )
         if self.config.run.docker:
@@ -225,7 +225,7 @@ class DockerTestRunner:
                 "caterpillar:latest",
                 "/bin/bash",
                 "-c",
-                f'"{rdtset_cmd}"',
+                rdtset_cmd,
             ]
         else:
             cmd = [caterpillar_cmd]
