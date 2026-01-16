@@ -207,7 +207,8 @@ class DockerTestRunner:
             "/dev/cpu_dma_latency:/dev/cpu_dma_latency",
             "--cap-add=SYS_NICE",
             "--cap-add=IPC_LOCK",
-            "--ulimit rtprio=95:95",
+            "--ulimit",
+            "rtprio=95:95",
             f"--name",
             test,
         ]
