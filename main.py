@@ -216,7 +216,7 @@ class DockerTestRunner:
     def _run_caterpillar(self, base_cmd: List[str], t_core: str, path: str) -> int:
         """Run caterpillar test."""
         caterpillar_cmd = (
-            "chrt -r 95 "
+            "chrt -f 95 "
             f"/opt/benchmarking/caterpillar/caterpillar "
             f"-c {t_core} -s {self.config.caterpillar.n_cycles}"
         )
