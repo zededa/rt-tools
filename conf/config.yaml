@@ -1,6 +1,8 @@
 benchmark_output_path: "${hydra:run.dir}/output.csv"
 sysinfo_collector_file: "${hydra:run.dir}/sysinfo.json"
 
+# --- Intel CAT specific configuration --- 
+
 pqos:
   # # 'os' = Uses Linux resctrl (Required for PIDs) recommended
   # 'msr' = Direct hardware access (Cores only, if some features are
@@ -14,11 +16,12 @@ pqos:
     - id: 1
       description: "real-time workload"
       # Hexademical mask (e.g 0x003 means using the last 2 cache ways)
-      l3_mask: "0x00ff"
+      l3_mask: "0x00ff" # comment if none
       # l2_mask: "0x00ff"
       mba: 100
-      # pids: [12345]
-      # Option B: List of CPU cores assigned to this class
+      # set PIDs to assign to CLOS leave empty if none
+      pids : [] 
+      # Option B: List of CPU cores assigned to this class, leave empty if none
       cores: [9, 11]
     - id: 2
       description: "background worker"
@@ -28,14 +31,22 @@ pqos:
       mba: 10
       cores: [0,1,2,3,4,5,6,7,8,10,12,13,14,15]
       pids: [115, 118]
-  
+
+irq_affinity:
+  enabled: true
+  housekeeping_cores: "0-1"
+      
+# --- Configuration related to tests running and parameters passed to it
 run:
   command: "caterpillar"
   t_core: "9,11"
   stressor: true
-  tests_path: "tests"
-  metrics: true
-  docker: true
+  # tests_path: "tests"
+  metrics: true # enable metrics monitoring
+  docker: true # run inside docker container, if false will run on host system
+  
+
+# --- Test specific configurations ---
 
 caterpillar:
   n_cycles: 7200
@@ -45,6 +56,8 @@ megabench:
   caterpillar_no_cat: "${hydra:run.dir}/caterpillar_no_cat.csv"
   cyclictest_cat: "${hydra:run.dir}/cyclictest_cat.csv"
   cyclictest_no_cat: "${hydra:run.dir}/cyclictest_no_cat.csv"
+
+# ---  Monitoring specific configurations ---
 
 cpu_monitor:
   path: "${hydra:run.dir}/cpu_monitor.csv"
@@ -64,4 +77,8 @@ softirq_monitor:
 
 cpustat_monitor:
   path: "${hydra:run.dir}/cpustat_monitor.csv"
+  interval: 1.0
+
+pqos_monitor:
+  path: "${hydra:run.dir}/pqos_monitor.csv"
   interval: 1.0

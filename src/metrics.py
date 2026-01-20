@@ -2,6 +2,9 @@ import threading
 import time
 import csv
 import psutil
+import shutil
+import os
+
 from abc import ABC, abstractmethod
 
 
@@ -277,3 +280,122 @@ class CpuStatMonitor(Metric):
                 self._writer.writerow(row)
                 self._file.flush()
                 time.sleep(self.interval)
+
+
+class PQOSMonitor(Metric):
+    """
+    Monitors LLC Misses, LLC Occupancy, and Memory Bandwidth using 'pqos'.
+
+    Parses output based on the user-verified format:
+    Time,Core,IPC,LLC Misses,LLC[KB],MBL[MB/s],MBR[MB/s]
+    """
+
+    def __init__(self, filename: str, interval: float = 1.0, cores: list = None):
+        """
+        :param filename: Output CSV file path.
+        :param interval: Monitoring interval in seconds.
+        :param cores: Optional list of specific core IDs to monitor (e.g., [9, 11]).
+                      If None, monitors all cores.
+        """
+        super().__init__(filename, interval)
+
+        if shutil.which("pqos") is None:
+            raise FileNotFoundError("The 'pqos' tool is not installed.")
+
+        if cores:
+            self.core_str = ",".join(map(str, cores))
+        else:
+            # os.cpu_count() returns logical CPUs (threads)
+            count = os.cpu_count()
+            if not count:
+                raise RuntimeError("Unable to detect CPU count.")
+            self.core_str = f"0-{count - 1}"
+
+        # 2. Define the metrics we want to extract from the CSV headers
+        # Key = Column name for our output file
+        # Value = Regex to find in pqos output header
+        self.target_metrics = {
+            "ipc": r"IPC",
+            "llc_misses": r"LLC Misses",
+            "llc_kb": r"LLC\[KB\]",  # Escape brackets
+            "mbl_mbs": r"MBL\[MB/s\]",
+            "mbr_mbs": r"MBR\[MB/s\]",
+        }
+        self.col_indices = {}
+
+    def _monitor(self):
+        """Runs pqos and parses the specific CSV format."""
+
+        # Command: pqos -u csv -m all:<cores> -i <deciseconds>
+        # 1.0s interval = 10 deciseconds
+        interval_ds = str(int(self.interval * 10))
+
+        cmd = ["pqos", "-u", "csv", "-m", f"all:{self.core_str}", "-i", interval_ds]
+
+        # Use line buffering (bufsize=1) to get data immediately
+        process = subprocess.Popen(
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, bufsize=1
+        )
+
+        try:
+            with open(self.filename, "a", newline="") as self._file:
+                self._writer = csv.writer(self._file)
+
+                # Write header if file is empty
+                if self._file.tell() == 0:
+                    headers = ["timestamp", "core"] + list(self.target_metrics.keys())
+                    self._writer.writerow(headers)
+                    self._file.flush()
+
+                while not self._stop_event.is_set():
+                    line = process.stdout.readline()
+
+                    if not line and process.poll() is not None:
+                        break  # Process finished/died
+
+                    if not line:
+                        continue
+
+                    line = line.strip()
+
+                    if "Core" in line and "LLC" in line:
+                        parts = line.split(",")
+                        self.col_indices = {}  # Reset indices
+
+                        # Map our target metrics to the actual indices in this line
+                        for metric_name, regex_pattern in self.target_metrics.items():
+                            for index, header_part in enumerate(parts):
+                                # Regex search matches "LLC Misses" or "LLC[KB]" specifically
+                                if re.search(regex_pattern, header_part):
+                                    self.col_indices[metric_name] = index
+                        continue
+
+                    if self.col_indices and re.match(r"^\d{4}-\d{2}-\d{2}", line):
+                        parts = line.split(",")
+
+                        try:
+                            raw_core = parts[1].replace('"', "")
+
+                            row = [
+                                time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+                                raw_core,
+                            ]
+
+                            for metric_name in self.target_metrics.keys():
+                                idx = self.col_indices.get(metric_name)
+                                if idx is not None and idx < len(parts):
+                                    row.append(parts[idx])
+                                else:
+                                    row.append("NaN")  # Handle missing data gracefully
+
+                            self._writer.writerow(row)
+                            self._file.flush()
+                        except (IndexError, ValueError):
+                            continue
+
+        finally:
+            process.terminate()
+            try:
+                process.wait(timeout=1)
+            except subprocess.TimeoutExpired:
+                process.kill()

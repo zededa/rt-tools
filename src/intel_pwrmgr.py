@@ -1,3 +1,9 @@
+# Helper functions to manage Intel Power management
+# Note that it's not used in benchmark, since we disabled
+# _everything_ in BIOS settings. Left here as a pointer
+# if one needs to set it up for their hardware
+
+
 import pwr  # Import the module
 from omegaconf import DictConfig
 
