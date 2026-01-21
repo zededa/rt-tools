@@ -165,7 +165,10 @@ class DockerTestRunner:
             )
         elif test == "cyclictest":
             return self._run_cyclictest(
-                docker_cmd, t_core, self.config.benchmark_output_path
+                docker_cmd,
+                t_core,
+                self.config.benchmark_output_path,
+                self.config.cyclictest.loops,
             )
         elif test == "codesys-jitter-benchmark":
             return self._run_codesys_jitter(docker_cmd, t_core)
@@ -238,12 +241,14 @@ class DockerTestRunner:
 
         return process.wait()
 
-    def _run_cyclictest(self, base_cmd: List[str], t_core: str, path: str) -> int:
+    def _run_cyclictest(
+        self, base_cmd: List[str], t_core: str, path: str, cycles: str
+    ) -> int:
         """Run cyclictest."""
         cyclictest_cmd = (
-            "chrt -r 95 "
-            f"/usr/bin/cyclictest --threads -t 1 -p 99 "
-            f"-l 100000 -d 1 -D 0 -i 100000 -a {t_core}"
+            # "chrt -r 95 "
+            f"/usr/bin/cyclictest --threads -t 1 -p 95 "
+            f"-l {cycles} -d 1 -D 0 -i 100000 -a {t_core}"
         )
         if self.config.run.docker:
             rdtset_cmd = f"stdbuf -oL -eL " f"{cyclictest_cmd}"
@@ -457,12 +462,14 @@ class DockerTestRunner:
             base_cmd,
             self.config.megabench.no_cat_cores,
             self.config.megabench.cyclictest_no_cat,
+            self.config.cyclictest.loops,
         )
 
         self._run_cyclictest(
             base_cmd,
             self.config.megabench.cat_cores,
             self.config.megabench.cyclictest_cat,
+            self.config.cyclictest.loops,
         )
 
         return 0

@@ -51,6 +51,9 @@ run:
 caterpillar:
   n_cycles: 7200
 
+cyclictest:
+  loops: 100000
+
 megabench:
   caterpillar_cat: "${hydra:run.dir}/caterpillar_cat.csv"
   caterpillar_no_cat: "${hydra:run.dir}/caterpillar_no_cat.csv"
