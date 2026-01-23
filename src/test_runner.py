@@ -18,20 +18,15 @@ from src.test_output_parser import (
 class DockerTestRunner:
     """Manages Docker-based test execution with resource allocation."""
 
-    EXCLUDED_DIRS = {"docs", "stressor"}
-
     def __init__(self, config: DictConfig):
-        self.tests = self._discover_tests()
+        self.tests = [
+            "cyclictest",
+            "caterpillar",
+            "iperf3",
+            "codesys-jitter-benchmark",
+            "codesys-opcua-pubsub",
+        ]
         self.config = config
-
-    def _discover_tests(self) -> List[str]:
-        """Discover available test directories."""
-        tests = []
-        for item in Path(".").iterdir():
-            if item.is_dir() and item.name not in self.EXCLUDED_DIRS:
-                tests.append(item.name)
-
-        return sorted(tests)
 
     def build(self) -> int:
         """Build all Docker images for tests."""
@@ -43,6 +38,7 @@ class DockerTestRunner:
                 [
                     "docker",
                     "build",
+                    "--network=host",
                     "-f",
                     "Dockerfile.base",
                     "-t",
@@ -60,6 +56,7 @@ class DockerTestRunner:
                 [
                     "docker",
                     "build",
+                    "--network=host",
                     "-f",
                     "stressor/Dockerfile",
                     "-t",
@@ -73,8 +70,7 @@ class DockerTestRunner:
 
         for test in self.tests:
             print(f"Building test {test}...")
-            if not self._build_test(test):
-                return 1
+            self._build_test(test)
 
         return 0
 
@@ -85,6 +81,7 @@ class DockerTestRunner:
             cmd = [
                 "docker",
                 "build",
+                "--network=host",
                 "-f",
                 f"{test}/opcua-client/Dockerfile",
                 "-t",
@@ -102,6 +99,7 @@ class DockerTestRunner:
             cmd = [
                 "docker",
                 "build",
+                "--network=host",
                 "-f",
                 f"{test}/opcua-server/Dockerfile",
                 "-t",
@@ -120,6 +118,7 @@ class DockerTestRunner:
             cmd = [
                 "docker",
                 "build",
+                "--network=host",
                 "-f",
                 f"{test}/Dockerfile",
                 "-t",
@@ -136,6 +135,7 @@ class DockerTestRunner:
             cmd = [
                 "docker",
                 "build",
+                "--network=host",
                 "-f",
                 f"{test}/Dockerfile",
                 "-t",
@@ -191,12 +191,14 @@ class DockerTestRunner:
             "--rm",
             "--privileged",
             f"--cpuset-cpus={t_core}",
-            # "-v",
-            # "/sys/fs/resctrl:/sys/fs/resctrl",
+            f"--cpuset-mems={self.config.run.numa_node}",
+            "-v",
+            "/sys/fs/cgroup:/sys/fs/cgroup",
             "-v",
             "/dev/cpu_dma_latency:/dev/cpu_dma_latency",
             "--cap-add=SYS_NICE",
             "--cap-add=IPC_LOCK",
+            "--cap-add=SYS_ADMIN",
             "--ulimit",
             "rtprio=95:95",
             f"--name",

@@ -40,6 +40,7 @@ irq_affinity:
 run:
   command: "caterpillar"
   t_core: "9,11"
+  numa_node: "1"
   stressor: true
   # tests_path: "tests"
   metrics: true # enable metrics monitoring

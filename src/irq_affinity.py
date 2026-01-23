@@ -63,7 +63,7 @@ def set_irq_affinity(housekeeping_cores: str) -> None:
         try:
             pid_int = int(pid)
             with open(os.path.join("/proc", pid, "comm"), "r") as f:
-                comm = f.read.strip()
+                comm = f.read().strip()
 
             if "rcu" in comm:
                 os.sched_setaffinity(pid_int, cpu_affinity_set)
