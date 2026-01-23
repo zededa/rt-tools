@@ -1,62 +1,65 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 import os
-import glob
 import sys
-from typing import Set, List
 
 
-def parse_cpu_list(cpu_list_str: str) -> Set[int]:
-    cpus: Set[int] = set()
+def set_irq_affinity(core_list_str: str) -> None:
+    """
+    Sets IRQ and RCU affinity using the logic from the bash script:
+    1. Parses /proc/interrupts (ignoring IRQ 0 and 2).
+    2. Finds RCU processes via /proc and pins them.
+    """
+    print(f"--- Configuring Affinity for Cores: {core_list_str} ---")
+
+    cpu_set = set()
     try:
-        for part in cpu_list_str.split(","):
+        for part in core_list_str.split(","):
             if "-" in part:
                 start, end = map(int, part.split("-"))
-                cpus.update(range(start, end + 1))
+                cpu_set.update(range(start, end + 1))
             else:
-                cpus.add(int(part))
+                cpu_set.add(int(part))
     except ValueError:
-        print(f"Error: Invalid CPU format '{cpu_list_str}'", file=sys.stderr)
-    return cpus
-
-
-def set_irq_affinity(housekeeping_cores: str) -> None:
-    """
-    Moves IRQs and RCU threads to the specified housekeeping cores.
-    :param housekeeping_cores: String representation of cores, e.g., "0-1"
-    """
-    print(f"Applying irq affinity configuration to cores: {housekeeping_cores}")
-
-    # Checks if housekeeping_cores are in the right format
-    # set is used for os.sched_setaffinity
-    cpu_affinity_set: Set[int] = parse_cpu_list(housekeeping_cores)
-    if not cpu_affinity_set:
+        print(f"Error: Invalid CPU format '{core_list_str}'", file=sys.stderr)
         return
 
-    # --- Part 1: IRQ Affinity ---
-    search_pattern = "proc/irq/*/smp_affinity_list"
-    count_irq = 0
+    irq_count = 0
+    try:
+        with open("/proc/interrupts", "r") as f:
+            for line in f:
+                parts = line.strip().split()
+                if not parts:
+                    continue
 
-    for file_path in glob.glob(search_pattern):
-        try:
-            parts = file_path.split(os.sep)
-            # Path structure: /proc/irq/<irq_num>/smp_affinity_list
-            irq_num = parts[-2]
+                # grep '^ *[0-9]*[0-9]:' | awk {'print $1'} | sed 's/:$//'
+                irq_token = parts[0].rstrip(":")
 
-            # Skip non-numeric IRQ names (like SUB directories)
-            if not irq_num.isdigit():
-                continue
+                if not irq_token.isdigit():
+                    continue
 
-            with open(file_path, "w") as f:
-                f.write(f"{housekeeping_cores}\n")
-                count_irq += 1
-        except OSError:
-            print(f"Error; failed to configure {file_path}")
-            pass
+                irq_num = int(irq_token)
 
-    print(f" -> updated affinity for {count_irq} IRQs.")
+                # explicit checks to skip Timer (0) and Cascade (2)
+                if irq_num == 0 or irq_num == 2:
+                    continue
 
-    # --- Part 2: RCU Offloading ---
-    count_rcu = 0
+                # Apply affinity
+                affinity_path = f"/proc/irq/{irq_num}/smp_affinity_list"
+                if os.path.exists(affinity_path):
+                    try:
+                        with open(affinity_path, "w") as af:
+                            af.write(core_list_str)
+                            irq_count += 1
+                    except OSError:
+                        # Some IRQs listed in /interrupts might not be writable
+                        pass
+
+    except FileNotFoundError:
+        print("Error: /proc/interrupts not found.")
+
+    print(f" -> Set affinity for {irq_count} IRQs (Skipped 0 & 2).")
+
+    rcu_count = 0
     pids = [p for p in os.listdir("/proc") if p.isdigit()]
 
     for pid in pids:
@@ -66,10 +69,11 @@ def set_irq_affinity(housekeeping_cores: str) -> None:
                 comm = f.read().strip()
 
             if "rcu" in comm:
-                os.sched_setaffinity(pid_int, cpu_affinity_set)
-                count_rcu += 1
+                os.sched_setaffinity(pid_int, cpu_set)
+                rcu_count += 1
 
         except (OSError, ValueError):
-            print(f"Error: Failed to set {pid}")
+            # Process may have ended during the loop
+            continue
 
-    print(f" -> Pinned {count_rcu} RCU tasks to cores {housekeeping_cores}.")
+    print(f" -> Pinned {rcu_count} RCU tasks.")
