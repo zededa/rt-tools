@@ -2,6 +2,7 @@ import csv
 import io
 import subprocess
 import psutil
+import time
 
 from typing import List, Optional
 from omegaconf import DictConfig, OmegaConf
@@ -546,10 +547,28 @@ class DockerTestRunner:
         )
 
         if self.config.run.cat_clos_pinning.enable:
-            pids = get_pid_psutil(self.config.run.command)
-            if len(pids) == 0:
-                print(f"Error: empty PID for process!")
+            MAX_RETRIES = 5
+            SLEEP_TIME = 2  # Seconds to wait between tries
+
+            # 3. The Retry Logic
+            pids = []
+
+            for attempt in range(1, MAX_RETRIES + 1):
+                print(f"Attempt {attempt}/{MAX_RETRIES}...")
+
+                pids = get_pid_psutil(self.config.run.command)
+
+                # Check if result is NOT empty
+                if len(pids) > 0:
+                    break
+
+                print("Result was empty. Sleeping...")
+                time.sleep(SLEEP_TIME)
             else:
+                # This block executes only if the loop finishes without 'break'
+                print("Failed: Max retries reached with empty results.")
+
+            if len(pids) > 0:
                 print(
                     f"Assigning {self.config.run.command} with PID(s) {pids} to CLOS {self.config.run.cat_clos_pinning.clos}"
                 )
