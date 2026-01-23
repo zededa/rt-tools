@@ -45,8 +45,10 @@ run:
   # tests_path: "tests"
   metrics: true # enable metrics monitoring
   docker: true # run inside docker container, if false will run on host system
-  
-
+  cat_clos_pinnig:
+    enable: true # pins test PID to CLOS specified below works only for caterpillar and cyclictest
+    clos: 1
+  enable_cat_clos1_pinning: true 
 # --- Test specific configurations ---
 
 caterpillar:

@@ -1,18 +1,33 @@
 import csv
 import io
 import subprocess
+import psutil
 
 from typing import List, Optional
 from omegaconf import DictConfig, OmegaConf
 from pathlib import Path
 from tqdm import tqdm
 from subprocess import CompletedProcess, Popen
+from src.pqos_manager import PQOSManager
 
 from src.test_output_parser import (
     build_caterpillar_parser,
     build_cyclictest_parser,
     MegabenchParser,
 )
+
+
+def get_pid_psutil(process_name):
+    found_pids = []
+    # Iterate over all running processes
+    for proc in psutil.process_iter(["pid", "name"]):
+        try:
+            # Check if process name contains the query string
+            if process_name in proc.info["name"]:
+                found_pids.append(proc.info["pid"])
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+    return found_pids
 
 
 class DockerTestRunner:
@@ -224,22 +239,31 @@ class DockerTestRunner:
             cmd = [caterpillar_cmd]
 
         print(" ".join(cmd))
-        process = self._run_interactive_command(cmd)
-        assert process.stdout is not None
+        try:
+            process = self._run_interactive_command(cmd)
+            assert process.stdout is not None
 
-        pbar = tqdm(total=self.config.caterpillar.n_cycles)
-        parser = build_caterpillar_parser()
-        with open(path, "w") as f:
-            prelude = parser.prelude()
-            if prelude is not None:
-                f.write(prelude)
+            pbar = tqdm(total=self.config.caterpillar.n_cycles)
+            parser = build_caterpillar_parser()
 
-            for line in process.stdout:
-                parsed = parser.parse(line)
-                if parsed is not None:
-                    pbar.update(1)
-                    f.write(parsed)
-        pbar.close()
+            with open(path, "w") as f:
+                prelude = parser.prelude()
+                if prelude is not None:
+                    f.write(prelude)
+
+                for line in process.stdout:
+                    parsed = parser.parse(line)
+                    if parsed is not None:
+                        pbar.update(1)
+                        f.write(parsed)
+            pbar.close()
+
+        except KeyboardInterrupt:
+            process.terminate()
+            try:
+                subprocess.run("docker stop $(docker ps -q)", shell=True, check=False)
+            except Exception as e:
+                print(f"Error stopping containers: {e}")
 
         return process.wait()
 
@@ -512,8 +536,7 @@ class DockerTestRunner:
             print(f"CRITICAL ERROR running command: {e}")
             return 1
 
-    @staticmethod
-    def _run_interactive_command(cmd: List[str]) -> Popen[str]:
+    def _run_interactive_command(self, cmd: List[str]) -> Popen[str]:
         process = Popen(
             cmd,
             stdout=subprocess.PIPE,
@@ -521,5 +544,18 @@ class DockerTestRunner:
             text=True,
             bufsize=1,
         )
+
+        if self.config.run.cat_clos_pinning.enable:
+            pids = get_pid_psutil(self.config.run.command)
+            if len(pids) == 0:
+                print(f"Error: empty PID for process!")
+            else:
+                print(
+                    f"Assigning {self.config.run.command} with PID(s) {pids} to CLOS {self.config.run.cat_clos_pinning.clos}"
+                )
+                manager = PQOSManager()
+                manager.assign_pids_to_class(
+                    self.config.run.cat_clos_pinning.clos, pids
+                )
 
         return process
