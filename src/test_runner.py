@@ -261,6 +261,7 @@ class DockerTestRunner:
 
         except KeyboardInterrupt:
             process.terminate()
+        finally:
             try:
                 subprocess.run("docker stop $(docker ps -q)", shell=True, check=False)
             except Exception as e:
