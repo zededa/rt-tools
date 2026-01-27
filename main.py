@@ -6,6 +6,8 @@ import subprocess
 
 from omegaconf import DictConfig, OmegaConf
 
+from src.bios_settings import process_bios_settings
+
 from src.metrics import (
     CPUmonitor,
     InterruptMonitor,
@@ -90,6 +92,10 @@ def main(cfg: DictConfig):
     collector = SystemInfoCollector()
     collector.gather_all(cfg)
     collector.dump_to_file(cfg.sysinfo_collector_file)
+
+    # Collect BIOS settings via redfish
+    if cfg.bios.enable:
+        process_bios_settings(cfg.bios)
 
     runner = DockerTestRunner(cfg)
 

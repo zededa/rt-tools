@@ -1,6 +1,22 @@
 benchmark_output_path: "${hydra:run.dir}/output.csv"
 sysinfo_collector_file: "${hydra:run.dir}/sysinfo.json"
 
+# --- Configuration for getting BIOS data from redfish
+
+bios:
+  enable: true
+  redfish:
+    host: "0.0.0.0"
+    username: "root"
+    password: "SECRET_PASSWORD"
+    verify_ssl: false
+    timeout: 15
+
+  output:
+    format: "json"
+    file: "${hydra:run.dir}/bios.json"
+    pretty: true
+
 # --- Intel CAT specific configuration --- 
 
 pqos:
