@@ -1,0 +1,5 @@
+Id;Default
+0;SET_ZERO
+1;SET_LINEAR
+2;DONT_CHANGE
+;

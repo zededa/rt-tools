@@ -1,0 +1,466 @@
+Id;Default
+383; Name:
+139;%.2f
+285;%d
+287;%f
+324;%s
+385;/
+151;1
+299;16#%x
+152;32
+389;A:
+3602;Abort
+200;Accelerating
+296;Acceleration
+32;Acceleration : %f
+109;Acceleration: %f
+250;Acceleration:%f
+288;AccelerationScale
+925;AccFactor
+2565;Active
+67;ActPosition: %f
+69;ActVelocity: %f
+2712;AdaptEndVelToAvoidOvershoot
+286;ArraySize
+155;ArraySize: %d
+416;AvoidReversal
+72;AxisError
+313;AxisErrorID
+73;AxisErrorID : %d
+735;AxisType
+450;bAbort
+237;bActAcceleration
+233;bActPosition
+235;bActVelocity
+26;bBrakeClosed
+2;bBusy
+218;bCheckAccDec
+96;bCheckVel
+231;bCloseFile
+81;bCommandAborted
+181;bCompensating
+25;bDone
+46;bDriveStart
+4;bDriveStartRealState
+24;bEnable
+82;bError
+77;bExecute
+117;bFBError
+92;bIgnoreHWLimit
+90;bIndexOccured
+146;bInitValue
+162;bInPosition
+3785;bInSync
+217;bLimitsExceeded
+406;bPositionRestored
+405;bPositionStored
+240;bRecording
+12;bReferenceSwitch
+45;bRegulatorOn
+14;bRegulatorRealState
+89;bReturnToZero
+225;bSet
+236;bSetAcceleration
+147;bSetInitValueAtReset
+232;bSetPosition
+234;bSetVelocity
+93;bStartLatchingIndex
+359;bTappet
+166;bTimeOut
+1081;BufferMode
+3980;BufferMode:%s
+0;Busy
+5;bValid
+94;bVirtual
+360;byDeadTimeCycles
+185;byDeadTimeCycles: %d
+326;bySeparatorChar
+239;bySeparatorChar: %d
+37;CommandAborted
+2571;CommandAccepted
+199;ConstantVelocity
+196;ContinuousMotion
+269;DeadTimeComp.: %f
+346;DeadTimeCompensation
+201;Decelerating
+297;Deceleration
+173;Deceleration : %f
+33;Deceleration: %f
+251;Deceleration:%f
+309;Direction
+40;Direction: %s
+9;Disabled
+195;DiscreteMotion
+310;Distance
+48;Distance : %f
+1407;DistanceTravelled
+994;DistanceTravelled : %f
+337;dMasterAccMax
+129;dMasterAccMax : %.2f
+338;dMasterScaling
+130;dMasterScaling : %.2f
+336;dMasterVelMax
+128;dMasterVelMax : %.2f
+344;dMaxAccDec
+126;dMaxAccDec : %.2f
+340;dMaxPos
+122;dMaxPos : %.2f
+342;dMaxVel
+124;dMaxVel : %.2f
+345;dMinAccDec
+127;dMinAccDec : %.2f
+341;dMinPos
+123;dMinPos : %.2f
+343;dMinVel
+125;dMinVel : %.2f
+99;Done
+339;dSlaveScaling
+131;dSlaveScaling : %.2f
+1274;Duration
+408;dwDrivePersistedMask: 16#%x
+223;dwEncoderValue: %d
+347;dwRatioTechUnitsDenom
+212;dwRatioTechUnitsDenom: %d
+356;dwTimeAtMax
+189;dwTimeAtMax: %d
+354;dwTimeStamp
+186;dwTimeStamp: %d
+421;dwValueMask
+333;eBacklashMode
+179;eBacklashMode : %s
+334;eBacklashStartState
+180;eBacklashStartState : %s
+402;eErrorID
+401;eErrorID : %d
+328;eMode
+18;eMode: %s
+43;Enable
+929;Enabled
+300;EnableMask
+206;EnableMask : 16#%x
+111;EndOfProfile
+376;EndVelocity
+38;EndVelocity : %f
+377;EndVelocityDirection
+41;EndVelocityDirection: %s
+403;eRampType
+398;eRampType: %s
+414;eRestoringDiag
+413;eRestoringDiag : %d
+35;Error
+284;ErrorID
+308;ErrorId
+36;ErrorID : %d
+158;ErrorID: %d
+202;Errorstop
+322;eSetBrake
+22;eSetBrake: %d
+680;Events
+30;Execute
+366;fAcceleration
+85;fAcceleration: %f
+361;fActTrackingError
+187;fActTrackingError: %f
+329;fBacklash
+175;fBacklash : %f
+203;FBErrorOccured
+331;fCompensationAcc
+177;fCompensationAcc : %f
+332;fCompensationDec
+178;fCompensationDec : %f
+3357;fCompensationJerk
+330;fCompensationVel
+176;fCompensationVel : %f
+367;fDeceleration
+86;fDeceleration: %f
+375;fDistance
+227;fDistance : %.2f
+363;fHomePosition
+78;fHomePosition: %f
+371;fIndexPosition
+91;fIndexPosition: %f
+318;FirstPosition
+273;FirstPosition: %f
+393;fJerk
+391;fJerk: %f
+355;fMaxAcceleration
+255;fMaxAcceleration: %f
+431;fMaxDeceleration
+432;fMaxJerk
+740;fMaxTorque
+362;fMaxTrackingError
+188;fMaxTrackingError: %f
+357;fMaxVelocity
+280;fMaxVelocity: %f
+1382;ForecastDuration
+349;fPositionPeriod
+214;fPositionPeriod: %f
+373;fPosTime
+164;fPosTime: %f
+372;fPosWindow
+163;fPosWindow: %f
+422;fSetAcceleration
+424;fSetCurrent
+433;fSetJerk
+351;fSetPosition
+113;fSetPosition : %f
+423;fSetTorque
+224;fSetValue %f
+352;fSetVelocity
+115;fSetVelocity : %f
+369;fSignalDelay
+87;fSignalDelay: %f
+435;fStartAcceleration
+429;fStartAcceleration: %f
+353;fStartPosition
+221;fStartPosition: %f
+434;fStartVelocity
+426;fStartVelocity: %f
+374;fTimeOut
+165;fTimeOut: %f
+382;fTorque
+243;fTorque: %f
+365;fVelocityFast
+80;fVelocityFast: %f
+364;fVelocitySlow
+79;fVelocitySlow : %f
+1071;GearOutput1
+2735;GearOutput2
+198;Homing
+65;Id: %d
+335;iErrorID
+114;iErrorID : %d
+358;iID
+144;iID:%d
+350;iMovementType
+400;iMovementType: %d
+215;iMovementType: %s
+62;InchBackward
+63;InchForward
+729;Increments
+34;InEndVelocity
+248;InGear
+205;InOperation
+283;Instance: %s
+220;Instanz: $$FB$$
+27;Instanz: %s
+103;InSync
+51;InVelocity
+732;InvertDirection
+348;iRatioTechUnitsNum
+213;iRatioTechUnitsNum: %d
+392;Jerk
+390;Jerk: %f
+927;JerkFactor
+53;JogBackward
+52;JogForward
+319;LastPosition
+275;LastPosition: %f
+171;MasterAbsolute
+290;MasterOffset
+102;MasterOffset:%f
+292;MasterScaling
+105;MasterScaling:%f
+305;MasterStartDistance
+265;MasterStartDistance %f
+303;MasterSyncPosition
+49;MasterSyncPosition %f
+407;maxPersistedValue
+266;MC_AbortTrigger
+167;MC_AccelerationProfile
+101;MC_CamIn
+256;MC_CamOut
+169;MC_CamTableSelect
+204;MC_DigitalCamSwitch
+246;MC_GearIn
+261;MC_GearInPos
+270;MC_GearOut
+252;MC_Halt
+3169;MC_HaltSuperImposed
+97;MC_Home
+57;MC_Jog
+208;MC_MoveAbsolute
+153;MC_MoveAdditive
+271;MC_MoveRelative
+190;MC_MoveSuperImposed
+50;MC_MoveVelocity
+258;MC_Phasing
+154;MC_PositionProfile
+42;MC_Power
+278;MC_ReadActualPosition
+417;MC_ReadActualTorque
+419;MC_ReadActualVelocity
+71;MC_ReadAxisError
+209;MC_ReadBoolParameter
+157;MC_ReadParameter
+192;MC_ReadStatus
+100;MC_Reset
+921;MC_SetOverride
+281;MC_SetPosition
+229;MC_Stop
+272;MC_TouchProbe
+267;MC_VelocityProfile
+228;MC_WriteBoolParameter
+253;MC_WriteParameter
+317;Mode
+282;Mode: %s
+734;ModuloPeriod
+1067;MotorTurns1
+1069;MotorTurns2
+1362;motorType
+2577;MovementId
+2196;MovementId : %d
+3029;MovementID : %d
+381;nControllerMode
+183;nControllerMode: %d
+368;nDirection
+84;nDirection: %s
+323;nErrorID
+83;nErrorID : %d
+378;nFBErrorID
+118;nFBErrorID : %d
+370;nHomingMode
+88;nHomingMode: %s
+289;Offset
+156;Offset: %f
+207;Outputs
+314;ParameterNumber
+159;ParameterNumber: %d
+379;pbyErrorInstance
+119;pbyFBErrorID : %s
+170;Periodic
+311;PhaseShift
+259;PhaseShift: %f
+306;Position
+39;Position : %f
+98;Position: %f
+3542;PositionReached
+312;PositionScale
+10;PositionScale: %f
+302;RatioDenominator
+249;RatioDenominator: %d
+301;RatioNumerator
+263;RatioNumerator: %d
+247;RatioNumerator:%d
+320;RecordedPosition
+276;RecordedPosition : %f
+168;Scale: %f
+384;Selection:
+66;SetPosition: %f
+68;SetVelocity: %f
+325;sFileName
+149;sFileName:%s
+2332;SignalModuloPeriod
+172;SlaveAbsolute
+291;SlaveOffset
+104;SlaveOffset:%f
+293;SlaveScaling
+106;SlaveScaling:%f
+304;SlaveSyncPosition
+264;SlaveSyncPosition %f
+21;SMC3_BrakeControl
+23;SMC3_BrakeStatus
+404;SMC3_PersistPosition
+412;SMC3_PersistPositionLogical
+410;SMC3_PersistPositionSingleturn
+95;SMC3_ReinitDrive
+230;SMC_AxisDiagnosticLog
+174;SMC_BacklashCompensation
+121;SMC_CAMBounds
+241;SMC_CAMBounds_Pos
+268;SMC_CamRegister
+727;SMC_ChangeAxisScalingLinear
+1064;SMC_ChangeAxisScalingRotary
+430;SMC_ChangeDynamicLimits
+211;SMC_ChangeGearingRatio
+216;SMC_CheckLimits
+1412;SMC_DigitalCamSwitch_HighPrecision
+222;SMC_Encoder
+257;SMC_FollowPosition
+112;SMC_FollowPositionVelocity
+420;SMC_FollowSetValues
+150;SMC_FollowVelocity
+245;SMC_GetCamSlaveSetPosition
+219;SMC_GetCamSlaveSetPositionEx
+1379;SMC_GetForecast
+254;SMC_GetMaxSetAccDec
+279;SMC_GetMaxSetVelocity
+2880;SMC_GetOverride
+143;SMC_GetTappetValue
+184;SMC_GetTrackingError
+1271;SMC_GetTravelTime
+76;SMC_Homing
+70;SMC_Inch
+161;SMC_InPosition
+226;SMC_MeasureDistance
+29;SMC_MoveContinuousAbsolute
+47;SMC_MoveContinuousRelative
+244;SMC_ReadCAM
+116;SMC_ReadFBError
+277;SMC_ReadSetPosition
+1589;SMC_ReadSetValues
+3098;SMC_SetAdditionalConversionFactors
+182;SMC_SetControllerMode
+443;SMC_SetCustomRampType
+2237;SMC_SetForecast
+399;SMC_SetMovementType
+396;SMC_SetRampType
+436;SMC_SetSoftwareLimits
+242;SMC_SetTorque
+394;SMC_TrackAxis
+770;SMC_TrackSetValues
+148;SMC_WriteCAM
+327;sRecordSeparatorString
+238;sRecordSeparatorString:%s
+316;StandStill
+194;Standstill
+294;StartMode
+107;StartMode: %s
+262;StartSync
+44;Status
+193;Stopping
+428;strErrorInstance
+427;strErrorInstance : %s
+4328;SuperImposedAcceleration
+397;SuperImposedAcceleration : %f
+4318;SuperImposedVelocity
+1731;SuperImposedVelocity : %f
+75;SWEndSwitchActive
+3942;SwitchCorrupted
+444;SWL_Activated
+447;SWL_Error_Decelerate
+448;SWL_Error_Deceleration
+449;SWL_Error_MaxDistance
+446;SWL_Negative
+445;SWL_Positive
+197;SynchronizedMotion
+145;Tappet
+298;TappetHysteresis
+110;TappetHysteresis: %f
+451;TappetMode
+731;TechnicalUnits
+1593;TimeOffset
+418;Torque
+3105;TorqueFactor
+380;tTimeStamp
+120;tTimeStamp : %s
+395;Type: %s
+415;usiNumberOfAbsoluteBits
+388;V:
+8;Valid
+315;Value
+160;Value: %f
+210;Value: %s
+679;ValueSource
+923;VelFactor
+307;Velocity
+31;Velocity : %f
+260;Velocity: %f
+295;VelocityDiff
+191;VelocityDiff : %f
+108;VelocityDiff: %f
+321;VelocityScale
+11;VelocityScale: %f
+274;WindowOnly
+386;X :
+387;Y :

@@ -3,6 +3,7 @@ import os
 import sys
 import hydra
 import subprocess
+import threading
 
 from omegaconf import DictConfig, OmegaConf
 
@@ -18,6 +19,7 @@ from src.sysinfo_collector import SystemInfoCollector
 from src.pqos_manager import PQOSManager
 from src.irq_affinity import set_irq_affinity
 from src.test_runner import DockerTestRunner
+from src.hde2e import DockerHDE2E
 
 
 def setup_pqos(cfg: DictConfig) -> None:
@@ -91,24 +93,41 @@ def main(cfg: DictConfig):
     collector.gather_all(cfg)
     collector.dump_to_file(cfg.sysinfo_collector_file)
 
-    runner = DockerTestRunner(cfg)
+    if cfg.demo.demo_mode:
+        print("Running in demo mode. Skipping test execution.")
+        runner = DockerHDE2E(cfg)
+        print("Starting demo HDE2E test...")
+        print("Starting IO...")
+        io_thread = threading.Thread(target=runner.start_io)
+        control_thread = threading.Thread(target=runner.start_control)
 
-    if cfg.run.command == "build":
-        return runner.build()
+        print("Starting IO...")
+        io_thread.start()
+        print("Starting Control...")
+        control_thread.start()
 
-    setup_pqos(cfg)
+        io_thread.join()
+        control_thread.join()
+        return 0
+    else:
+        runner = DockerTestRunner(cfg)
 
-    # Handle test commands
-    if cfg.run.command not in runner.tests:
-        print(f"Error: '{cfg.run.command}' is not a valid command")
-        return 1
+        if cfg.run.command == "build":
+            return runner.build()
 
-    if cfg.run.metrics:
-        setup_metrics(cfg)
-    if cfg.irq_affinity.enabled:
-        set_irq_affinity(cfg.irq_affinity.housekeeping_cores)
+        setup_pqos(cfg)
 
-    return runner.run_test(cfg.run.command, cfg.run.t_core, cfg.run.stressor)
+        # Handle test commands
+        if cfg.run.command not in runner.tests:
+            print(f"Error: '{cfg.run.command}' is not a valid command")
+            return 1
+
+        if cfg.run.metrics:
+            setup_metrics(cfg)
+        if cfg.irq_affinity.enabled:
+            set_irq_affinity(cfg.irq_affinity.housekeeping_cores)
+
+        return runner.run_test(cfg.run.command, cfg.run.t_core, cfg.run.stressor)
 
 
 if __name__ == "__main__":

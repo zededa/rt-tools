@@ -12,3 +12,6 @@ wheels/
 
 # OS-X files
 .DS_Store
+
+# Docker image tarballs
+*.tar

@@ -49,6 +49,47 @@ run:
     enable: true # pins test PID to CLOS specified below works only for caterpillar and cyclictest
     clos: 1
 
+# --- High density End to End demo ---
+
+demo:
+  demo_mode: true
+  t_core: [9,11]
+  io_system:
+    ip: 10.34.106.119
+    nic: enp3s0
+    ssh_user: intel
+    ssh_password: ""   # set SSH_PASSWORD env var, or use key-based auth
+    ssh_port: 22
+    # Host-side IP on the macvlan subnet (must not clash with any container IP).
+    # Allows the IO host to reach containers via:  curl http://192.168.10.12:8080
+    shim_ip: 192.168.10.253
+    t_cpus: "1,3"
+  control_system:
+    ip: localhost
+    nic: eno12399np0
+    # Host-side IP on the macvlan subnet (must not clash with any container IP).
+    # Allows the control host to reach containers via:  curl http://192.168.10.15:8080
+    shim_ip: 192.168.10.254
+    t_cpus: "3,5,7,9"
+    t_mems: "1"
+
+  # Map host_ip:<host_port> → container_ip:<container_port> via iptables.
+  # This lets external clients access container services
+  # using the host's real IP  (e.g.  http://10.34.107.101:8080).
+  port_forwards:
+    Control_PLC_01:
+      - { host_port: 30080, container_port: 8080 }       # web visu
+      - { host_port: 11741, container_port: 11740 }     # CODESYS gateway
+    Control_PLC_02:
+      - { host_port: 30081, container_port: 8080 }       # web visu
+      - { host_port: 11742, container_port: 11740 }     # CODESYS gateway
+    IO_PLC_01:
+      - { host_port: 30090, container_port: 8080 }       # web visu
+      - { host_port: 11741, container_port: 11740 }     # CODESYS gateway
+    IO_PLC_02:
+      - { host_port: 30091, container_port: 8080 }       # web visu
+      - { host_port: 11742, container_port: 11740 }     # CODESYS gateway
+
 # --- Test specific configurations ---
 
 caterpillar:
@@ -63,6 +104,14 @@ megabench:
   cyclictest_cat: "${hydra:run.dir}/cyclictest_cat.csv"
   cyclictest_no_cat: "${hydra:run.dir}/cyclictest_no_cat.csv"
 
+# --- Demo specific configurations ---
+
+# --- Demo PLC config paths (relative to codesys-hde2e/) ---
+
+control_1:
+  config: configs/control/hdE2ELatencyConfig_Control_PLC_01.json
+control_2:
+  config: configs/control/hdE2ELatencyConfig_Control_PLC_02.json
 # ---  Monitoring specific configurations ---
 
 cpu_monitor:

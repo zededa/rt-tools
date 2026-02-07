@@ -1,0 +1,4 @@
+Id;Default
+0;ROTARY
+1;LINEAR
+;

@@ -1,0 +1,5 @@
+Id;Default
+0;AL_OFF
+1;AL_ON
+2;AL_END
+;

@@ -1,0 +1,78 @@
+# RDT/CAT Configuration for Control PLCs
+# Based on Intel Cache Allocation Technology (CAT) / Resource Director Technology (RDT)
+
+# Global RDT Settings
+rdt:
+  enabled: true
+  interface: "os"  # Use OS interface (resctrl) - required for PID assignment
+  reset_before_apply: true  # Reset RDT configuration before applying new settings
+
+# Class of Service (COS) Definitions
+# Class 0 is default, Classes 1-15 can be configured (hardware dependent)
+classes:
+  # Class 1: Real-time Control PLC cores with dedicated L3 cache
+  - id: 1
+    name: "RT_Control_Cores"
+    description: "Real-time cores for Control PLC with dedicated cache allocation"
+    # L3 cache mask (hex): 0x0f = lower 4 ways of L3 cache (bits 0-3)
+    # Adjust based on your processor's cache configuration
+    l3_mask: "0x0f"
+    # L2 cache mask (optional, if supported by hardware)
+    # l2_mask: "0xf"
+    # Memory Bandwidth Allocation (percentage, optional)
+    mba: 100
+    # CPU cores assigned to this class
+    cores: [3, 5, 7, 9]
+    # PIDs will be assigned dynamically based on container
+    pids: []
+
+  # Class 2: Non-real-time cores with shared cache
+  - id: 2
+    name: "Non_RT_Cores"
+    description: "Non-real-time cores with shared cache"
+    # L3 cache mask: 0xf0 = upper 4 ways of L3 cache (bits 4-7)
+    l3_mask: "0xf0"
+    mba: 50
+    cores: [0, 1, 2, 4, 6, 8]
+    pids: []
+
+# IRQ Affinity Configuration
+irq_affinity:
+  enabled: true
+  # Cores for handling interrupts (non-RT cores to avoid RT interference)
+  irq_cores: "0,1,2"
+  # Move RCU tasks to non-RT cores
+  rcu_cores: "0,1,2"
+
+# Core Isolation Settings
+core_isolation:
+  # RT cores that should be isolated
+  isolated_cores: [3, 5, 7, 9]
+  # Kernel parameters that should be set (add to kernel cmdline):
+  # isolcpus=3,5,7,9
+  # nohz_full=3,5,7,9
+  # rcu_nocbs=3,5,7,9
+  # irqaffinity=0,1,2
+
+# Instance-specific settings for Control PLCs
+instances:
+  Control_PLC_01:
+    class_id: 1
+    cpu_affinity: "3,5"  # Specific cores for this instance
+    priority: 95  # RT priority (1-99, higher = more priority)
+    enable_rdtset: true  # Use rdtset wrapper when starting CODESYS
+    
+  Control_PLC_02:
+    class_id: 1
+    cpu_affinity: "7,9"  # Different cores for second instance
+    priority: 95
+    enable_rdtset: true
+
+# Monitoring Configuration
+monitoring:
+  enabled: false
+  interval: 1  # seconds
+  metrics:
+    - llc_occupancy  # Last Level Cache occupancy
+    - mbm_local      # Memory Bandwidth Monitoring - local
+    - mbm_total      # Memory Bandwidth Monitoring - total

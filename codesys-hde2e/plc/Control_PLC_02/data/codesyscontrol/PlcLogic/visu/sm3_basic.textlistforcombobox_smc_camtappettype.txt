@@ -1,0 +1,5 @@
+Id;Default
+0;TAPPET_POS
+1;TAPPET_ALL
+2;TAPPET_NEG
+;

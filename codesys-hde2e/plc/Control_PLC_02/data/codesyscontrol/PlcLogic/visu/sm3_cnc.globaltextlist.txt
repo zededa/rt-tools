@@ -1,0 +1,490 @@
+Id;Default
+1525;$T
+114;%.0f
+219;%.2f
+128;%d
+151;%d µs
+138;%f
+158;%i
+188;%s
+107;1
+106;32
+216;3D-Mode
+2660;A1.dX
+2668;A1.dY
+2677;A1.dZ
+2685;A2.dX
+2168;A2.dY
+2175;A2.dZ
+2182;A3.dX
+2188;A3.dY
+2195;A3.dZ
+3497;aActivePrograms[0]
+3505;aActivePrograms[1]
+3513;aActivePrograms[2]
+2800;aActivePrograms[3]
+2806;aActivePrograms[4]
+2812;aActivePrograms[5]
+1705;aActivePrograms[6]
+1709;aActivePrograms[7]
+1713;aActivePrograms[8]
+3320;aActivePrograms[9]
+206;Acc (EF):%f
+40;Acc:%f
+3655;adToolLength[0]
+2525;adToolLength[0]: %f
+3664;adToolLength[1]
+1878;adToolLength[1]: %f
+3674;adToolLength[2]
+862;adToolLength[2]: %f
+4683;adwFileSize[0]
+4693;adwPos[0]
+2395;aSubProgramDirs[0]
+1661;aSubProgramDirs[1]
+3290;aSubProgramDirs[2]
+3298;aSubProgramDirs[3]
+3305;aSubProgramDirs[4]
+2202;B1.dX
+2209;B1.dY
+2215;B1.dZ
+2222;B2.dX
+2229;B2.dY
+2236;B2.dZ
+217;b3DMode
+20;bAbort
+76;bAcknM
+588;bAllowCNC_ND_License
+16;bAppend
+35;bAvoidGaps
+12;bBusy
+243;bCheckAddAxVelJump
+236;bCheckCurvature
+33;bCommandAborted
+389;bDisableJumpBuffer
+10;bDone
+63;bEmergency_Stop
+26;bEnable
+227;bEnableSyntaxChecks
+2268;bEndOfData
+81;bEndOfPath
+8;bError
+6;bExecute
+38;bExecuteDecoder
+784;bForwardTrafo
+234;bImprovedSymmetricCuts
+113;bIncludePathSettings
+97;bMActive
+2251;bNewData
+3312;bParenthesesAsComments
+201;bPositionStored
+77;bQucikStop
+220;bQuickStop
+154;bQuick_Stop
+2510;bReset
+3473;bResetDelimiterConfig
+242;bResetInternalVariables
+74;bSingleStep
+62;bSlow_Stop
+83;bStartAtEnd
+198;bStartFromSavedPos
+89;bStepSuppress
+31;bStopIpo
+254;bStrictlyHold...ABC
+253;bStrictlyHoldAccDecABC
+251;bSuppressSystemMFunctions
+21;bSymmetricalDistances
+64;bWaitAtNextStop
+65;bWorking
+215;c = %.2f deg  
+2242;C1.dX
+2249;C1.dY
+2256;C1.dZ
+4763;CallstackInfo
+3862;Callstack[0]
+3870;Callstack[1]
+3878;Callstack[2]
+3887;Callstack[3]
+3128;Callstack[4]
+3134;Callstack[5]
+3141;Callstack[6]
+3148;Callstack[7]
+3154;Callstack[8]
+3161;Callstack[9]
+218;centerZ: %.2f
+2332;d3dCheckDistance
+257;d3dCheckDistance: %d
+716;d3dCheckDistance: %f
+1634;dA
+118;dA1: %f
+119;dA2: %f
+120;dA3: %f
+121;dA4: %f
+122;dA5: %f
+123;dA6: %f
+124;dA: %f
+503;dActObjectLength
+1426;dActObjectLength: %f
+505;dActObjectLengthRemaining
+2369;dActObjectLengthRemaining: %f
+3850;dAdditionalToolRadius
+139;dAngleTol
+18;dAngleTol: %f
+1638;dB
+125;dB: %f
+1641;dC
+126;dC: %f
+843;dCircleTolerance
+2692;dCircleTolerance: %f
+207;Dec (EF):%f
+41;Dec:%f
+179;dEdgeDistance
+17;dEdgeDistance: %f
+1068;diColumnNo
+450;diMaxNoPoints
+1548;diMaxNoPoints: %d
+995;diMaxNoPoints: %f
+2340;diMinNoPoints
+2667;diMinNoPoints: %d
+1066;diSourceLineNo
+156;dJerkMax
+186;dJerkMax: %f
+147;dK
+98;dK: %d
+148;dL
+99;dL: %d
+153;dLastWayPos
+72;dLastWayPos: %f
+167;dMaxAcc
+53;dMaxAcc: %f
+172;dMaxAccDec
+112;dMaxAccDec: %f
+168;dMaxAccJump
+95;dMaxAccJump: %f
+244;dMaxAddAxVelDifference
+50;dMaxDec: %f
+171;dMaxVel
+52;dMaxVel: %f
+247;dMaxVelDifferenceABC
+246;dMinAngleToAct
+235;dMinimumCurvatureRadius
+239;dMinimumCurvatureRadius: %f
+149;dOverride
+60;dOverride: %f
+175;dPhi
+58;dPhi: %f
+4675;dPrecision
+155;dQuickDeceleration
+78;dQuickDeceleration: %f
+157;dQuickStopJerk
+187;dQuickStopJerk: %f
+176;dRadius
+43;dRadius: %f
+237;dRelativeCurvatureTol
+241;dRelativeCurvatureTol : %f
+240;dRelativeCurvatureTolerance : %f
+177;dScaleFactor
+93;dScaleFactor: %f
+178;dSmoothingPart
+24;dSmoothingPart: %f
+182;dToolRadius
+47;dToolRadius: %f
+160;dVel
+67;dVel: %f
+163;dWayPos
+73;dWayPos: %f
+789;dwBufferOutSize
+190;dwBufferSize
+268;dwFileSize
+1662;dwFileSize:%d
+152;dwIpoTime
+2;dwIpoTime: %d µs
+269;dwPos
+2156;dwPos : %d
+162;dwSwitches
+71;dwSwitches: %d
+100;dX: %f
+1030;dXOffset
+101;dY: %f
+102;dZ: %f
+181;eAddAxMode
+22;eAddAxMode: %s
+183;eDirection
+91;eDirection: %s
+180;eMode
+19;eMode: %s
+2179;Enable
+841;eOriConv
+2338;eOriConv: %s
+820;ePos.dRelPosInObj
+823;ePos.iSourceLine_No
+826;ePos.iSubElement
+829;ePos.xPosStored
+3853;Error
+194;ErrorID
+9;ErrorID : %d
+2624;errorPos.diColumn
+1917;errorPos.diLength
+2618;errorPos.diLine
+4674;ErrorProgramName
+192;fDefaultAccel
+209;fDefaultAccelFF
+193;fDefaultDecel
+210;fDefaultDecelFF
+191;fDefaultVel
+208;fDefaultVelFF
+142;fGapAcceleration
+29;fGapAccelertion : %f
+143;fGapDeceleration
+30;fGapDeceleration: %f
+202;fGapJerk
+196;fGapJerk: %f
+141;fGapVelocity
+28;fGapVelocity : %f
+7;File:%f
+37;File:%s
+436;fQuality
+140;fSetPosition
+27;fSetPosition : %f
+146;fSetVelocity
+56;fSetVelocity : %f
+1921;GCodeText.str
+159;iActObjectSourceNo
+66;iActObjectSourceNo: %i
+144;iErrorID
+32;iErrorID : %d
+161;iLastSwitch
+70;iLastSwitch: %d
+87;iLineNoDec.: %i
+173;iLineNumberDecoded
+174;iM
+45;iM: %i
+127;Instance: %s
+3;Instanz: %s
+4;Instanz: 5s
+195;iObjectsRead
+11;iObjectsRead: %d
+135;iSourceLine_No
+105;iSourceLine_No: %d
+131;iStatus
+34;iStatus: %s
+150;iVelMode
+61;iVelMode: %s
+184;lol
+258;M.dX
+259;M.dY
+260;M.dZ
+75;M: %d
+2038;modeAtStop
+2033;modeNoStop
+598;MParameters.dP1
+600;MParameters.dP2
+602;MParameters.dP3
+604;MParameters.dP4
+1879;MParameters.dP5
+1884;MParameters.dP6
+1890;MParameters.dP7
+1895;MParameters.dP8
+2300;nActiveChain
+165;nDirection
+82;nDirection: %s
+1364;nError
+1059;nInterpreterStackSizeBytes
+204;nNumReservedEntries
+129;nSizeOutQueue
+15;nSizeOutQueue: %d
+434;piIn.dX
+435;piIn.dY
+437;piIn.dZ
+2308;piMax.dA
+2316;piMax.dB
+2324;piMax.dC
+2285;piMax.dX
+2293;piMax.dY
+2301;piMax.dZ
+248;piMaxDifference.dA
+249;piMaxDifference.dB
+250;piMaxDifference.dC
+224;piMaxDifference.dX
+225;piMaxDifference.dY
+226;piMaxDifference.dZ
+223;piMaxDifference.X
+2261;piMin.dA
+2269;piMin.dB
+2277;piMin.dC
+1225;piMin.dX
+1230;piMin.dY
+1234;piMin.dZ
+2271;piOut.dA
+2288;piOut.dA1
+2294;piOut.dA2
+2299;piOut.dA3
+2304;piOut.dA4
+2310;piOut.dA5
+2315;piOut.dA6
+2278;piOut.dB
+2282;piOut.dC
+3073;piOut.dX
+3083;piOut.dY
+3093;piOut.dZ
+68;piSetPosition
+1513;piSetPosition.dA
+2835;piSetPosition.dA1
+2843;piSetPosition.dA2
+2851;piSetPosition.dA3
+2859;piSetPosition.dA4
+2866;piSetPosition.dA5
+2874;piSetPosition.dA6
+1517;piSetPosition.dB
+2828;piSetPosition.dC
+1501;piSetPosition.dX
+1505;piSetPosition.dY
+1509;piSetPosition.dZ
+88;piStartPosition
+266;piStartPosition.dA
+1453;piStartPosition.dA1
+1457;piStartPosition.dA2
+1461;piStartPosition.dA3
+1465;piStartPosition.dA4
+1469;piStartPosition.dA5
+1472;piStartPosition.dA6
+267;piStartPosition.dB
+1450;piStartPosition.dC
+263;piStartPosition.dX
+264;piStartPosition.dY
+265;piStartPosition.dZ
+199;poqDataOut
+228;pStringBuffer
+2260;sData
+189;sFileName
+54;SMC_AvoidLoop
+197;SMC_BlockSearch
+200;SMC_BlockSearchSafePos
+211;SMC_BlockSearchSavePos
+132;SMC_CheckForLimits
+84;SMC_CheckVelocities
+25;SMC_ControlAxisByPos
+145;SMC_ControlAxisByPosVel
+55;SMC_ControlAxisByVel
+85;SMC_ControlAxisByVelPos
+432;SMC_CoordinateTransformation3D
+2651;SMC_DetermineCuboidBearing
+2174;SMC_DisplayNCCallstack
+108;SMC_ExtendedVelocityChecks
+2125;SMC_FileStream
+787;SMC_GCodeJumpBuffer
+96;SMC_GetMParameters
+59;SMC_Interpolator
+80;SMC_Interpolator2Dir
+2103;SMC_Interpolator2Dir_Restricted
+3036;SMC_Interpolator_Restricted
+291;SMC_InvCoordinateTransformation3D
+48;SMC_LimitAddAxisDynamics
+166;SMC_LimitCircularVelocity
+169;SMC_LimitDynamics
+86;SMC_NCDecoder
+4066;SMC_NCInterpreter
+255;SMC_NCTokenizer
+44;SMC_PreAcknowledgeMFunction
+203;SMC_QueueSetReservedEntries
+36;SMC_ReadNCFile
+4397;SMC_ReadNCFile2
+555;SMC_ReadNCFromStream
+5;SMC_ReadNCQueue
+960;SMC_ReadNCTokens
+229;SMC_RecomputeABCSlopes
+245;SMC_ReduceVelEndAtCorner
+57;SMC_RotateQueue2D
+42;SMC_RoundPath
+92;SMC_ScaleQueue3D
+23;SMC_SmoothAddAxes
+230;SMC_SmoothBSpline
+221;SMC_SmoothMerge
+13;SMC_SmoothPath
+1301;SMC_StringStream
+1557;SMC_TeachCoordinateSystem
+46;SMC_ToolCorr
+782;SMC_ToolLengthCorr
+568;SMC_ToolRadiusCorr
+79;SMC_TranslateQueue3D
+2329;SMC_UnitVectorToRPY
+90;SMC_XInterpolator
+2243;sName
+252;SuppressSysMFuns
+3482;tokens
+791;udiRefillWindowSizePercentage
+238;udiStopsDueToCurvatureRadius
+256;udiTokensBufferSize
+233;uiNrElems
+232;usiMaxDegree
+261;vAB.dX
+262;vAB.dY
+1336;vAB.dZ
+3845;Valid
+1340;vBC.dX
+1344;vBC.dY
+1348;vBC.dZ
+1352;vCA.dX
+1356;vCA.dY
+1360;vCA.dZ
+185;vec
+2548;vec.dX
+2554;vec.dY
+2560;vec.dZ
+69;vecActTangent
+506;vecActTangent.dX
+507;vecActTangent.dY
+509;vecActTangent.dZ
+205;Vel (FF):%f
+39;Vel:%f
+103;VISU_SMC_CheckForLimits
+94;VISU_SMC_LimitCircularVelocities
+109;VISU_SMC_LimitDynamics
+1561;vOrigin.dX
+1565;vOrigin.dY
+1569;vOrigin.dZ
+1573;vPointOnX.dX
+1577;vPointOnX.dY
+3041;vPointOnX.dZ
+3048;vPointOnY.dX
+3056;vPointOnY.dY
+3064;vPointOnY.dZ
+2733;vStartToolLength
+1476;vStartToolLength.dX
+1480;vStartToolLength.dY
+1484;vStartToolLength.dZ
+452;vTranslation.dX
+3054;vTranslation.dY
+3063;vTranslation.dZ
+438;vX.dX
+439;vX.dY
+441;vX.dZ
+442;vY.dX
+444;vY.dY
+445;vY.dZ
+447;vZ.dX
+448;vZ.dY
+451;vZ.dZ
+133;wAddAxis
+51;wAddAxis: %d
+222;wAdditionalParamNumber
+170;wAxis
+111;wAxis: %d
+134;wAxisOutOfLimits
+104;wAxisOutOfLimits: %d
+49;wError: %d
+130;wErrorID
+14;wErrorID : %d
+110;wErrorID: %d
+231;wFeatureFlag
+137;wLimitSwNegative
+1;wLimitSwNegative: %d
+136;wLimitSwPositive
+0;wLimitSwPositive: %d
+;
+164;wM
+117;x
+213;x = %.2f u
+116;y
+214;y = %.2f u
+115;z
+212;z = %.2f u

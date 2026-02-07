@@ -1,0 +1,970 @@
+;****************************************************************
+;<loggername>.Audit.log</loggername>
+;<logoptions>
+;	<enable>1</enable>
+;	<type>normal</type>
+;	<timestamp>rtc high resolution</timestamp>
+;	<deactivatable>0</deactivatable>
+;	<dump>always</dump>
+;	<filter>0x7fffffff<filter>
+;	<maxentries>500</maxentries>
+;	<maxfiles>3</maxfiles>
+;	<maxfilesize>100000</maxfilesize>
+;</logoptions>
+;<entries>
+;Timestamp, CmpId, ClassId, ErrorId, InfoId, InfoText
+;ClassId: LOG_INFO		=1
+;ClassId: LOG_WARNING	=2
+;ClassId: LOG_ERROR		=4
+;ClassId: LOG_EXCEPTION	=8
+;ClassId: LOG_DEBUG		=16
+;ClassId: LOG_PRINTF	=32
+;ClassId: LOG_COM		=64
+;</entries>
+;****************************************************************
+2026-01-28T21:28:20.778Z, 0x000000a1, 1, 0, 0, System, Startup
+2026-01-28T21:28:20.778Z, 0x00000061, 1, 0, 0, System, Add object 'Device.CodeMeter' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.RemoteConnections.OPCUAServer' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportCertificate' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportCertificate' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.DeleteCertificate' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.MoveCertificate' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListCertificates' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListUseCases' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateSelfSignedCertificate' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateCertificateSigningRequest' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.GetStatus' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportPkcs12Keystore' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportPkcs12Keystore' successful
+2026-01-28T21:28:20.779Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcShell' successful
+2026-01-28T21:28:20.781Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement' successful
+2026-01-28T21:28:20.781Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Groups' successful
+2026-01-28T21:28:20.781Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Users' successful
+2026-01-28T21:28:20.781Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Access Rights' successful
+2026-01-28T21:29:32.624Z, 0x00000061, 1, 0, 0, System, Remove object 'Logger' successful
+2026-01-28T21:29:32.624Z, 0x00000061, 1, 0, 0, System, Remove object 'Settings' successful
+2026-01-28T21:29:32.624Z, 0x00000061, 4, 2, 0, **** ERROR: System, Remove object '<unknown object>' failed, result=ERR_PARAMETER
+2026-01-28T21:29:32.624Z, 0x00000061, 1, 0, 0, System, Remove object 'PlcLogic' successful
+2026-01-28T21:29:32.624Z, 0x000000a1, 1, 0, 1, System, Shutdown
+;****************************************************************
+;<loggername>.Audit.log</loggername>
+;<logoptions>
+;	<enable>1</enable>
+;	<type>normal</type>
+;	<timestamp>rtc high resolution</timestamp>
+;	<deactivatable>0</deactivatable>
+;	<dump>always</dump>
+;	<filter>0x7fffffff<filter>
+;	<maxentries>500</maxentries>
+;	<maxfiles>3</maxfiles>
+;	<maxfilesize>100000</maxfilesize>
+;</logoptions>
+;<entries>
+;Timestamp, CmpId, ClassId, ErrorId, InfoId, InfoText
+;ClassId: LOG_INFO		=1
+;ClassId: LOG_WARNING	=2
+;ClassId: LOG_ERROR		=4
+;ClassId: LOG_EXCEPTION	=8
+;ClassId: LOG_DEBUG		=16
+;ClassId: LOG_PRINTF	=32
+;ClassId: LOG_COM		=64
+;</entries>
+;****************************************************************
+2026-01-28T21:30:47.014Z, 0x000000a1, 1, 0, 0, System, Startup
+2026-01-28T21:30:47.014Z, 0x00000061, 1, 0, 0, System, Add object 'Device.CodeMeter' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.RemoteConnections.OPCUAServer' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportCertificate' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportCertificate' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.DeleteCertificate' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.MoveCertificate' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListCertificates' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListUseCases' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateSelfSignedCertificate' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateCertificateSigningRequest' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.GetStatus' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportPkcs12Keystore' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportPkcs12Keystore' successful
+2026-01-28T21:30:47.015Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcShell' successful
+2026-01-28T21:30:47.018Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement' successful
+2026-01-28T21:30:47.018Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Groups' successful
+2026-01-28T21:30:47.018Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Users' successful
+2026-01-28T21:30:47.018Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Access Rights' successful
+2026-01-28T21:30:47.038Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO' successful
+2026-01-28T21:30:47.038Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.__C-ModuleIntegration__' successful
+2026-01-28T21:30:47.038Z, 0x00000002, 1, 0, 0, System, App [IO] Create for Download successful
+2026-01-28T21:30:47.038Z, 0x00000002, 1, 0, 0, System, App [IO] Download started ...
+2026-01-28T21:30:47.039Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.039Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.039Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.039Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.040Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.040Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.040Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.040Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.040Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.040Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.040Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.040Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.040Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.040Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.041Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.042Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.042Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.042Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.042Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.042Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.042Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.042Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.042Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.042Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.042Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.043Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.044Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.044Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.044Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.044Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.044Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.044Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.044Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.044Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.044Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.044Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.045Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.045Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.045Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.045Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.045Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.045Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.045Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.045Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.045Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.045Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.046Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.046Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.046Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.046Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.046Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.046Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.052Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.__SymbolSets' successful
+2026-01-28T21:30:47.052Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.CommunicationManager' successful
+2026-01-28T21:30:47.052Z, 0x00000061, 1, 0, 0, System, Remove object 'CommunicationManager' successful
+2026-01-28T21:30:47.053Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:47.053Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:47.057Z, 0x00000002, 1, 0, 10, System, App [IO] started
+2026-01-28T21:30:58.759Z, 0x00000061, 1, 0, 0, System, Remove object 'Logger' successful
+2026-01-28T21:30:58.759Z, 0x00000061, 1, 0, 0, System, Remove object 'Settings' successful
+2026-01-28T21:30:58.759Z, 0x00000061, 4, 2, 0, **** ERROR: System, Remove object '<unknown object>' failed, result=ERR_PARAMETER
+2026-01-28T21:30:58.759Z, 0x00000061, 1, 0, 0, System, Remove object '__C-ModuleIntegration__' successful
+2026-01-28T21:30:58.759Z, 0x00000061, 1, 0, 0, System, Remove object 'IO' successful
+2026-01-28T21:30:58.760Z, 0x00000061, 1, 0, 0, System, Remove object 'PlcLogic' successful
+2026-01-28T21:30:58.760Z, 0x000000a1, 1, 0, 1, System, Shutdown
+;****************************************************************
+;<loggername>.Audit.log</loggername>
+;<logoptions>
+;	<enable>1</enable>
+;	<type>normal</type>
+;	<timestamp>rtc high resolution</timestamp>
+;	<deactivatable>0</deactivatable>
+;	<dump>always</dump>
+;	<filter>0x7fffffff<filter>
+;	<maxentries>500</maxentries>
+;	<maxfiles>3</maxfiles>
+;	<maxfilesize>100000</maxfilesize>
+;</logoptions>
+;<entries>
+;Timestamp, CmpId, ClassId, ErrorId, InfoId, InfoText
+;ClassId: LOG_INFO		=1
+;ClassId: LOG_WARNING	=2
+;ClassId: LOG_ERROR		=4
+;ClassId: LOG_EXCEPTION	=8
+;ClassId: LOG_DEBUG		=16
+;ClassId: LOG_PRINTF	=32
+;ClassId: LOG_COM		=64
+;</entries>
+;****************************************************************
+2026-01-28T21:30:59.126Z, 0x000000a1, 1, 0, 0, System, Startup
+2026-01-28T21:30:59.126Z, 0x00000061, 1, 0, 0, System, Add object 'Device.CodeMeter' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.RemoteConnections.OPCUAServer' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportCertificate' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportCertificate' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.DeleteCertificate' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.MoveCertificate' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListCertificates' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListUseCases' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateSelfSignedCertificate' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateCertificateSigningRequest' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.GetStatus' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportPkcs12Keystore' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportPkcs12Keystore' successful
+2026-01-28T21:30:59.127Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcShell' successful
+2026-01-28T21:30:59.129Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement' successful
+2026-01-28T21:30:59.129Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Groups' successful
+2026-01-28T21:30:59.129Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Users' successful
+2026-01-28T21:30:59.129Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Access Rights' successful
+2026-01-28T21:30:59.158Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO' successful
+2026-01-28T21:30:59.158Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.__C-ModuleIntegration__' successful
+2026-01-28T21:30:59.158Z, 0x00000002, 1, 0, 0, System, App [IO] Create for Download successful
+2026-01-28T21:30:59.158Z, 0x00000002, 1, 0, 0, System, App [IO] Download started ...
+2026-01-28T21:30:59.159Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.159Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.159Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.159Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.159Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.159Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.160Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.160Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.160Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.160Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.160Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.160Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.160Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.160Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.160Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.160Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.161Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.162Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.163Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.164Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.164Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.164Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.164Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.164Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.164Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.164Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.164Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.164Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.164Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.165Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.171Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.CommunicationManager' successful
+2026-01-28T21:30:59.171Z, 0x00000061, 1, 0, 0, System, Remove object 'CommunicationManager' successful
+2026-01-28T21:30:59.172Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-28T21:30:59.172Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-28T21:30:59.174Z, 0x00000002, 1, 0, 10, System, App [IO] started
+2026-01-28T23:31:53.617Z, 0x00000061, 1, 0, 0, System, Remove object 'Logger' successful
+2026-01-28T23:31:53.617Z, 0x00000061, 1, 0, 0, System, Remove object 'Settings' successful
+2026-01-28T23:31:53.617Z, 0x00000061, 4, 2, 0, **** ERROR: System, Remove object '<unknown object>' failed, result=ERR_PARAMETER
+2026-01-28T23:31:53.617Z, 0x00000061, 1, 0, 0, System, Remove object '__C-ModuleIntegration__' successful
+2026-01-28T23:31:53.617Z, 0x00000061, 1, 0, 0, System, Remove object 'IO' successful
+2026-01-28T23:31:53.617Z, 0x00000061, 1, 0, 0, System, Remove object 'PlcLogic' successful
+2026-01-28T23:31:53.617Z, 0x000000a1, 1, 0, 1, System, Shutdown
+;****************************************************************
+;<loggername>.Audit.log</loggername>
+;<logoptions>
+;	<enable>1</enable>
+;	<type>normal</type>
+;	<timestamp>rtc high resolution</timestamp>
+;	<deactivatable>0</deactivatable>
+;	<dump>always</dump>
+;	<filter>0x7fffffff<filter>
+;	<maxentries>500</maxentries>
+;	<maxfiles>3</maxfiles>
+;	<maxfilesize>100000</maxfilesize>
+;</logoptions>
+;<entries>
+;Timestamp, CmpId, ClassId, ErrorId, InfoId, InfoText
+;ClassId: LOG_INFO		=1
+;ClassId: LOG_WARNING	=2
+;ClassId: LOG_ERROR		=4
+;ClassId: LOG_EXCEPTION	=8
+;ClassId: LOG_DEBUG		=16
+;ClassId: LOG_PRINTF	=32
+;ClassId: LOG_COM		=64
+;</entries>
+;****************************************************************
+2026-01-29T17:27:53.038Z, 0x000000a1, 1, 0, 0, System, Startup
+2026-01-29T17:27:53.038Z, 0x00000061, 1, 0, 0, System, Add object 'Device.CodeMeter' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.RemoteConnections.OPCUAServer' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportCertificate' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportCertificate' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.DeleteCertificate' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.MoveCertificate' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListCertificates' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListUseCases' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateSelfSignedCertificate' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateCertificateSigningRequest' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.GetStatus' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportPkcs12Keystore' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportPkcs12Keystore' successful
+2026-01-29T17:27:53.039Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcShell' successful
+2026-01-29T17:27:53.047Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement' successful
+2026-01-29T17:27:53.047Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Groups' successful
+2026-01-29T17:27:53.047Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Users' successful
+2026-01-29T17:27:53.047Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Access Rights' successful
+2026-01-29T17:27:53.062Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO' successful
+2026-01-29T17:27:53.062Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.__C-ModuleIntegration__' successful
+2026-01-29T17:27:53.062Z, 0x00000002, 1, 0, 0, System, App [IO] Create for Download successful
+2026-01-29T17:27:53.062Z, 0x00000002, 1, 0, 0, System, App [IO] Download started ...
+2026-01-29T17:27:53.063Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.063Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.063Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.063Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.064Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.064Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.064Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.064Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.064Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.064Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.064Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.064Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.065Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.065Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.065Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.065Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.065Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.065Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.065Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.065Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.065Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.065Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.066Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.066Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.066Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.066Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.066Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.066Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.066Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.066Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.066Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.066Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.067Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.067Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.067Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.067Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.067Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.067Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.067Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.067Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.068Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.068Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.068Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.068Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.068Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.068Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.068Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.068Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.068Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.068Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.069Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.069Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.069Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.069Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.069Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.069Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.069Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.069Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.070Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.070Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.070Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.070Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.070Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.070Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.070Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.070Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.071Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.071Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.071Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.071Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.071Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.071Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.071Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.071Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.080Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.CommunicationManager' successful
+2026-01-29T17:27:53.080Z, 0x00000061, 1, 0, 0, System, Remove object 'CommunicationManager' successful
+2026-01-29T17:27:53.081Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:27:53.081Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:27:53.085Z, 0x00000002, 1, 0, 10, System, App [IO] started
+2026-01-29T17:27:59.885Z, 0x00000061, 1, 0, 0, System, Remove object 'Logger' successful
+2026-01-29T17:27:59.885Z, 0x00000061, 1, 0, 0, System, Remove object 'Settings' successful
+2026-01-29T17:27:59.885Z, 0x00000061, 4, 2, 0, **** ERROR: System, Remove object '<unknown object>' failed, result=ERR_PARAMETER
+2026-01-29T17:27:59.885Z, 0x00000061, 1, 0, 0, System, Remove object '__C-ModuleIntegration__' successful
+2026-01-29T17:27:59.885Z, 0x00000061, 1, 0, 0, System, Remove object 'IO' successful
+2026-01-29T17:27:59.885Z, 0x00000061, 1, 0, 0, System, Remove object 'PlcLogic' successful
+2026-01-29T17:27:59.885Z, 0x000000a1, 1, 0, 1, System, Shutdown
+;****************************************************************
+;<loggername>.Audit.log</loggername>
+;<logoptions>
+;	<enable>1</enable>
+;	<type>normal</type>
+;	<timestamp>rtc high resolution</timestamp>
+;	<deactivatable>0</deactivatable>
+;	<dump>always</dump>
+;	<filter>0x7fffffff<filter>
+;	<maxentries>500</maxentries>
+;	<maxfiles>3</maxfiles>
+;	<maxfilesize>100000</maxfilesize>
+;</logoptions>
+;<entries>
+;Timestamp, CmpId, ClassId, ErrorId, InfoId, InfoText
+;ClassId: LOG_INFO		=1
+;ClassId: LOG_WARNING	=2
+;ClassId: LOG_ERROR		=4
+;ClassId: LOG_EXCEPTION	=8
+;ClassId: LOG_DEBUG		=16
+;ClassId: LOG_PRINTF	=32
+;ClassId: LOG_COM		=64
+;</entries>
+;****************************************************************
+2026-01-29T17:28:00.230Z, 0x000000a1, 1, 0, 0, System, Startup
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.CodeMeter' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.RemoteConnections.OPCUAServer' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportCertificate' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportCertificate' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.DeleteCertificate' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.MoveCertificate' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListCertificates' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListUseCases' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateSelfSignedCertificate' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateCertificateSigningRequest' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.GetStatus' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportPkcs12Keystore' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportPkcs12Keystore' successful
+2026-01-29T17:28:00.230Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcShell' successful
+2026-01-29T17:28:00.233Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement' successful
+2026-01-29T17:28:00.233Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Groups' successful
+2026-01-29T17:28:00.233Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Users' successful
+2026-01-29T17:28:00.233Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Access Rights' successful
+2026-01-29T17:28:00.258Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO' successful
+2026-01-29T17:28:00.258Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.__C-ModuleIntegration__' successful
+2026-01-29T17:28:00.258Z, 0x00000002, 1, 0, 0, System, App [IO] Create for Download successful
+2026-01-29T17:28:00.258Z, 0x00000002, 1, 0, 0, System, App [IO] Download started ...
+2026-01-29T17:28:00.259Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.259Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.259Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.259Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.260Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.260Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.260Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.260Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.260Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.260Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.260Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.260Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.260Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.260Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.261Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.262Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.262Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.262Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.262Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.262Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.262Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.262Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.262Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.262Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.262Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.263Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.264Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.264Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.264Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.264Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.264Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.264Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.264Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.264Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.264Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.264Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.265Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.265Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.265Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.265Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.265Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.265Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.265Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.265Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.265Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.265Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.266Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.266Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.266Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.266Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.266Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.266Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.272Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.CommunicationManager' successful
+2026-01-29T17:28:00.272Z, 0x00000061, 1, 0, 0, System, Remove object 'CommunicationManager' successful
+2026-01-29T17:28:00.273Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:28:00.273Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:28:00.275Z, 0x00000002, 1, 0, 10, System, App [IO] started
+2026-01-29T17:30:46.459Z, 0x00000061, 1, 0, 0, System, Remove object 'Logger' successful
+2026-01-29T17:30:46.459Z, 0x00000061, 1, 0, 0, System, Remove object 'Settings' successful
+2026-01-29T17:30:46.459Z, 0x00000061, 4, 2, 0, **** ERROR: System, Remove object '<unknown object>' failed, result=ERR_PARAMETER
+2026-01-29T17:30:46.459Z, 0x00000061, 1, 0, 0, System, Remove object '__C-ModuleIntegration__' successful
+2026-01-29T17:30:46.459Z, 0x00000061, 1, 0, 0, System, Remove object 'IO' successful
+2026-01-29T17:30:46.459Z, 0x00000061, 1, 0, 0, System, Remove object 'PlcLogic' successful
+2026-01-29T17:30:46.459Z, 0x000000a1, 1, 0, 1, System, Shutdown
+;****************************************************************
+;<loggername>.Audit.log</loggername>
+;<logoptions>
+;	<enable>1</enable>
+;	<type>normal</type>
+;	<timestamp>rtc high resolution</timestamp>
+;	<deactivatable>0</deactivatable>
+;	<dump>always</dump>
+;	<filter>0x7fffffff<filter>
+;	<maxentries>500</maxentries>
+;	<maxfiles>3</maxfiles>
+;	<maxfilesize>100000</maxfilesize>
+;</logoptions>
+;<entries>
+;Timestamp, CmpId, ClassId, ErrorId, InfoId, InfoText
+;ClassId: LOG_INFO		=1
+;ClassId: LOG_WARNING	=2
+;ClassId: LOG_ERROR		=4
+;ClassId: LOG_EXCEPTION	=8
+;ClassId: LOG_DEBUG		=16
+;ClassId: LOG_PRINTF	=32
+;ClassId: LOG_COM		=64
+;</entries>
+;****************************************************************
+2026-01-29T17:33:40.095Z, 0x000000a1, 1, 0, 0, System, Startup
+2026-01-29T17:33:40.095Z, 0x00000061, 1, 0, 0, System, Add object 'Device.CodeMeter' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.RemoteConnections.OPCUAServer' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportCertificate' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportCertificate' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.DeleteCertificate' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.MoveCertificate' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListCertificates' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListUseCases' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateSelfSignedCertificate' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateCertificateSigningRequest' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.GetStatus' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportPkcs12Keystore' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportPkcs12Keystore' successful
+2026-01-29T17:33:40.096Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcShell' successful
+2026-01-29T17:33:40.099Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement' successful
+2026-01-29T17:33:40.099Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Groups' successful
+2026-01-29T17:33:40.099Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Users' successful
+2026-01-29T17:33:40.099Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Access Rights' successful
+2026-01-29T17:33:40.120Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO' successful
+2026-01-29T17:33:40.120Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.__C-ModuleIntegration__' successful
+2026-01-29T17:33:40.120Z, 0x00000002, 1, 0, 0, System, App [IO] Create for Download successful
+2026-01-29T17:33:40.121Z, 0x00000002, 1, 0, 0, System, App [IO] Download started ...
+2026-01-29T17:33:40.121Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.121Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.122Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.122Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.122Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.122Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.122Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.122Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.122Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.122Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.122Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.122Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.123Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.124Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.125Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.125Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.125Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.125Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.125Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.125Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.125Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.125Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.125Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.125Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.126Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.127Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.127Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.127Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.127Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.127Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.127Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.127Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.127Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.127Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.127Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.128Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.128Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.128Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.128Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.128Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.128Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.134Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.CommunicationManager' successful
+2026-01-29T17:33:40.134Z, 0x00000061, 1, 0, 0, System, Remove object 'CommunicationManager' successful
+2026-01-29T17:33:40.135Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:40.135Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:40.138Z, 0x00000002, 1, 0, 10, System, App [IO] started
+2026-01-29T17:33:46.938Z, 0x00000061, 1, 0, 0, System, Remove object 'Logger' successful
+2026-01-29T17:33:46.938Z, 0x00000061, 1, 0, 0, System, Remove object 'Settings' successful
+2026-01-29T17:33:46.938Z, 0x00000061, 4, 2, 0, **** ERROR: System, Remove object '<unknown object>' failed, result=ERR_PARAMETER
+2026-01-29T17:33:46.938Z, 0x00000061, 1, 0, 0, System, Remove object '__C-ModuleIntegration__' successful
+2026-01-29T17:33:46.938Z, 0x00000061, 1, 0, 0, System, Remove object 'IO' successful
+2026-01-29T17:33:46.938Z, 0x00000061, 1, 0, 0, System, Remove object 'PlcLogic' successful
+2026-01-29T17:33:46.938Z, 0x000000a1, 1, 0, 1, System, Shutdown
+;****************************************************************
+;<loggername>.Audit.log</loggername>
+;<logoptions>
+;	<enable>1</enable>
+;	<type>normal</type>
+;	<timestamp>rtc high resolution</timestamp>
+;	<deactivatable>0</deactivatable>
+;	<dump>always</dump>
+;	<filter>0x7fffffff<filter>
+;	<maxentries>500</maxentries>
+;	<maxfiles>3</maxfiles>
+;	<maxfilesize>100000</maxfilesize>
+;</logoptions>
+;<entries>
+;Timestamp, CmpId, ClassId, ErrorId, InfoId, InfoText
+;ClassId: LOG_INFO		=1
+;ClassId: LOG_WARNING	=2
+;ClassId: LOG_ERROR		=4
+;ClassId: LOG_EXCEPTION	=8
+;ClassId: LOG_DEBUG		=16
+;ClassId: LOG_PRINTF	=32
+;ClassId: LOG_COM		=64
+;</entries>
+;****************************************************************
+2026-01-29T17:33:47.275Z, 0x000000a1, 1, 0, 0, System, Startup
+2026-01-29T17:33:47.275Z, 0x00000061, 1, 0, 0, System, Add object 'Device.CodeMeter' successful
+2026-01-29T17:33:47.275Z, 0x00000061, 1, 0, 0, System, Add object 'Device.RemoteConnections.OPCUAServer' successful
+2026-01-29T17:33:47.275Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509' successful
+2026-01-29T17:33:47.275Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportCertificate' successful
+2026-01-29T17:33:47.275Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportCertificate' successful
+2026-01-29T17:33:47.275Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.DeleteCertificate' successful
+2026-01-29T17:33:47.275Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.MoveCertificate' successful
+2026-01-29T17:33:47.275Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListCertificates' successful
+2026-01-29T17:33:47.275Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListUseCases' successful
+2026-01-29T17:33:47.275Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateSelfSignedCertificate' successful
+2026-01-29T17:33:47.276Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateCertificateSigningRequest' successful
+2026-01-29T17:33:47.276Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.GetStatus' successful
+2026-01-29T17:33:47.276Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportPkcs12Keystore' successful
+2026-01-29T17:33:47.276Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportPkcs12Keystore' successful
+2026-01-29T17:33:47.276Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcShell' successful
+2026-01-29T17:33:47.278Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement' successful
+2026-01-29T17:33:47.278Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Groups' successful
+2026-01-29T17:33:47.278Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Users' successful
+2026-01-29T17:33:47.278Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Access Rights' successful
+2026-01-29T17:33:47.301Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO' successful
+2026-01-29T17:33:47.301Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.__C-ModuleIntegration__' successful
+2026-01-29T17:33:47.301Z, 0x00000002, 1, 0, 0, System, App [IO] Create for Download successful
+2026-01-29T17:33:47.301Z, 0x00000002, 1, 0, 0, System, App [IO] Download started ...
+2026-01-29T17:33:47.302Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.302Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.302Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.302Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.302Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.302Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.302Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.302Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.302Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.302Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.303Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.304Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.304Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.304Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.304Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.304Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.304Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.304Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.304Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.304Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.304Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.305Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.306Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.307Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.307Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.307Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.307Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.307Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.307Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.307Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.307Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.308Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.308Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.308Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.308Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.308Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.308Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.308Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.308Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.308Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.308Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.314Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.CommunicationManager' successful
+2026-01-29T17:33:47.314Z, 0x00000061, 1, 0, 0, System, Remove object 'CommunicationManager' successful
+2026-01-29T17:33:47.315Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T17:33:47.315Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T17:33:47.317Z, 0x00000002, 1, 0, 10, System, App [IO] started
+2026-01-29T19:14:41.130Z, 0x00000061, 1, 0, 0, System, Remove object 'Logger' successful
+2026-01-29T19:14:41.130Z, 0x00000061, 1, 0, 0, System, Remove object 'Settings' successful
+2026-01-29T19:14:41.130Z, 0x00000061, 4, 2, 0, **** ERROR: System, Remove object '<unknown object>' failed, result=ERR_PARAMETER
+2026-01-29T19:14:41.130Z, 0x00000061, 1, 0, 0, System, Remove object '__C-ModuleIntegration__' successful
+2026-01-29T19:14:41.130Z, 0x00000061, 1, 0, 0, System, Remove object 'IO' successful
+2026-01-29T19:14:41.130Z, 0x00000061, 1, 0, 0, System, Remove object 'PlcLogic' successful
+2026-01-29T19:14:41.130Z, 0x000000a1, 1, 0, 1, System, Shutdown
+;****************************************************************
+;<loggername>.Audit.log</loggername>
+;<logoptions>
+;	<enable>1</enable>
+;	<type>normal</type>
+;	<timestamp>rtc high resolution</timestamp>
+;	<deactivatable>0</deactivatable>
+;	<dump>always</dump>
+;	<filter>0x7fffffff<filter>
+;	<maxentries>500</maxentries>
+;	<maxfiles>3</maxfiles>
+;	<maxfilesize>100000</maxfilesize>
+;</logoptions>
+;<entries>
+;Timestamp, CmpId, ClassId, ErrorId, InfoId, InfoText
+;ClassId: LOG_INFO		=1
+;ClassId: LOG_WARNING	=2
+;ClassId: LOG_ERROR		=4
+;ClassId: LOG_EXCEPTION	=8
+;ClassId: LOG_DEBUG		=16
+;ClassId: LOG_PRINTF	=32
+;ClassId: LOG_COM		=64
+;</entries>
+;****************************************************************
+2026-01-29T19:17:32.516Z, 0x000000a1, 1, 0, 0, System, Startup
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.CodeMeter' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.RemoteConnections.OPCUAServer' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportCertificate' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportCertificate' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.DeleteCertificate' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.MoveCertificate' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListCertificates' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ListUseCases' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateSelfSignedCertificate' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.CreateCertificateSigningRequest' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.GetStatus' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ImportPkcs12Keystore' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.X509.ExportPkcs12Keystore' successful
+2026-01-29T19:17:32.517Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcShell' successful
+2026-01-29T19:17:32.520Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement' successful
+2026-01-29T19:17:32.520Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Groups' successful
+2026-01-29T19:17:32.520Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Users' successful
+2026-01-29T19:17:32.520Z, 0x00000061, 1, 0, 0, System, Add object 'Device.UserManagement.Access Rights' successful
+2026-01-29T19:17:32.542Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO' successful
+2026-01-29T19:17:32.542Z, 0x00000061, 1, 0, 0, System, Add object 'Device.PlcLogic.IO.__C-ModuleIntegration__' successful
+2026-01-29T19:17:32.542Z, 0x00000002, 1, 0, 0, System, App [IO] Create for Download successful
+2026-01-29T19:17:32.542Z, 0x00000002, 1, 0, 0, System, App [IO] Download started ...
+2026-01-29T19:17:32.543Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.543Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.543Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.543Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.544Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.544Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.544Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.544Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.544Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.544Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.544Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.544Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.544Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.544Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.545Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.545Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.545Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.545Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.545Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.545Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.545Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.545Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.546Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.546Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.546Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.546Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.546Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.546Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.546Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.546Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.546Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.546Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.547Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.547Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.547Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.547Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.547Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.547Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.547Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.547Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.547Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.547Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.548Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.548Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.548Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.548Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.548Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.548Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.548Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.548Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.549Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.549Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.549Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.549Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.549Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.549Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.549Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.549Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.549Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.549Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.550Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.550Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.550Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.550Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.550Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.550Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
+2026-01-29T19:17:32.550Z, 0x00000002, 1, 0, 0, System, App [IO] Download successful, create bootproject: 0
+2026-01-29T19:17:32.550Z, 0x00000002, 1, 0, 0, System, App CodeGUID: 0b5ea275-0000-0000-0000-000000000000, DataGUID: d3c2fbee-0000-0000-0000-000000000000
