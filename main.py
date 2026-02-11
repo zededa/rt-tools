@@ -87,8 +87,7 @@ def setup_metrics(cfg: DictConfig) -> None:
     pqos_monitor.start()
 
 
-@hydra.main(version_base=None, config_path="conf", config_name="config")
-def main(cfg: DictConfig):
+def run_test(cfg: DictConfig):
     collector = SystemInfoCollector()
     collector.gather_all(cfg)
     collector.dump_to_file(cfg.sysinfo_collector_file)
@@ -115,6 +114,71 @@ def main(cfg: DictConfig):
         set_irq_affinity(cfg.irq_affinity.housekeeping_cores)
 
     return runner.run_test(cfg.run.command, cfg.run.t_core, cfg.run.stressor)
+
+
+@hydra.main(version_base=None, config_path="conf", config_name="config")
+def main(cfg: DictConfig):
+    execution_dir = os.getcwd()
+    counter_file = "/var/tmp/rt_tools_cur_count.txt"
+    service_name = "program-reboot.service"
+    service_path = f"/etc/systemd/system/{service_name}"
+    max_count = cfg.run.max_count
+
+    if max_count <= 1:
+        print("max_count <=1. Running once and exiting.")
+        run_test(cfg)
+        sys.exit(0)
+
+    cur_count = 0
+    if os.path.exists(counter_file):
+        with open(counter_file, "r") as f:
+            cur_count = int(f.read().strip())
+    else:
+        cur_count = 0
+
+    if cur_count == 0:
+        # First run: Setup systemd
+        print("First run (cur=0). Creating systemd service...")
+        service_content = f"""[Unit]
+Description=Auto-run main.py on boot
+After=network.target
+
+[Service]
+Type=oneshot
+User={os.getenv('USER')}
+WorkingDirectory={execution_dir}
+ExecStart=sudo ./env/python3 main.py
+RemainAfterExit=no
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
+"""
+        with open(service_path, "w") as f:
+            f.write(service_content)
+        subprocess.run(["sudo", "systemctl", "daemon-reload"])
+        subprocess.run(["sudo", "systemctl", "enable", service_name])
+
+    print(f"Run {cur_count + 1}/{max_count}")
+    run_test(cfg)
+
+    # Increment and check
+    cur_count += 1
+    with open(counter_file, "w") as f:
+        f.write(str(cur_count))
+
+    if cur_count >= max_count:
+        print("Max count reached. Cleaning up and exiting.")
+        if os.path.exists(service_path):
+            subprocess.run(["sudo", "systemctl", "stop", service_name], check=False)
+            subprocess.run(["sudo", "systemctl", "disable", service_name], check=False)
+            os.remove(service_path)
+            subprocess.run(["sudo", "systemctl", "daemon-reload"])
+        os.remove(counter_file)
+        sys.exit(0)
+    else:
+        print("Rebooting for next run...")
+        os.system("sudo reboot")
 
 
 if __name__ == "__main__":
