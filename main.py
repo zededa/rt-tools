@@ -95,6 +95,7 @@ def main(cfg: DictConfig):
 
     if cfg.demo.demo_mode:
         print("Running in demo mode. Skipping test execution.")
+        setup_pqos(cfg)
         runner = DockerHDE2E(cfg)
         print("Starting demo HDE2E test...")
         print("Starting IO...")
