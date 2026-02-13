@@ -100,7 +100,8 @@ def run_test(cfg: DictConfig):
 
     if cfg.demo.demo_mode:
         print("Running in demo mode. Skipping test execution.")
-        setup_pqos(cfg)
+        if cfg.pqos.enable:
+            setup_pqos(cfg)
         runner = DockerHDE2E(cfg)
         print("Starting demo HDE2E test...")
         print("Starting IO...")
@@ -121,7 +122,8 @@ def run_test(cfg: DictConfig):
         if cfg.run.command == "build":
             return runner.build()
 
-        setup_pqos(cfg)
+        if cfg.pqos.enable:
+            setup_pqos(cfg)
 
         # Handle test commands
         if cfg.run.command not in runner.tests:

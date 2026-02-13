@@ -276,7 +276,7 @@ class DockerTestRunner:
         cyclictest_cmd = (
             # "chrt -r 95 "
             f"/usr/bin/cyclictest --threads -t 1 -p 95 "
-            f"-l {cycles} -d 1 -D 0 -i 100000 -a {t_core}"
+            f"-l {cycles} -d 1 -D 0 -i {self.config.caterpillar.n_cycles} -a {t_core}"
         )
         if self.config.run.docker:
             rdtset_cmd = f"stdbuf -oL -eL " f"{cyclictest_cmd}"
@@ -547,7 +547,7 @@ class DockerTestRunner:
             bufsize=1,
         )
 
-        if self.config.run.cat_clos_pinning.enable:
+        if self.config.run.cat_clos_pinning.enable and self.config.pqos.enable:
             MAX_RETRIES = 5
             SLEEP_TIME = 2  # Seconds to wait between tries
 
