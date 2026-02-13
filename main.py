@@ -77,14 +77,15 @@ def setup_metrics(cfg: DictConfig) -> None:
     cpustat_monitor = CpuStatMonitor(
         cfg.cpustat_monitor.path, cfg.softirq_monitor.interval
     )
-    pqos_monitor = PQOSMonitor(cfg.pqos_monitor.path, cfg.pqos_monitor.interval)
+    if cfg.pqos.enable:
+        pqos_monitor = PQOSMonitor(cfg.pqos_monitor.path, cfg.pqos_monitor.interval)
+        pqos_monitor.start()
 
     cpu_monitor.start()
     interrupt_monitor.start()
     meminfo_monitor.start()
     softirq_monitor.start()
     cpustat_monitor.start()
-    pqos_monitor.start()
 
 
 def run_test(cfg: DictConfig):

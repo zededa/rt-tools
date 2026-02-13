@@ -3,6 +3,7 @@ import io
 import subprocess
 import psutil
 import time
+import shlex
 
 from typing import List, Optional
 from omegaconf import DictConfig, OmegaConf
@@ -237,7 +238,7 @@ class DockerTestRunner:
                 rdtset_cmd,
             ]
         else:
-            cmd = [caterpillar_cmd]
+            cmd = shlex.split(caterpillar_cmd)
 
         print(" ".join(cmd))
         try:
@@ -287,7 +288,7 @@ class DockerTestRunner:
                 rdtset_cmd,
             ]
         else:
-            cmd = [cyclictest_cmd]
+            cmd = shlex.split(cyclictest_cmd)
 
         print(" ".join(cmd))
 
