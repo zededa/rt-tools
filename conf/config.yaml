@@ -24,6 +24,7 @@ pqos:
   # 'msr' = Direct hardware access (Cores only, if some features are
   # not upstream kernel
   interface: "os"
+  enable: true
   
   # resets all allocations before applying new ones
   reset_before_apply: true

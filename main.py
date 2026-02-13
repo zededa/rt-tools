@@ -101,7 +101,8 @@ def run_test(cfg: DictConfig):
     if cfg.run.command == "build":
         return runner.build()
 
-    setup_pqos(cfg)
+    if cfg.pqos.enable:
+        setup_pqos(cfg)
 
     # Handle test commands
     if cfg.run.command not in runner.tests:
