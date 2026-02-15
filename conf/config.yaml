@@ -4,7 +4,7 @@ sysinfo_collector_file: "${hydra:run.dir}/sysinfo.json"
 # --- Configuration for getting BIOS data from redfish
 
 bios:
-  enable: true
+  enable: false
   redfish:
     host: "0.0.0.0"
     username: "root"
@@ -24,7 +24,7 @@ pqos:
   # 'msr' = Direct hardware access (Cores only, if some features are
   # not upstream kernel
   interface: "os"
-  enable: true
+  enable: false
   
   # resets all allocations before applying new ones
   reset_before_apply: true
@@ -50,7 +50,7 @@ pqos:
       pids: [115, 118]
 
 irq_affinity:
-  enabled: true
+  enabled: false
   housekeeping_cores: "0-1"
       
 # --- Configuration related to tests running and parameters passed to it
@@ -59,12 +59,12 @@ run:
   t_core: "9,11"
   max_count: 1
   numa_node: "1"
-  stressor: true
+  stressor: false
   # tests_path: "tests"
-  metrics: true # enable metrics monitoring
-  docker: true # run inside docker container, if false will run on host system
+  metrics: false # enable metrics monitoring
+  docker: false # run inside docker container, if false will run on host system
   cat_clos_pinning:
-    enable: true # pins test PID to CLOS specified below works only for caterpillar and cyclictest
+    enable: false # pins test PID to CLOS specified below works only for caterpillar and cyclictest
     clos: 1
 
 # --- High density End to End demo ---

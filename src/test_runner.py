@@ -264,7 +264,10 @@ class DockerTestRunner:
             process.terminate()
         finally:
             try:
-                subprocess.run("docker stop $(docker ps -q)", shell=True, check=False)
+                if self.config.run.docker:
+                    subprocess.run(
+                        "docker stop $(docker ps -q)", shell=True, check=False
+                    )
             except Exception as e:
                 print(f"Error stopping containers: {e}")
 
