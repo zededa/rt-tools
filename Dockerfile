@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     eci-realtime-benchmarking \
     rt-tests \
     intel-cmt-cat \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
 ENV USER=root
