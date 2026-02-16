@@ -34,7 +34,7 @@ pqos:
       description: "real-time workload"
       # Hexademical mask (e.g 0x003 means using the last 2 cache ways)
       l3_mask: "0x00ff" # comment if none
-      l2_mask: "0x00ff"
+      #l2_mask: "0x00ff"
       mba: 100
       # set PIDs to assign to CLOS leave empty if none
       pids : [] 
@@ -44,7 +44,7 @@ pqos:
       description: "background worker"
       # Using different cache ways to isolate from class 1
       l3_mask: "0x7f00"
-      l2_mask: "0xff00"
+      #l2_mask: "0xff00"
       mba: 10
       cores: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
       pids: [115, 118]
