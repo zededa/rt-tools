@@ -20,6 +20,7 @@ from src.sysinfo_collector import SystemInfoCollector
 from src.pqos_manager import PQOSManager
 from src.irq_affinity import set_irq_affinity
 from src.test_runner import DockerTestRunner
+from scr.detect_cpus import detect_cpus
 
 
 def setup_pqos(cfg: DictConfig) -> None:
@@ -115,7 +116,11 @@ def run_test(cfg: DictConfig):
     if cfg.irq_affinity.enabled:
         set_irq_affinity(cfg.irq_affinity.housekeeping_cores)
 
-    return runner.run_test(cfg.run.command, cfg.run.t_core, cfg.run.stressor)
+    cores = detect_cpus()
+    if cores == "":
+        cores = cfg.run.t_core
+
+    return runner.run_test(cfg.run.command, cores, cfg.run.stressor)
 
 
 @hydra.main(version_base=None, config_path="conf", config_name="config")
