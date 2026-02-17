@@ -95,8 +95,24 @@ def run_test(cfg: DictConfig):
     # Validate RT environment before doing anything else
     run_preflight(strict=not cfg.run.docker)
 
+    # Detect effective cores early so sysinfo captures the real values
+    cores = detect_cpus()
+    if cores == "":
+        cores = cfg.run.t_core
+
+    housekeeping_core = os.environ.get("RT_HOUSEKEEPING_CORE", "")
+
     collector = SystemInfoCollector()
     collector.gather_all(cfg)
+    collector.info["runtime"] = {
+        "effective_cores": cores,
+        "config_cores": cfg.run.t_core,
+        "housekeeping_core": housekeeping_core or "N/A",
+        "source": "RT_BENCHMARK_CORES"
+        if os.environ.get("RT_BENCHMARK_CORES")
+        else "cgroup/fallback",
+        "command": cfg.run.command,
+    }
     collector.dump_to_file(cfg.sysinfo_collector_file)
 
     # Collect BIOS settings via redfish
@@ -139,10 +155,6 @@ def run_test(cfg: DictConfig):
             setup_metrics(cfg)
         if cfg.irq_affinity.enabled:
             set_irq_affinity(cfg.irq_affinity.housekeeping_cores)
-
-        cores = detect_cpus()
-        if cores == "":
-            cores = cfg.run.t_core
 
         return runner.run_test(cfg.run.command, cores, cfg.run.stressor)
 

@@ -220,7 +220,7 @@ if [ $# -gt 0 ]; then
 fi
 
 echo "Container staying alive (sshd running on core ${HOUSEKEEPING_CORE}). SSH in or ctrl-c to stop."
-exec taskset -c "$HOUSEKEEPING_CORE" /usr/sbin/sshd -D
+sleep infinity
 ENTRY
 RUN chmod +x /entrypoint.sh
 
