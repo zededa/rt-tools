@@ -123,9 +123,61 @@ EXPOSE 22 8888
 # Entrypoint script: start sshd, run CMD, keep container alive
 RUN cat > /entrypoint.sh <<'ENTRY'
 #!/bin/bash
+
+# --- Detect cpuset and split into housekeeping vs benchmark cores ---
+CPUSET=""
+for f in /sys/fs/cgroup/cpuset.cpus.effective \
+         /sys/fs/cgroup/cpuset/cpuset.cpus \
+         /sys/fs/cgroup/cpuset/cpuset.effective_cpus; do
+    if [ -f "$f" ]; then
+        CPUSET=$(cat "$f")
+        break
+    fi
+done
+
+# Expand cpuset string (e.g. "2,4-6") into a sorted list of cores
+expand_cpuset() {
+    local result=""
+    IFS=',' read -ra parts <<< "$1"
+    for part in "${parts[@]}"; do
+        if [[ "$part" == *-* ]]; then
+            IFS='-' read -r lo hi <<< "$part"
+            for ((i=lo; i<=hi; i++)); do
+                result="$result $i"
+            done
+        else
+            result="$result $part"
+        fi
+    done
+    echo "$result" | tr ' ' '\n' | sort -n | tr '\n' ' '
+}
+
+ALL_CORES=( $(expand_cpuset "$CPUSET") )
+NUM_CORES=${#ALL_CORES[@]}
+
+if [ "$NUM_CORES" -ge 2 ]; then
+    # First core is housekeeping, rest are for benchmarks
+    HOUSEKEEPING_CORE=${ALL_CORES[0]}
+    BENCHMARK_CORES=$(IFS=,; echo "${ALL_CORES[*]:1}")
+    echo "CPU layout: housekeeping=${HOUSEKEEPING_CORE} benchmark=${BENCHMARK_CORES} (from cpuset: ${CPUSET})"
+else
+    # Only one core, everything shares it
+    HOUSEKEEPING_CORE=${ALL_CORES[0]:-0}
+    BENCHMARK_CORES=${ALL_CORES[0]:-0}
+    echo "WARNING: Only ${NUM_CORES} core(s) available (${CPUSET}), no isolation possible"
+fi
+
+# Export for child processes (main.py can read these)
+export RT_HOUSEKEEPING_CORE="$HOUSEKEEPING_CORE"
+export RT_BENCHMARK_CORES="$BENCHMARK_CORES"
+
+# Pin this shell (and all children: sshd, python, uv) to housekeeping core
+taskset -pc "$HOUSEKEEPING_CORE" $$ 2>/dev/null || true
+
+# --- Start services pinned to housekeeping core ---
 mkdir -p /run/sshd
-echo "Starting SSH server..."
-/usr/sbin/sshd -e || echo "WARNING: sshd failed to start (exit code $?)"
+echo "Starting SSH server on core ${HOUSEKEEPING_CORE}..."
+taskset -c "$HOUSEKEEPING_CORE" /usr/sbin/sshd -e || echo "WARNING: sshd failed to start (exit code $?)"
 
 IP=$(hostname -I 2>/dev/null | awk '{print $1}')
 IP=${IP:-<unknown>}
@@ -134,6 +186,9 @@ echo ""
 echo "============================================================"
 echo "  RT Benchmarking Container"
 echo "============================================================"
+echo ""
+echo "  Housekeeping core: ${HOUSEKEEPING_CORE}"
+echo "  Benchmark cores:   ${BENCHMARK_CORES}"
 echo ""
 echo "  SSH:      ssh -i <key> root@${IP}"
 echo "  Jupyter:  ssh in, then run: jupyter-start"
@@ -164,8 +219,8 @@ if [ $# -gt 0 ]; then
     echo ""
 fi
 
-echo "Container staying alive (sshd running). SSH in or ctrl-c to stop."
-exec /usr/sbin/sshd -D
+echo "Container staying alive (sshd running on core ${HOUSEKEEPING_CORE}). SSH in or ctrl-c to stop."
+exec taskset -c "$HOUSEKEEPING_CORE" /usr/sbin/sshd -D
 ENTRY
 RUN chmod +x /entrypoint.sh
 

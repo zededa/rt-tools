@@ -15,9 +15,18 @@ _CGROUP_V1_PATHS = (
 def detect_cpus() -> str:
     """Detect which CPUs this process/container is allowed to run on.
 
-    Returns the cpuset string (e.g. "9,11" or "2-5") as seen by cgroup,
-    falling back to /proc/stat or sysconf if cgroup is unavailable.
+    Returns the cpuset string (e.g. "9,11" or "2-5").
+
+    Prefers RT_BENCHMARK_CORES env var (set by entrypoint.sh) which
+    excludes the housekeeping core. Falls back to cgroup, /proc/stat,
+    or sysconf.
     """
+    # Entrypoint sets this to the clean cores (excluding housekeeping)
+    env_cores = os.environ.get("RT_BENCHMARK_CORES", "").strip()
+    if env_cores:
+        log.info("Detected CPUs from RT_BENCHMARK_CORES env: %s", env_cores)
+        return env_cores
+
     for source, result in (
         ("cgroup-v2", _from_cgroup_v2),
         ("cgroup-v1", _from_cgroup_v1),
