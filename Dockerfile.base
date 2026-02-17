@@ -1,20 +1,187 @@
 FROM debian:bookworm-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash \
+    bash-completion \
     ca-certificates \
     curl \
+    git \
     gnupg \
+    less \
     lsb-release \
-    wget
+    ncurses-base \
+    ncurses-term \
+    openssh-server \
+    procps \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# Shell environment
+ENV SHELL=/bin/bash
+ENV TERM=xterm-256color
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+
+# Login banner (motd)
+RUN cat > /etc/motd <<'MOTD'
+
+  ╔═════════════════════════════════════════════════════════════╗
+  ║              RT Benchmarking Container                      ║
+  ╠═════════════════════════════════════════════════════════════╣
+  ║                                                             ║
+  ║  BENCHMARKS                                                 ║
+  ║    Run benchmark:  cd /app && uv run python main.py \       ║
+  ║                      run.docker=false pqos.enable=false     ║
+  ║    Pre-flight:     cd /app && uv run python -m \            ║
+  ║                      src.rt_preflight                       ║
+  ║                                                             ║
+  ║  JUPYTER NOTEBOOK                                           ║
+  ║    Start:          jupyter-start                            ║
+  ║    Then open:      http://<this-host>:8888                  ║
+  ║                                                             ║
+  ║  RESULTS                                                    ║
+  ║    Output dir:     /app/outputs/                            ║
+  ║    Notebooks:      /app/notebook/                           ║
+  ║    SCP results:    scp -i <key> root@<host>:/app/outputs .  ║
+  ║                                                             ║
+  ║  USEFUL COMMANDS                                            ║
+  ║    rt-preflight    Run RT environment checks                ║
+  ║    rt-info         Show detected CPUs and kernel info       ║
+  ║    ll              List files (long format)                 ║
+  ║                                                             ║
+  ╚═════════════════════════════════════════════════════════════╝
+
+MOTD
+
+# Minimal but usable bashrc
+RUN cat > /root/.bashrc <<'EOF'
+# prompt
+PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
+
+# history
+HISTSIZE=1000
+HISTFILESIZE=2000
+HISTCONTROL=ignoreboth
+shopt -s histappend
+
+# usability
+shopt -s checkwinsize
+
+# color ls
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# RT tools aliases
+jupyter-start() {
+    local ip
+    ip=$(hostname -I 2>/dev/null | awk '{print $1}')
+    ip=${ip:-0.0.0.0}
+    echo ""
+    echo "  Starting Jupyter Notebook..."
+    echo "  Connect at:  http://${ip}:8888"
+    echo ""
+    cd /app && uv run jupyter notebook \
+        --ip=0.0.0.0 \
+        --port=8888 \
+        --no-browser \
+        --allow-root \
+        --notebook-dir=/app/notebook \
+        --ServerApp.custom_display_url="http://${ip}:8888"
+}
+alias rt-preflight='cd /app && uv run python -m src.rt_preflight'
+alias rt-info='echo "=== Kernel ===" && uname -a && echo && echo "=== CPUs (cgroup) ===" && cat /sys/fs/cgroup/cpuset.cpus.effective 2>/dev/null || cat /sys/fs/cgroup/cpuset/cpuset.cpus 2>/dev/null || echo "N/A" && echo && echo "=== RT cmdline params ===" && cat /proc/cmdline | tr " " "\n" | grep -E "isolcpus|nohz|rcu_nocbs|irqaffinity|cstate|pstate|hugepages"'
+
+# bash completion
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+fi
+
+# show motd on interactive login
+if [ -f /etc/motd ] && [ -t 0 ]; then
+    cat /etc/motd
+fi
+EOF
+
+RUN cp /root/.bashrc /etc/skel/.bashrc
+
+# SSH server configuration
+ARG SSH_KEY
+RUN mkdir -p /run/sshd /root/.ssh && \
+    chmod 700 /root/.ssh && \
+    ssh-keygen -A && \
+    sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?PubkeyAuthentication.*/PubkeyAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?UsePAM.*/UsePAM no/' /etc/ssh/sshd_config && \
+    echo "${SSH_KEY}" > /root/.ssh/authorized_keys && \
+    chmod 600 /root/.ssh/authorized_keys
+
+EXPOSE 22 8888
+
+# Entrypoint script: start sshd, run CMD, keep container alive
+RUN cat > /entrypoint.sh <<'ENTRY'
+#!/bin/bash
+mkdir -p /run/sshd
+echo "Starting SSH server..."
+/usr/sbin/sshd -e || echo "WARNING: sshd failed to start (exit code $?)"
+
+IP=$(hostname -I 2>/dev/null | awk '{print $1}')
+IP=${IP:-<unknown>}
+
+echo ""
+echo "============================================================"
+echo "  RT Benchmarking Container"
+echo "============================================================"
+echo ""
+echo "  SSH:      ssh -i <key> root@${IP}"
+echo "  Jupyter:  ssh in, then run: jupyter-start"
+echo "            or from this console:"
+echo "            cd /app && uv run jupyter notebook --ip=0.0.0.0 \\"
+echo "              --port=8888 --no-browser --allow-root \\"
+echo "              --notebook-dir=/app/notebook"
+echo "            then open: http://${IP}:8888"
+echo ""
+echo "  Results:  /app/outputs/"
+echo "  Notebooks: /app/notebook/"
+echo "============================================================"
+echo ""
+
+if [ $# -gt 0 ]; then
+    echo "Running: $@"
+    "$@"
+    EXIT_CODE=$?
+    echo ""
+    echo "============================================================"
+    echo "  Command finished with exit code ${EXIT_CODE}"
+    echo ""
+    echo "  Jupyter:  http://${IP}:8888"
+    echo "    To start: ssh root@${IP} then run: jupyter-start"
+    echo "  SSH:      ssh -i <key> root@${IP}"
+    echo "  Results:  /app/outputs/"
+    echo "============================================================"
+    echo ""
+fi
+
+echo "Container staying alive (sshd running). SSH in or ctrl-c to stop."
+exec /usr/sbin/sshd -D
+ENTRY
+RUN chmod +x /entrypoint.sh
+
+# Intel and ECI repository keys and sources
 RUN wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | gpg --dearmor |  tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
 RUN wget -O- https://eci.intel.com/repos/gpg-keys/GPG-PUB-KEY-INTEL-ECI.gpg | tee /usr/share/keyrings/eci-archive-keyring.gpg > /dev/null
 RUN wget -O- https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | tee /usr/share/keyrings/ros-archive-keyring.gpg > /dev/null
 RUN . /etc/os-release \
-&& echo $VERSION_CODENAME && \
-bash -c 'echo "deb [signed-by=/usr/share/keyrings/eci-archive-keyring.gpg] https://eci.intel.com/repos/$(source /etc/os-release && echo $VERSION_CODENAME) isar main" | tee /etc/apt/sources.list.d/eci.list' && \
-bash -c 'echo "deb-src [signed-by=/usr/share/keyrings/eci-archive-keyring.gpg] https://eci.intel.com/repos/$(source /etc/os-release && echo $VERSION_CODENAME) isar main" | tee -a /etc/apt/sources.list.d/eci.list' && \
-bash -c 'echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | tee /etc/apt/sources.list.d/oneAPI.list' && \
-bash -c 'echo -e "Package: intel-oneapi-runtime-*\nPin: version 2024.1.*\nPin-Priority: 1001" > /etc/apt/preferences.d/oneapi' && \
-bash -c 'echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/openvino/2024 ubuntu24 main" > /etc/apt/sources.list.d/intel-openvino-2024.list' && \
-bash -c 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $VERSION_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list'
+    && echo $VERSION_CODENAME && \
+    bash -c 'echo "deb [signed-by=/usr/share/keyrings/eci-archive-keyring.gpg] https://eci.intel.com/repos/$(source /etc/os-release && echo $VERSION_CODENAME) isar main" | tee /etc/apt/sources.list.d/eci.list' && \
+    bash -c 'echo "deb-src [signed-by=/usr/share/keyrings/eci-archive-keyring.gpg] https://eci.intel.com/repos/$(source /etc/os-release && echo $VERSION_CODENAME) isar main" | tee -a /etc/apt/sources.list.d/eci.list' && \
+    bash -c 'echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | tee /etc/apt/sources.list.d/oneAPI.list' && \
+    bash -c 'echo -e "Package: intel-oneapi-runtime-*\nPin: version 2024.1.*\nPin-Priority: 1001" > /etc/apt/preferences.d/oneapi' && \
+    bash -c 'echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/openvino/2024 ubuntu24 main" > /etc/apt/sources.list.d/intel-openvino-2024.list' && \
+    bash -c 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $VERSION_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list'
 RUN apt-get update && apt-get install -y intel-cmt-cat
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/bin/bash", "-l"]

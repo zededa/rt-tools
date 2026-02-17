@@ -17,7 +17,7 @@ bios:
     file: "${hydra:run.dir}/bios.json"
     pretty: true
 
-# --- Intel CAT specific configuration --- 
+# --- Intel CAT specific configuration ---
 
 pqos:
   # # 'os' = Uses Linux resctrl (Required for PIDs) recommended
@@ -25,7 +25,7 @@ pqos:
   # not upstream kernel
   interface: "os"
   enable: false
-  
+
   # resets all allocations before applying new ones
   reset_before_apply: true
 
@@ -37,7 +37,7 @@ pqos:
       #l2_mask: "0x00ff"
       mba: 100
       # set PIDs to assign to CLOS leave empty if none
-      pids : [] 
+      pids: []
       # Option B: List of CPU cores assigned to this class, leave empty if none
       cores: []
     - id: 0
@@ -46,13 +46,13 @@ pqos:
       l3_mask: "0x7f00"
       #l2_mask: "0xff00"
       mba: 10
-      cores: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+      cores: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
       pids: [115, 118]
 
 irq_affinity:
   enabled: false
   housekeeping_cores: "0-1"
-      
+
 # --- Configuration related to tests running and parameters passed to it
 run:
   command: "caterpillar"
@@ -60,6 +60,7 @@ run:
   max_count: 1
   numa_node: "1"
   stressor: false
+  interactive: true # show progress bars and verbose output (set false in containers)
   # tests_path: "tests"
   metrics: false # enable metrics monitoring
   docker: false # run inside docker container, if false will run on host system

@@ -1,28 +1,28 @@
 import argparse
 import os
-import sys
-import hydra
 import subprocess
+import sys
 import threading
 
+import hydra
 from omegaconf import DictConfig, OmegaConf
 
 from src.bios_settings import process_bios_settings
-
+from src.detect_cpus import detect_cpus
+from src.irq_affinity import set_irq_affinity
 from src.metrics import (
     CPUmonitor,
+    CpuStatMonitor,
     InterruptMonitor,
     MemInfoMonitor,
-    SoftIrqMonitor,
-    CpuStatMonitor,
     PQOSMonitor,
+    SoftIrqMonitor,
 )
-from src.sysinfo_collector import SystemInfoCollector
 from src.pqos_manager import PQOSManager
-from src.irq_affinity import set_irq_affinity
+from src.rt_preflight import run_preflight
+from src.sysinfo_collector import SystemInfoCollector
 from src.test_runner import DockerTestRunner
 from src.hde2e import DockerHDE2E
-from scr.detect_cpus import detect_cpus
 
 
 def setup_pqos(cfg: DictConfig) -> None:
@@ -92,6 +92,9 @@ def setup_metrics(cfg: DictConfig) -> None:
 
 
 def run_test(cfg: DictConfig):
+    # Validate RT environment before doing anything else
+    run_preflight(strict=not cfg.run.docker)
+
     collector = SystemInfoCollector()
     collector.gather_all(cfg)
     collector.dump_to_file(cfg.sysinfo_collector_file)
@@ -173,7 +176,7 @@ After=network.target
 
 [Service]
 Type=oneshot
-User={os.getenv('USER')}
+User={os.getenv("USER")}
 WorkingDirectory={execution_dir}
 ExecStart=sudo ./env/python3 main.py
 RemainAfterExit=no
