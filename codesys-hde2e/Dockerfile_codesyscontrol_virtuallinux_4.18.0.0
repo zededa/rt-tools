@@ -1,0 +1,37 @@
+###############################################################################
+# Copyright CODESYS Development GmbH
+###############################################################################
+
+# The referenced base image in this file can be downloaded from the Homepage of OSADL. The base image is a binary-only image for delayed source code delivery.
+# https://www.osadl.org/OSADL-Container-Base-Image.osadl-container-base-image.0.html?&no_cache=1&sword_list%5B0%5D=docker
+# Add it to your own registry and replace the FROM statement with your URL.
+# Alteratively you can directly pull the base image for immediate source code delivery with all sources directly from docker-hub.
+# To do that replace the FROM statement with:
+FROM osadl/debian-docker-base-image:bookworm-amd64-latest
+
+#FROM repoman.codesys.com:50000/config/standard/osadl-bin/debian/amd64/bookworm:develop
+
+ENV CONTAINER=true
+
+USER root
+ENV USER=root
+
+EXPOSE 443   
+EXPOSE 4840
+EXPOSE 8080  
+EXPOSE 11740
+
+RUN apt-get update && apt-get install -y procps libcap2-bin libpciaccess0 \
+    intel-cmt-cat python3 python3-pip python3-yaml \
+    && apt-get source --download-only libcap2 procps libpciaccess 2>/dev/null \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG CODESYSCONTROL_DEB=codesyscontrol_virtuallinux_4.18.0.0*_amd64.deb
+ADD ${CODESYSCONTROL_DEB}  /tmp/ 
+ADD Docker_copyright_* /
+
+RUN cd /tmp; cd /tmp; dpkg -i ${CODESYSCONTROL_DEB}; rm ${CODESYSCONTROL_DEB};
+
+WORKDIR /var/opt/codesys/
+ENTRYPOINT [ "/opt/codesys/scripts/startup.sh" ]
+CMD []

@@ -1,0 +1,5 @@
+Id;Default
+0;BORDER
+1;CENTER
+2;RADIUS
+;

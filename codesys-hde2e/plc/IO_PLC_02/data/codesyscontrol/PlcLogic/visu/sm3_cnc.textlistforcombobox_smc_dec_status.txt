@@ -1,0 +1,5 @@
+Id;Default
+0;WAIT_PROG
+1;READ_WORD
+2;PROG_READ
+;

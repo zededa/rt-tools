@@ -1,0 +1,78 @@
+Id;Default
+514;%10.0f
+694;%10.1f
+277;%10.2f
+380;%10d
+823;%10f
+438;%d
+863;%i
+599;%s
+291;Actual
+384;Arithmetic
+604;Bitwise
+759;BUTTON STATUS
+121;BUTTON STATUS (OPC UA)
+120;BUTTONS
+562;Compute Iterations
+709;DIGITAL INPUT
+48;DIGITAL OUTPUT
+692;Enable Counter/Publsih
+948;Execution Times (us)
+722;Floating Point
+523;INVERT LED
+236;Jitter (us)
+697;Last
+446;Last value
+791;Latency (us)
+534;LED STATUS
+25;Max
+24;Mean
+740;Measurement RTT t4 - t1 [us]
+460;Message Counter
+216;Min
+307;NUMBER PAD
+674;PACKET CAPTURE
+95;Pointer Chasing
+179;Publish Interval - Control Node
+281;Publish Interval - I/O Simulator
+624;PublisherInterval [us]
+748;Push Buttons
+196;PUSH BUTTONS
+59;Received Counter value
+234;Received value
+88;RESET
+892;Round Trip Time (T2-T1 in us) 
+689;Round Trip Time (T3-T2 in us) 
+849;Round Trip Time (T4 - T1 in us)
+533;Round Trip Time (T4-T1 in us ) 
+297;Round Trip Time (T4-T1 in us)
+925;Round Trip Time (T4-T1 in us) 
+710;Round Trip Time (T4-T3 in us) 
+908;Round Trip Time (us)
+507;Round Trip Time Variance (us)
+698;Samples
+578;Set received value
+49;SQUARE BUTTONS
+470;Start
+636;Start/Stop
+223;Std Deviation
+893;T2 - T1
+352;T2 - T1 (us)
+374;T2-T1 in us
+442;T3 - T2
+315;T3 - T2 (green)
+734;T3 - T2 (us)
+707;T3-T2 in us
+726;T4 - T1
+974;T4 - T1 (blue)
+93;T4 - T1 (us)
+686;T4 - T3
+197;T4 - T3 (us)
+206;T4-T3 in us
+294;Test
+170;Time in milliseconds
+905;Transmitted Counter value
+255;Transmitted value
+45;WORKLOAD CONTROL
+144;Workload Type
+633;Your reaction time in milliseconds

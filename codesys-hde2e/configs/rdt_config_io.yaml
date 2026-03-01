@@ -1,0 +1,66 @@
+# RDT/CAT Configuration for IO PLCs
+# Based on Intel Cache Allocation Technology (CAT) / Resource Director Technology (RDT)
+
+# Global RDT Settings
+rdt:
+  enabled: true
+  interface: "os"  # Use OS interface (resctrl) - required for PID assignment
+  reset_before_apply: true  # Reset RDT configuration before applying new settings
+
+# Class of Service (COS) Definitions
+classes:
+  # Class 1: Real-time IO PLC cores with dedicated L3 cache
+  - id: 1
+    name: "RT_IO_Cores"
+    description: "Real-time cores for IO PLC with dedicated cache allocation"
+    # L3 cache mask (hex): 0x0f = lower 4 ways of L3 cache
+    l3_mask: "0x0f"
+    # Memory Bandwidth Allocation
+    mba: 100
+    # CPU cores assigned to this class
+    cores: [3, 5, 7, 9]
+    pids: []
+
+  # Class 2: Non-real-time cores with shared cache
+  - id: 2
+    name: "Non_RT_Cores"
+    description: "Non-real-time cores with shared cache"
+    l3_mask: "0xf0"
+    mba: 50
+    cores: [0, 1, 2, 4, 6, 8]
+    pids: []
+
+# IRQ Affinity Configuration
+irq_affinity:
+  enabled: true
+  # Cores for handling interrupts
+  irq_cores: "0,1,2"
+  # Move RCU tasks to non-RT cores
+  rcu_cores: "0,1,2"
+
+# Core Isolation Settings
+core_isolation:
+  isolated_cores: [3, 5, 7, 9]
+
+# Instance-specific settings for IO PLCs
+instances:
+  IO_PLC_01:
+    class_id: 1
+    cpu_affinity: "3,5"  # Specific cores for this instance
+    priority: 90  # Slightly lower priority than Control PLCs
+    enable_rdtset: true
+    
+  IO_PLC_02:
+    class_id: 1
+    cpu_affinity: "7,9"
+    priority: 90
+    enable_rdtset: true
+
+# Monitoring Configuration
+monitoring:
+  enabled: false
+  interval: 1
+  metrics:
+    - llc_occupancy
+    - mbm_local
+    - mbm_total

@@ -15,6 +15,7 @@ dependencies = [
     "numpy>=2.3.4",
     "omegaconf>=2.3.0",
     "pandas>=2.3.3",
+    "paramiko>=4.0.0",
     "plotly>=6.5.2",
     "psutil>=7.1.2",
     "pyextremes>=2.3.3",
@@ -27,5 +28,11 @@ dependencies = [
     "tqdm>=4.67.1",
 ]
 
+[project.scripts]
+hde2e-analyze = "hde2e_results:main"
+
 [tool.uv.sources]
 hurst = { git = "https://github.com/Mottl/hurst" }
+
+[tool.uv]
+package = true

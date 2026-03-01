@@ -1,0 +1,46 @@
+{
+  "plcName": "Control_PLC_01",
+  "controller": [
+    {
+      "name": "Controller_01",
+      "pub": [
+        {
+          "ip": "192.168.10.15",
+          "pubId": 11,
+          "wrGroupId": 13,
+          "dataSetId": 110,
+          "task": {
+            "Name": "PubSubTask",
+            "Interval": 500,
+            "Priority": 1
+          }
+        }
+      ],
+      "sub": [
+        {
+          "ip": "192.168.10.15",
+          "pubId": 12,
+          "wrGroupId": 14,
+          "dataSetId": 100,
+          "task": null
+        }
+      ],
+      "processing": {
+        "iterations": 10,
+        "task": {
+          "Name": "ProcessingTask",
+          "Interval": 5000,
+          "Priority": 2
+        }
+      },
+      "logging": {
+        "enabled": true,
+        "task": {
+          "Name": "FileLoggingTask",
+          "Interval": 50000,
+          "Priority": 5
+        }
+      }
+    }
+  ]
+}

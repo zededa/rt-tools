@@ -1,0 +1,4 @@
+Id;Default
+0;MODULO
+1;FINITE
+;

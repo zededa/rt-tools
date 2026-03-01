@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    
+<style type="text/css">
+body {font-family: Arial, Helvetica, sans-serif;}
+.fileTransferDialog {
+    display: block;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 300;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.fileTransferDialogContent {
+    display: block;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background-color: #d4d0c8;
+    border: 1px solid #888;
+    width: 200px;
+    height: 100px;
+    box-shadow: 2px 2px 6px 6px rgba(0,0,0,0.5);
+}
+
+.fileTransferButton {
+    position: relative;
+    margin-top: 2px;
+    margin-right: 5px;
+    float: right;
+    font-size: 12px;
+    width: 80px;
+    height: 25px;
+    border: 1px solid #888;
+}
+
+.fileTransferButton:hover,
+.fileTransferButton:focus {
+    color: gray;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.fileTransferDialogHeader {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: blue;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    width: 100%;
+    height: 20%;
+}
+
+.fileTransferDialogHeader p {
+    position: relative;
+    margin-top: 2px;
+    margin-left: 7px;
+}
+
+.fileTransferDialogBody {
+    position: absolute;
+    top: 20%;
+    left: 0px;
+    background-color: #d4d0c8;
+    font-size: 12px;
+    width: 100%;
+    height: 50%;
+}
+
+.fileTransferDialogBody p {
+    position: relative;
+    margin: 10px;
+}
+
+.fileTransferDialogFooter {
+    position: absolute;
+    top: 70%;
+    left: 0px;
+    background-color: #d4d0c8;
+    color: white;
+    width: 100%;
+    height: 30%;
+}
+</style>
+	<script language="javascript" src="webvisu.js"></script>
+	<script language="javascript" src="browsercontrol_ext0.js"></script>
+
+    
+</head>
+<body onload="new Webvisu('background', 'foreground', true, false, false, false)">
+	<div id="cdsRoot" style="position: absolute; left: 0px; top: 0px; width: 700px; height:500px; overflow:hidden">
+		<canvas id="background" width="700" height="500" style="position: absolute; left: 0px; top: 0px;">Webvisu not supported due to missing browser feature HTML5-Canvas</canvas>
+		<canvas id="foreground" width="700" height="500" style="position: absolute; left: 0px; top: 0px;">Webvisu not supported due to missing browser feature HTML5-Canvas</canvas>
+	</div>
+</body>
+</html>

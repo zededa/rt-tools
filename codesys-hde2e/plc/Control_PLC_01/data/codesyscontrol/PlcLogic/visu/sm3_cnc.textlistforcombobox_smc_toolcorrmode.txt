@@ -1,0 +1,4 @@
+Id;Default
+0;TC_BLIND_POS
+1;TC_RAMP_IN
+;

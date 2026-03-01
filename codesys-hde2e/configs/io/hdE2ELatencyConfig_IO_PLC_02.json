@@ -1,0 +1,45 @@
+{
+  "plcName": "IO_PLC_02",
+  "io": [
+    {
+      "name": "IO_02",
+      "pub": [
+        {
+          "ip": "192.168.10.13",
+          "pubId": 22,
+          "wrGroupId": 24,
+          "dataSetId": 100,
+          "task": {
+            "Name": "PubSubTask",
+            "Interval": 500,
+            "Priority": 1
+          }
+        }
+      ],
+      "sub": [
+        {
+          "ip": "192.168.10.13",
+          "pubId": 21,
+          "wrGroupId": 23,
+          "dataSetId": 110,
+          "task": null
+        }
+      ],
+      "benchmarking": {
+        "task": {
+          "Name": "BenchmarkingTask",
+          "Interval": 500,
+          "Priority": 2
+        }
+      },
+      "logging": {
+        "enabled": true,
+        "task": {
+          "Name": "FileLoggingTask",
+          "Interval": 50000,
+          "Priority": 5
+        }
+      }
+    }
+  ]
+}
