@@ -113,19 +113,92 @@ def _cmdline_has(name: str) -> bool:
     return bool(re.search(rf"(?:^|\s){re.escape(name)}(?:=|\s|$)", _cmdline()))
 
 
+def _max_cpu_id() -> int:
+    """Return the highest possible CPU id from the kernel.
+
+    Reads ``/sys/devices/system/cpu/possible`` (e.g. ``0-127``).
+    Falls back to ``os.cpu_count() - 1``.
+    """
+    possible = _read("/sys/devices/system/cpu/possible")
+    if possible:
+        # e.g. "0-127" — take the last number
+        m = re.search(r"(\d+)\s*$", possible)
+        if m:
+            return int(m.group(1))
+    n = os.cpu_count()
+    return (n - 1) if n and n > 0 else 0
+
+
 def _parse_cpulist(s: str) -> set[int]:
-    """Parse '1-3,5,7-9' into {1,2,3,5,7,8,9}."""
+    """Parse '1-3,5,7-9' into {1,2,3,5,7,8,9}.
+
+    Supports open-ended ranges: ``1-N`` means CPU 1 through the last
+    available CPU (read from ``/sys/devices/system/cpu/possible``).
+
+    Non-numeric tokens (e.g. 'managed_irq', 'domain') are silently
+    skipped so that ``isolcpus=managed_irq,domain,2-5`` works.
+    """
     cpus: set[int] = set()
     for part in s.split(","):
         part = part.strip()
         if not part:
             continue
         if "-" in part:
-            lo, hi = part.split("-", 1)
-            cpus.update(range(int(lo), int(hi) + 1))
+            lo_s, hi_s = part.split("-", 1)
+            try:
+                lo = int(lo_s)
+            except ValueError:
+                continue
+            hi_s = hi_s.strip()
+            if hi_s.upper() == "N" or hi_s == "":
+                hi = _max_cpu_id()
+            else:
+                try:
+                    hi = int(hi_s)
+                except ValueError:
+                    continue
+            cpus.update(range(lo, hi + 1))
         else:
-            cpus.add(int(part))
+            try:
+                cpus.add(int(part))
+            except ValueError:
+                continue
     return cpus
+
+
+def _parse_isolcpus_flags(param: str) -> tuple[set[str], str]:
+    """Parse isolcpus value into (flags, cpu_list_str).
+
+    isolcpus can be:
+      - ``isolcpus=2-5``              → flags={}, cpulist="2-5"
+      - ``isolcpus=managed_irq,2-5``  → flags={"managed_irq"}, cpulist="2-5"
+      - ``isolcpus=managed_irq,domain,io_queue,2-5``
+                                      → flags={"managed_irq","domain","io_queue"}, cpulist="2-5"
+    """
+    known_flags = {"managed_irq", "domain", "io_queue"}
+    flags: set[str] = set()
+    cpu_parts: list[str] = []
+
+    for token in param.split(","):
+        token = token.strip()
+        if token in known_flags:
+            flags.add(token)
+        elif token:
+            cpu_parts.append(token)
+
+    return flags, ",".join(cpu_parts)
+
+
+def _kernel_version() -> tuple[int, int]:
+    """Return (major, minor) kernel version from /proc/version.
+
+    Falls back to (0, 0) if parsing fails.
+    """
+    version_str = _read("/proc/version") or ""
+    m = re.search(r"Linux version (\d+)\.(\d+)", version_str)
+    if m:
+        return int(m.group(1)), int(m.group(2))
+    return 0, 0
 
 
 def _get_container_cpus() -> Optional[str]:
@@ -182,7 +255,7 @@ def check_preempt_rt() -> CheckResult:
 
 
 def check_isolcpus() -> CheckResult:
-    """Check that isolcpus is set and our container cpus are in the isolated set."""
+    """Check that isolcpus is set with recommended flags and covers container CPUs."""
     name = "CPU isolation (isolcpus)"
 
     isolated_param = _cmdline_param("isolcpus")
@@ -196,33 +269,91 @@ def check_isolcpus() -> CheckResult:
                 name, Status.WARN, "isolcpus not found in cmdline or sysfs"
             )
 
-    isolated_set = _parse_cpulist(isolated_param)
+    # Parse flags and CPU list from isolcpus value
+    flags, cpulist_str = _parse_isolcpus_flags(isolated_param)
+    # If the value came from sysfs it's just a cpu list, no flags
+    isolated_set = (
+        _parse_cpulist(cpulist_str) if cpulist_str else _parse_cpulist(isolated_param)
+    )
 
+    warnings: list[str] = []
+
+    # Check for recommended flags.
+    # When any flags are present, 'domain' is NOT implied — it must be
+    # specified explicitly.  Without flags isolcpus defaults to
+    # domain isolation, but adding e.g. managed_irq alone disables
+    # that default.
+    missing_flags: list[str] = []
+    if "managed_irq" not in flags:
+        missing_flags.append("managed_irq")
+    if "domain" not in flags:
+        missing_flags.append("domain")
+
+    if missing_flags:
+        warnings.append(
+            f"{', '.join(missing_flags)} flag(s) missing from isolcpus.  "
+            "Note: when any flag is specified, 'domain' is no longer "
+            "implied and must be listed explicitly.  Recommended: "
+            "isolcpus=managed_irq,domain,<cpulist>"
+        )
+
+    kmaj, kmin = _kernel_version()
+    if (kmaj, kmin) >= (6, 17) and "io_queue" not in flags:
+        warnings.append(
+            f"io_queue flag missing (kernel {kmaj}.{kmin} supports it) — "
+            "block-layer IO completion queues may still land on isolated "
+            "cores.  Recommended: isolcpus=managed_irq,domain,io_queue,<cpulist>"
+        )
+
+    # Verify container CPUs are in the isolated set
     container_cpus_str = _get_container_cpus()
     if not container_cpus_str:
+        msg = f"isolcpus={isolated_param} (could not read container cpuset)"
+        if warnings:
+            return CheckResult(
+                name,
+                Status.WARN,
+                msg,
+                detail="\n".join(warnings),
+            )
         return CheckResult(
             name,
             Status.PASS,
-            f"isolcpus={isolated_param} (could not read container cpuset)",
+            msg,
             detail="Cannot verify overlap — cgroup cpuset not readable",
         )
 
     container_set = _parse_cpulist(container_cpus_str)
     not_isolated = container_set - isolated_set
     if not_isolated:
+        warnings.insert(
+            0,
+            f"Container CPUs {sorted(not_isolated)} are NOT in "
+            f"isolcpus={isolated_param}",
+        )
         return CheckResult(
             name,
             Status.WARN,
             f"Container CPUs {sorted(not_isolated)} are NOT in isolcpus={isolated_param}",
             detail=f"Container cpuset: {container_cpus_str}\n"
-            f"Isolated: {isolated_param}",
+            f"Isolated: {isolated_param}\n" + "\n".join(warnings),
+        )
+
+    detail = f"isolcpus={isolated_param}"
+    if warnings:
+        detail += "\n" + "\n".join(warnings)
+        return CheckResult(
+            name,
+            Status.WARN,
+            f"All container CPUs isolated but missing recommended flags",
+            detail=detail,
         )
 
     return CheckResult(
         name,
         Status.PASS,
         f"All container CPUs ({container_cpus_str}) are isolated",
-        detail=f"isolcpus={isolated_param}",
+        detail=detail,
     )
 
 
@@ -360,24 +491,7 @@ def check_cstates() -> CheckResult:
             detail="\n".join(f"  {k}={v}" for k, v in found.items()),
         )
 
-    # Also check for the known typo
-    typo_params = ["rocessor.max_cstate", "rocessor_idle.max_cstate"]
-    typos_found = []
-    for tp in typo_params:
-        if tp in cmdline:
-            typos_found.append(tp)
-
     detail = "\n".join(f"  {k}={v}" for k, v in found.items())
-    if typos_found:
-        detail += f"\n  WARNING: Possible typo in cmdline: {', '.join(typos_found)}"
-        detail += "\n  (missing leading 'p' — parameter is being ignored by kernel)"
-        return CheckResult(
-            name,
-            Status.WARN,
-            "C-states look disabled but found typo in cmdline",
-            detail=detail,
-        )
-
     return CheckResult(
         name, Status.PASS, "All C-states disabled via kernel cmdline", detail=detail
     )
