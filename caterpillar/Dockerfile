@@ -43,4 +43,4 @@ RUN uv python install 3.12 && uv sync
 # Output directory for results
 RUN mkdir -p /tmp/output
 
-ENTRYPOINT ["/entrypoint.sh", "uv", "run", "python", "main.py", "run.docker=false", "pqos.enable=false", "run.stressor=false", "run.interactive=false", "run.command=caterpillar"]
+ENTRYPOINT ["/entrypoint.sh", "uv", "run", "python", "main.py", "run.docker=false", "pqos.enable=false", "run.stressor=false", "run.interactive=false", "demo.demo_mode=false", "run.command=caterpillar"]
