@@ -13,33 +13,12 @@
 # License.
 #
 
-ARG BASE_TAG=latest
-FROM eci-base:${BASE_TAG}
-
-# Install cyclictest benchmark
+FROM eci-base:latest
+# Install required dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    rt-tests \
-    && rm -rf /var/lib/apt/lists/*
-
+ rt-tests\
+ && rm -rf /var/lib/apt/lists/*
 ENV USER=root
-
-# Install uv package manager
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.local/bin:$PATH"
-
-WORKDIR /app
-
-# Copy project files
-COPY pyproject.toml uv.lock* ./
-COPY src/ ./src/
-COPY conf/ ./conf/
-COPY notebook/ ./notebook/
-COPY main.py ./
-
-# Install Python 3.12 and sync dependencies
-RUN uv python install 3.12 && uv sync
-
-# Output directory for results
+# example directory to share file (-v output:/tmp/output)
 RUN mkdir -p /tmp/output
 
-ENTRYPOINT ["/entrypoint.sh", "uv", "run", "python", "main.py", "run.docker=false", "pqos.enable=false", "run.stressor=false", "run.interactive=false", "demo.demo_mode=false", "run.command=cyclictest"]

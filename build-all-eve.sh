@@ -15,9 +15,9 @@ SSH_KEY_CONTENT="$(cat "$SSH_KEY")"
 echo "Using SSH public key: ${SSH_KEY}"
 
 IMAGES=(
-    "eci-base:Dockerfile.base:."
-    "caterpillar:caterpillar/Dockerfile:."
-    "cyclictest:cyclictest/Dockerfile:."
+    "eci-base:Dockerfile.base.eve:."
+    "caterpillar:caterpillar/Dockerfile.eve:."
+    "cyclictest:cyclictest/Dockerfile.eve:."
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

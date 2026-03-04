@@ -13,17 +13,34 @@
 # License.
 #
 
-FROM eci-base:latest
-# Install required dependencies
+ARG BASE_TAG=latest
+FROM eci-base:${BASE_TAG}
+
+# Install caterpillar benchmark
 RUN apt-get update && apt-get install -y --no-install-recommends \
- caterpillar \
- && rm -rf /var/lib/apt/lists/*
+    caterpillar \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV USER=root
 RUN chmod +x /opt/benchmarking/caterpillar/caterpillar
 
-WORKDIR /opt/benchmarking/caterpillar
+# Install uv package manager
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:$PATH"
 
-# example directory to share file (-v output:/tmp/output)
+WORKDIR /app
+
+# Copy project files
+COPY pyproject.toml uv.lock* ./
+COPY src/ ./src/
+COPY conf/ ./conf/
+COPY notebook/ ./notebook/
+COPY main.py ./
+
+# Install Python 3.12 and sync dependencies
+RUN uv python install 3.12 && uv sync
+
+# Output directory for results
 RUN mkdir -p /tmp/output
 
+ENTRYPOINT ["/entrypoint.sh", "uv", "run", "python", "main.py", "run.docker=false", "pqos.enable=false", "run.stressor=false", "run.interactive=false", "demo.demo_mode=false", "run.command=caterpillar"]
