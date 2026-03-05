@@ -1,23 +1,26 @@
 import argparse
 import os
-import sys
-import hydra
 import subprocess
+import sys
 import threading
 
+import hydra
 from omegaconf import DictConfig, OmegaConf
 
+from src.bios_settings import process_bios_settings
+from src.detect_cpus import detect_cpus
+from src.irq_affinity import set_irq_affinity
 from src.metrics import (
     CPUmonitor,
+    CpuStatMonitor,
     InterruptMonitor,
     MemInfoMonitor,
-    SoftIrqMonitor,
-    CpuStatMonitor,
     PQOSMonitor,
+    SoftIrqMonitor,
 )
-from src.sysinfo_collector import SystemInfoCollector
 from src.pqos_manager import PQOSManager
-from src.irq_affinity import set_irq_affinity
+from src.rt_preflight import run_preflight
+from src.sysinfo_collector import SystemInfoCollector
 from src.test_runner import DockerTestRunner
 from src.hde2e import DockerHDE2E
 
@@ -77,25 +80,49 @@ def setup_metrics(cfg: DictConfig) -> None:
     cpustat_monitor = CpuStatMonitor(
         cfg.cpustat_monitor.path, cfg.softirq_monitor.interval
     )
-    pqos_monitor = PQOSMonitor(cfg.pqos_monitor.path, cfg.pqos_monitor.interval)
+    if cfg.pqos.enable:
+        pqos_monitor = PQOSMonitor(cfg.pqos_monitor.path, cfg.pqos_monitor.interval)
+        pqos_monitor.start()
 
     cpu_monitor.start()
     interrupt_monitor.start()
     meminfo_monitor.start()
     softirq_monitor.start()
     cpustat_monitor.start()
-    pqos_monitor.start()
 
 
-@hydra.main(version_base=None, config_path="conf", config_name="config")
-def main(cfg: DictConfig):
+def run_test(cfg: DictConfig):
+    # Validate RT environment before doing anything else
+    run_preflight(strict=not cfg.run.docker)
+
+    # Detect effective cores early so sysinfo captures the real values
+    cores = detect_cpus()
+    if cores == "":
+        cores = cfg.run.t_core
+
+    housekeeping_core = os.environ.get("RT_HOUSEKEEPING_CORE", "")
+
     collector = SystemInfoCollector()
     collector.gather_all(cfg)
+    collector.info["runtime"] = {
+        "effective_cores": cores,
+        "config_cores": cfg.run.t_core,
+        "housekeeping_core": housekeeping_core or "N/A",
+        "source": "RT_BENCHMARK_CORES"
+        if os.environ.get("RT_BENCHMARK_CORES")
+        else "cgroup/fallback",
+        "command": cfg.run.command,
+    }
     collector.dump_to_file(cfg.sysinfo_collector_file)
+
+    # Collect BIOS settings via redfish
+    if cfg.bios.enable:
+        process_bios_settings(cfg.bios)
 
     if cfg.demo.demo_mode:
         print("Running in demo mode. Skipping test execution.")
-        setup_pqos(cfg)
+        if cfg.pqos.enable:
+            setup_pqos(cfg)
         runner = DockerHDE2E(cfg)
         print("Starting demo HDE2E test...")
         print("Starting IO...")
@@ -116,7 +143,8 @@ def main(cfg: DictConfig):
         if cfg.run.command == "build":
             return runner.build()
 
-        setup_pqos(cfg)
+        if cfg.pqos.enable:
+            setup_pqos(cfg)
 
         # Handle test commands
         if cfg.run.command not in runner.tests:
@@ -128,7 +156,72 @@ def main(cfg: DictConfig):
         if cfg.irq_affinity.enabled:
             set_irq_affinity(cfg.irq_affinity.housekeeping_cores)
 
-        return runner.run_test(cfg.run.command, cfg.run.t_core, cfg.run.stressor)
+        return runner.run_test(cfg.run.command, cores, cfg.run.stressor)
+
+
+@hydra.main(version_base=None, config_path="conf", config_name="config")
+def main(cfg: DictConfig):
+    execution_dir = os.getcwd()
+    counter_file = "/var/tmp/rt_tools_cur_count.txt"
+    service_name = "program-reboot.service"
+    service_path = f"/etc/systemd/system/{service_name}"
+    max_count = cfg.run.max_count
+
+    if max_count <= 1:
+        print("max_count <=1. Running once and exiting.")
+        run_test(cfg)
+        sys.exit(0)
+
+    cur_count = 0
+    if os.path.exists(counter_file):
+        with open(counter_file, "r") as f:
+            cur_count = int(f.read().strip())
+    else:
+        cur_count = 0
+
+    if cur_count == 0:
+        # First run: Setup systemd
+        print("First run (cur=0). Creating systemd service...")
+        service_content = f"""[Unit]
+Description=Auto-run main.py on boot
+After=network.target
+
+[Service]
+Type=oneshot
+User={os.getenv("USER")}
+WorkingDirectory={execution_dir}
+ExecStart=sudo ./env/python3 main.py
+RemainAfterExit=no
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
+"""
+        with open(service_path, "w") as f:
+            f.write(service_content)
+        subprocess.run(["sudo", "systemctl", "daemon-reload"])
+        subprocess.run(["sudo", "systemctl", "enable", service_name])
+
+    print(f"Run {cur_count + 1}/{max_count}")
+    run_test(cfg)
+
+    # Increment and check
+    cur_count += 1
+    with open(counter_file, "w") as f:
+        f.write(str(cur_count))
+
+    if cur_count >= max_count:
+        print("Max count reached. Cleaning up and exiting.")
+        if os.path.exists(service_path):
+            subprocess.run(["sudo", "systemctl", "stop", service_name], check=False)
+            subprocess.run(["sudo", "systemctl", "disable", service_name], check=False)
+            os.remove(service_path)
+            subprocess.run(["sudo", "systemctl", "daemon-reload"])
+        os.remove(counter_file)
+        sys.exit(0)
+    else:
+        print("Rebooting for next run...")
+        os.system("sudo reboot")
 
 
 if __name__ == "__main__":

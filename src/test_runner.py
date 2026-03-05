@@ -1,20 +1,24 @@
 import csv
 import io
+import logging
+import shlex
 import subprocess
-import psutil
 import time
-
-from typing import List, Optional
-from omegaconf import DictConfig, OmegaConf
 from pathlib import Path
-from tqdm import tqdm
 from subprocess import CompletedProcess, Popen
-from src.pqos_manager import PQOSManager
+from typing import List, Optional
 
+import psutil
+from omegaconf import DictConfig, OmegaConf
+from tqdm import tqdm
+
+log = logging.getLogger(__name__)
+
+from src.pqos_manager import PQOSManager
 from src.test_output_parser import (
+    MegabenchParser,
     build_caterpillar_parser,
     build_cyclictest_parser,
-    MegabenchParser,
 )
 
 
@@ -173,7 +177,11 @@ class DockerTestRunner:
         print(f"  Target Core(s): {t_core}")
         print(f"  Stressor: {stressor}")
 
-        docker_cmd = self._build_base_docker_command(test, t_core)
+        docker_cmd = (
+            self._build_base_docker_command(test, t_core)
+            if self.config.run.docker
+            else []
+        )
 
         if test == "caterpillar":
             return self._run_caterpillar(
@@ -229,23 +237,25 @@ class DockerTestRunner:
             f"-c {t_core} -s {self.config.caterpillar.n_cycles}"
         )
         if self.config.run.docker:
-            rdtset_cmd = f"stdbuf -oL -eL " f"{caterpillar_cmd}"
             cmd = base_cmd + [
                 "caterpillar:latest",
                 "/bin/bash",
                 "-c",
-                rdtset_cmd,
+                f"stdbuf -oL -eL {caterpillar_cmd}",
             ]
         else:
-            cmd = [caterpillar_cmd]
+            cmd = shlex.split(caterpillar_cmd)
 
-        print(" ".join(cmd))
+        log.info("Running: %s", " ".join(cmd))
+        interactive = self.config.run.get("interactive", True)
         try:
             process = self._run_interactive_command(cmd)
             assert process.stdout is not None
 
-            pbar = tqdm(total=self.config.caterpillar.n_cycles)
+            n_cycles = self.config.caterpillar.n_cycles
+            count = 0
             parser = build_caterpillar_parser()
+            pbar = tqdm(total=n_cycles, desc="caterpillar") if interactive else None
 
             with open(path, "w") as f:
                 prelude = parser.prelude()
@@ -255,15 +265,25 @@ class DockerTestRunner:
                 for line in process.stdout:
                     parsed = parser.parse(line)
                     if parsed is not None:
-                        pbar.update(1)
+                        count += 1
                         f.write(parsed)
-            pbar.close()
+                        if pbar:
+                            pbar.update(1)
+                        elif count % 1000 == 0 or count == n_cycles:
+                            print(f"caterpillar: {count}/{n_cycles} cycles")
+
+            if pbar:
+                pbar.close()
+            print(f"caterpillar: completed {count} cycles, results in {path}")
 
         except KeyboardInterrupt:
             process.terminate()
         finally:
             try:
-                subprocess.run("docker stop $(docker ps -q)", shell=True, check=False)
+                if self.config.run.docker:
+                    subprocess.run(
+                        "docker stop $(docker ps -q)", shell=True, check=False
+                    )
             except Exception as e:
                 print(f"Error stopping containers: {e}")
 
@@ -274,45 +294,46 @@ class DockerTestRunner:
     ) -> int:
         """Run cyclictest."""
         cyclictest_cmd = (
-            # "chrt -r 95 "
             f"/usr/bin/cyclictest --threads -t 1 -p 95 "
-            f"-l {cycles} -d 1 -D 0 -i 100000 -a {t_core}"
+            f"-l {cycles} -d 1 -D 0 -i {self.config.caterpillar.n_cycles} -a {t_core}"
         )
         if self.config.run.docker:
-            rdtset_cmd = f"stdbuf -oL -eL " f"{cyclictest_cmd}"
             cmd = base_cmd + [
                 "cyclictest:latest",
                 "/bin/bash",
                 "-c",
-                rdtset_cmd,
+                f"stdbuf -oL -eL {cyclictest_cmd}",
             ]
         else:
-            cmd = [cyclictest_cmd]
+            cmd = shlex.split(cyclictest_cmd)
 
-        print(" ".join(cmd))
+        log.info("Running: %s", " ".join(cmd))
+        interactive = self.config.run.get("interactive", True)
 
         process = self._run_interactive_command(cmd)
         assert process.stdout is not None
 
-        pbar = tqdm(total=400000)
         last_c_value = 0
+        total_lines = 0
         parser = build_cyclictest_parser()
+        pbar = tqdm(total=int(cycles), desc="cyclictest") if interactive else None
         with open(path, "w") as f:
             prelude = parser.prelude()
             if prelude is not None:
                 f.write(prelude)
 
             for line in process.stdout:
-                print(line)
+                if interactive:
+                    print(line, end="")
                 parsed = parser.parse(line)
 
                 if parsed is None:
                     continue
 
+                total_lines += 1
                 f.write(parsed)
 
                 try:
-                    # Use csv reader to safely split by commas
                     reader = csv.DictReader(
                         io.StringIO(parsed),
                         fieldnames=parser.headers,
@@ -320,16 +341,22 @@ class DockerTestRunner:
                     row = next(reader)
                     c_val = int(row["C"])
 
-                    # --- Update tqdm only if C increases ---
                     if c_val > last_c_value:
-                        pbar.update(c_val - last_c_value)
+                        delta = c_val - last_c_value
                         last_c_value = c_val
+                        if pbar:
+                            pbar.update(delta)
+                        elif c_val % 10000 == 0:
+                            print(f"cyclictest: {c_val}/{cycles} loops")
 
                 except Exception as e:
-                    # Optional: log or ignore malformed lines
-                    print(f"Warning: could not parse C value: {e}")
+                    log.debug("Could not parse C value: %s", e)
 
-        pbar.close()
+        if pbar:
+            pbar.close()
+        print(
+            f"cyclictest: completed {last_c_value} loops ({total_lines} samples), results in {path}"
+        )
 
         return process.wait()
 
@@ -547,7 +574,7 @@ class DockerTestRunner:
             bufsize=1,
         )
 
-        if self.config.run.cat_clos_pinning.enable:
+        if self.config.run.cat_clos_pinning.enable and self.config.pqos.enable:
             MAX_RETRIES = 5
             SLEEP_TIME = 2  # Seconds to wait between tries
 
