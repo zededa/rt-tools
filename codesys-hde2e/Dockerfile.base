@@ -1,0 +1,90 @@
+###############################################################################
+# Dockerfile.base - Base image for CODESYS HDE2E PLC Instances
+#
+# Contains: OS packages, CODESYS runtime, debug tools, shell environment.
+# Build this rarely - only when changing packages or CODESYS runtime version.
+#
+# Usage:
+#   docker build --build-arg CODESYSCONTROL_DEB=codesyscontrol_virtuallinux_4.18.0.0_amd64.deb \
+#     -f Dockerfile.base -t codesys-hde2e-base:latest .
+#   docker build --build-arg CODESYSCONTROL_DEB=codesyscontrol_virtuallinux_4.20.0.0_amd64.deb \
+#     -f Dockerfile.base -t myregistry.com/codesys-hde2e-base:4.20.0 .
+###############################################################################
+
+FROM osadl/debian-docker-base-image:bookworm-amd64-latest
+
+ARG CODESYSCONTROL_DEB
+RUN test -n "$CODESYSCONTROL_DEB" || (echo "ERROR: CODESYSCONTROL_DEB build arg is required (e.g. codesyscontrol_virtuallinux_4.18.0.0_amd64.deb)" && exit 1)
+
+# Environment setup
+ENV CONTAINER=true
+USER root
+ENV USER=root
+ENV HOME=/root
+
+# Install runtime dependencies + Intel RDT tools + debug/shell tools
+RUN apt-get update && apt-get install -y \
+    procps \
+    libcap2-bin \
+    libpciaccess0 \
+    intel-cmt-cat \
+    python3 \
+    python3-pip \
+    python3-yaml \
+    strace \
+    tcpdump \
+    iproute2 \
+    iputils-ping \
+    vim \
+    ncurses-base \
+    less \
+    bash-completion \
+    isc-dhcp-client \
+    && apt-get source --download-only libcap2-bin procps libpciaccess0 2>/dev/null \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install CODESYS Control Runtime
+COPY ${CODESYSCONTROL_DEB} /tmp/
+RUN cd /tmp && dpkg -i ${CODESYSCONTROL_DEB} && rm ${CODESYSCONTROL_DEB}
+
+# Set up interactive shell environment
+RUN mkdir -p /root && \
+    cat > /root/.bashrc <<'BASHRC'
+# History settings
+HISTSIZE=1000
+HISTFILESIZE=2000
+HISTFILE=/root/.bash_history
+HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
+
+# Arrow key search through history (PgUp/PgDn too)
+bind '"\e[A": history-search-backward' 2>/dev/null
+bind '"\e[B": history-search-forward' 2>/dev/null
+bind '"\e[5~": history-search-backward' 2>/dev/null
+bind '"\e[6~": history-search-forward' 2>/dev/null
+
+# Fix DEL key
+bind '"\e[3~": delete-char' 2>/dev/null
+
+# Home/End keys
+bind '"\e[H": beginning-of-line' 2>/dev/null
+bind '"\e[F": end-of-line' 2>/dev/null
+
+# Useful prompt showing container name
+export PS1='\[\033[01;31m\][CODESYS]\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]\$ '
+
+# Color ls
+alias ls='ls --color=auto'
+alias ll='ls -lah'
+alias la='ls -A'
+
+# Enable bash completion
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+elif [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+fi
+BASHRC
+
+ENV SHELL=/bin/bash
+ENV TERM=xterm
